@@ -1,5 +1,7 @@
-package com.softeng306;
+package com.softeng306.Database;
 
+
+import com.softeng306.Entity.*;
 
 import java.io.*;
 import java.util.*;

@@ -1,5 +1,12 @@
 package com.softeng306;
 
+import com.softeng306.Database.FILEMgr;
+import com.softeng306.Entity.*;
+import com.softeng306.Managers.CourseMgr;
+import com.softeng306.Managers.CourseRegistrationMgr;
+import com.softeng306.Managers.MarkMgr;
+import com.softeng306.Managers.StudentMgr;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

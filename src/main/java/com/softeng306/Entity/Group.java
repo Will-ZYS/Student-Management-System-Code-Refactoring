@@ -1,4 +1,4 @@
-package com.softeng306;
+package com.softeng306.Entity;
 
 /**
  * Represents study groups (LectureGroup, TutorialGroup and LabGroup) for a course.

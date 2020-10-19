@@ -1,10 +1,17 @@
-package com.softeng306;
+package com.softeng306.Managers;
+
+import com.softeng306.*;
+import com.softeng306.Database.FILEMgr;
+import com.softeng306.Entity.Course;
+import com.softeng306.Entity.CourseRegistration;
+import com.softeng306.Entity.Group;
+import com.softeng306.Entity.Student;
 
 import java.util.*;
 
-import static com.softeng306.CourseRegistration.LabComparator;
-import static com.softeng306.CourseRegistration.LecComparator;
-import static com.softeng306.CourseRegistration.TutComparator;
+import static com.softeng306.Entity.CourseRegistration.LabComparator;
+import static com.softeng306.Entity.CourseRegistration.LecComparator;
+import static com.softeng306.Entity.CourseRegistration.TutComparator;
 
 
 public class CourseRegistrationMgr {

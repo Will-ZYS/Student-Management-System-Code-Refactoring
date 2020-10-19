@@ -1,4 +1,6 @@
-package com.softeng306;
+package com.softeng306.Entity;
+
+import com.softeng306.Main;
 
 /**
  * Represents a student enrolled in a school.

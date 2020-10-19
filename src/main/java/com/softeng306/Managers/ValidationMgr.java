@@ -1,4 +1,10 @@
-package com.softeng306;
+package com.softeng306.Managers;
+
+import com.softeng306.*;
+import com.softeng306.Entity.Course;
+import com.softeng306.Entity.CourseRegistration;
+import com.softeng306.Entity.Professor;
+import com.softeng306.Entity.Student;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

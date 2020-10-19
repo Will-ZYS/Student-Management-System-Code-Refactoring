@@ -1,4 +1,4 @@
-package com.softeng306;
+package com.softeng306.Entity;
 
 /**
  * Represents a sub-component of a main component.
