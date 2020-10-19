@@ -1,4 +1,4 @@
-package com.softeng306;
+package com.softeng306.Entity;
 
 /**
  * Represents TutorialGroup for a course.

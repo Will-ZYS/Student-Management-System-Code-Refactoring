@@ -1,4 +1,4 @@
-package com.softeng306;
+package com.softeng306.Entity;
 
 import java.util.Comparator;
 

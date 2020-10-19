@@ -1,5 +1,9 @@
-package com.softeng306;
+package com.softeng306.Managers;
 
+
+import com.softeng306.*;
+import com.softeng306.Database.FILEMgr;
+import com.softeng306.Entity.*;
 
 import java.util.*;
 import java.io.PrintStream;
