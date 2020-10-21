@@ -5,6 +5,7 @@ import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IProfessor;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -261,8 +262,8 @@ public class ValidationMgr {
      * @param profID The inputted professor ID.
      * @return the existing professor or else null.
      */
-    public static Professor checkProfExists(String profID){
-        List<Professor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+    public static IProfessor checkProfExists(String profID){
+        List<IProfessor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
         if(anyProf.size() == 0){
             return null;
         }

@@ -1,6 +1,7 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Course implements ICourse {
     /**
      * The professor in charge of this course.
      */
-    private Professor profInCharge;
+    private IProfessor profInCharge;
 
     /**
      * The department this course belongs to.
@@ -98,7 +99,8 @@ public class Course implements ICourse {
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
      */
-    public Course(String courseID, String courseName, Professor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
+
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -128,7 +130,7 @@ public class Course implements ICourse {
      * @param tutWeeklyHour The tutorial weekly hour of this course.
      * @param labWeeklyHour The lab weekly hour of this course.
      */
-    public Course(String courseID, String courseName, Professor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -171,7 +173,7 @@ public class Course implements ICourse {
      * Gets the course's professor in charge.
      * @return the professor in charge of this course.
      */
-    public Professor getProfInCharge() {
+    public IProfessor getProfInCharge() {
         return profInCharge;
     }
 
