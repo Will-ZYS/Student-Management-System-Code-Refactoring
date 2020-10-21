@@ -16,7 +16,6 @@ import java.util.regex.*;
 
 /**
  * Manages all the validation check in this system.
-
  */
 
 public class ValidationMgr implements IValidationMgr {
