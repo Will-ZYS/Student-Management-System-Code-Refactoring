@@ -89,10 +89,10 @@ public class Main {
                     CourseMgr.getInstance().enterCourseWorkComponentWeightage(null);
                     break;
                 case 7:
-                    MarkMgr.setCourseWorkMark(false);
+                    MarkMgr.getInstance().setCourseWorkMark(false);
                     break;
                 case 8:
-                    MarkMgr.setCourseWorkMark(true);
+                    MarkMgr.getInstance().setCourseWorkMark(true);
                     break;
                 case 9:
                     MarkMgr.printCourseStatistics();

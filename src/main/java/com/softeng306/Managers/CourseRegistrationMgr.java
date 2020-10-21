@@ -74,7 +74,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         Main.courseRegistrations.add(courseRegistration);
 
-        Main.marks.add(MarkMgr.initializeMark(currentStudent, currentCourse));
+        Main.marks.add(MarkMgr.getInstance().initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());

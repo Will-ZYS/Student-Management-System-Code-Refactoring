@@ -14,6 +14,9 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
+
+    private static MarkMgr instance = null;
+
     private static Scanner scanner = new Scanner(System.in);
 
     /**
@@ -22,7 +25,7 @@ public class MarkMgr implements IMarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    public static Mark initializeMark(Student student, Course course) {
+    public Mark initializeMark(Student student, Course course) {
         HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>();
         double totalMark = 0d;
         ArrayList<MainComponent> mainComponents = course.getMainComponents();
@@ -44,7 +47,7 @@ public class MarkMgr implements IMarkMgr {
      * Sets the coursework mark for the mark record.
      * @param isExam whether this coursework component refers to "Exam"
      */
-    public static void setCourseWorkMark(boolean isExam) {
+    public void setCourseWorkMark(boolean isExam) {
         System.out.println("enterCourseWorkMark is called");
 
         String studentID = ValidationMgr.checkStudentExists().getStudentID();
@@ -144,7 +147,7 @@ public class MarkMgr implements IMarkMgr {
      * @param thisComponentName the component name interested.
      * @return the sum of component marks
      */
-    public static double computeMark(ArrayList<Mark> thisCourseMark, String thisComponentName){
+    public double computeMark(ArrayList<Mark> thisCourseMark, String thisComponentName){
         double averageMark = 0;
         for (Mark mark : thisCourseMark) {
             HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
@@ -205,7 +208,7 @@ public class MarkMgr implements IMarkMgr {
                 System.out.print("Main Component: " + courseworkComponent.getComponentName());
                 System.out.print("\tWeight: " + courseworkComponent.getComponentWeight() + "%");
 
-                averageMark += computeMark(thisCourseMark, thisComponentName);
+                averageMark += MarkMgr.getInstance().computeMark(thisCourseMark, thisComponentName);
 
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
@@ -218,7 +221,7 @@ public class MarkMgr implements IMarkMgr {
                     System.out.print("\tWeight: " + subComponent.getComponentWeight() + "% (in main component)");
                     String thisSubComponentName = subComponent.getComponentName();
 
-                    averageMark += computeMark(thisCourseMark, thisSubComponentName);
+                    averageMark += MarkMgr.getInstance().computeMark(thisCourseMark, thisSubComponentName);
 
                     averageMark = averageMark / thisCourseMark.size();
                     System.out.println("\t Average: " + averageMark);
@@ -324,7 +327,7 @@ public class MarkMgr implements IMarkMgr {
             }
 
             System.out.println("Course Total: " + mark.getTotalMark());
-            studentGPA += gpaCalcualtor(mark.getTotalMark()) * mark.getCourse().getAU();
+            studentGPA += MarkMgr.getInstance().gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
             System.out.println();
         }
         studentGPA /= thisStudentAU;
@@ -348,7 +351,7 @@ public class MarkMgr implements IMarkMgr {
      * @param result result of this course
      * @return the grade (in A, B ... )
      */
-    public static double gpaCalcualtor(double result) {
+    public double gpaCalculator(double result) {
         if (result > 85) {
             // A+, A
             return 5d;
@@ -381,5 +384,16 @@ public class MarkMgr implements IMarkMgr {
             return 0d;
         }
 
+    }
+
+    /**
+     * Get the instance of the MarkMgr class.
+     * @return the singleton instance.
+     */
+    public static MarkMgr getInstance() {
+        if (instance == null) {
+            instance = new MarkMgr();
+        }
+        return instance;
     }
 }

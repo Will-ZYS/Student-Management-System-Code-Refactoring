@@ -12,12 +12,12 @@ public interface ICourseMgr {
     /**
      * Checks whether a course (with all of its groups) have available slots and displays the result.
      */
-    public void checkAvailableSlots();
+    void checkAvailableSlots();
 
     /**
      * Sets the course work component weightage of a course.
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    public void enterCourseWorkComponentWeightage(Course currentCourse);
+    void enterCourseWorkComponentWeightage(Course currentCourse);
 }

@@ -697,6 +697,10 @@ public class CourseMgr implements ICourseMgr {
         System.out.println();
     }
 
+    /**
+     * Get the instance of the CourseMgr class.
+     * @return the singleton instance.
+     */
     public static CourseMgr getInstance() {
         if (instance == null) {
             instance = new CourseMgr();
