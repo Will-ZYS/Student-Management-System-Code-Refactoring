@@ -4,7 +4,6 @@ import com.softeng306.Main;
 import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,12 +14,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
-import org.junit.contrib.java.lang.system.ExpectedSystemExit;
-
 public class MainIT {
-    @Rule
-    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
-    //        exit.expectSystemExit(); Use this line if system expects to exit by calling System.exit()
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
