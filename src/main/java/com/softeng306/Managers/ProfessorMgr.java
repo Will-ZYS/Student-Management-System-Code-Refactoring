@@ -23,8 +23,8 @@ public class ProfessorMgr implements IProfessorMgr {
         while (true) {
             System.out.println("Give this professor an ID: ");
             profID = scanner.nextLine();
-            if (ValidationMgr.checkValidProfIDInput(profID)) {
-                if (ValidationMgr.checkProfExists(profID) == null) {
+            if (ValidationMgr.getInstance().checkValidProfIDInput(profID)) {
+                if (ValidationMgr.getInstance().checkProfExists(profID) == null) {
                     break;
                 }
             }
@@ -34,7 +34,7 @@ public class ProfessorMgr implements IProfessorMgr {
         while (true) {
             System.out.println("Enter the professor's name: ");
             profName = scanner.nextLine();
-            if (ValidationMgr.checkValidPersonNameInput(profName)) {
+            if (ValidationMgr.getInstance().checkValidPersonNameInput(profName)) {
                 break;
             }
         }
@@ -45,11 +45,11 @@ public class ProfessorMgr implements IProfessorMgr {
             System.out.println("Enter -h to print all the departments.");
             department = scanner.nextLine();
             while (department.equals("-h")) {
-                HelpInfoMgr.getAllDepartment();
+                HelpInfoMgr.getInstance().getAllDepartment();
                 department = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkDepartmentValidation(department)) {
+            if (ValidationMgr.getInstance().checkDepartmentValidation(department)) {
                 professor.setProfDepartment(department);
                 break;
             }

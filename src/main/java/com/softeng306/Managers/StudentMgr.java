@@ -56,8 +56,8 @@ public class StudentMgr implements IStudentMgr {
                 System.out.println();
                 System.out.println("Give this student an ID: ");
                 studentID = scanner.nextLine();
-                if (ValidationMgr.checkValidStudentIDInput(studentID)) {
-                    if (ValidationMgr.checkStudentExists(studentID) == null) {
+                if (ValidationMgr.getInstance().checkValidStudentIDInput(studentID)) {
+                    if (ValidationMgr.getInstance().checkStudentExists(studentID) == null) {
                         break;
                     }
                 }
@@ -67,7 +67,7 @@ public class StudentMgr implements IStudentMgr {
         while (true) {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
-            if (ValidationMgr.checkValidPersonNameInput(studentName)) {
+            if (ValidationMgr.getInstance().checkValidPersonNameInput(studentName)) {
                 break;
             }
         }
@@ -84,11 +84,11 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the schools.");
             studentSchool = scanner.nextLine();
             while ("-h".equals(studentSchool)) {
-                HelpInfoMgr.printAllDepartment();
+                HelpInfoMgr.getInstance().printAllDepartment();
                 studentSchool = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkDepartmentValidation(studentSchool)) {
+            if (ValidationMgr.getInstance().checkDepartmentValidation(studentSchool)) {
                 currentStudent.setStudentSchool(studentSchool);
                 break;
             }
@@ -102,11 +102,11 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the genders.");
             studentGender = scanner.nextLine();
             while ("-h".equals(studentGender)) {
-                HelpInfoMgr.printAllGender();
+                HelpInfoMgr.getInstance().printAllGender();
                 studentGender = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkGenderValidation(studentGender)) {
+            if (ValidationMgr.getInstance().checkGenderValidation(studentGender)) {
                 currentStudent.setGender(studentGender);
                 break;
             }

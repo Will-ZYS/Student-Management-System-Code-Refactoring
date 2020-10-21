@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class HelpInfoMgr implements IHelpInfoMgr {
     private static Scanner scanner = new Scanner(System.in);
+    private static HelpInfoMgr instance = null;
 
     /**
      * Displays all the professors in the inputted department.
@@ -24,8 +25,8 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      * @param printOut Represents whether print out the professor information or not
      * @return A list of all the names of professors in the inputted department or else null.
      */
-    public static List<String> printProfInDepartment(String department, boolean printOut) {
-        if (ValidationMgr.checkDepartmentValidation(department)) {
+    public List<String> printProfInDepartment(String department, boolean printOut) {
+        if (ValidationMgr.getInstance().checkDepartmentValidation(department)) {
             List<String> validProfString = Main.professors.stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);
@@ -40,14 +41,14 @@ public class HelpInfoMgr implements IHelpInfoMgr {
     /**
      * Displays a list of IDs of all the students.
      */
-    public static void printAllStudents() {
+    public void printAllStudents() {
         Main.students.stream().map(s -> s.getStudentID()).forEach(System.out::println);
     }
 
     /**
      * Displays a list of IDs of all the courses.
      */
-    public static void printAllCourses() {
+    public void printAllCourses() {
         Main.courses.stream().map(c -> c.getCourseID()).forEach(System.out::println);
 
     }
@@ -55,7 +56,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
     /**
      * Displays a list of all the departments.
      */
-    public static void printAllDepartment() {
+    public void printAllDepartment() {
         int index = 1;
         for (Department department : Department.values()) {
             System.out.println(index + ": " + department);
@@ -67,7 +68,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
     /**
      * Displays a list of all the genders.
      */
-    public static void printAllGender() {
+    public void printAllGender() {
         int index = 1;
         for (Gender gender : Gender.values()) {
             System.out.println(index + ": " + gender);
@@ -79,7 +80,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
     /**
      * Displays a list of all the course types.
      */
-    public static void printAllCourseType() {
+    public void printAllCourseType() {
         int index = 1;
         for (CourseType courseType : CourseType.values()) {
             System.out.println(index + ": " + courseType);
@@ -92,7 +93,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      *
      * @return an array list of all the departments.
      */
-    public static ArrayList<String> getAllDepartment() {
+    public ArrayList<String> getAllDepartment() {
         Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
         ArrayList<String> departmentStringList = new ArrayList<String>(0);
         Iterator iter = departmentEnumSet.iterator();
@@ -108,7 +109,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      *
      * @return an array list of all the genders.
      */
-    public static ArrayList<String> getAllGender() {
+    public ArrayList<String> getAllGender() {
         Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
         ArrayList<String> genderStringList = new ArrayList<String>(0);
         Iterator iter = genderEnumSet.iterator();
@@ -123,7 +124,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      *
      * @return an array list of all the course types.
      */
-    public static ArrayList<String> getAllCourseType() {
+    public ArrayList<String> getAllCourseType() {
         Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
         ArrayList<String> courseTypeStringSet = new ArrayList<String>(0);
         Iterator iter = courseTypeEnumSet.iterator();
@@ -140,7 +141,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      * @param department The inputted department.
      * @return a list of all the department values.
      */
-    public static List<String> printCourseInDepartment(String department) {
+    public List<String> printCourseInDepartment(String department) {
         List<Course> validCourses = Main.courses.stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
         validCourseString.forEach(System.out::println);
@@ -157,7 +158,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      * @param groups    An array list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    public static String printGroupWithVacancyInfo(String groupType, ArrayList<Group> groups) {
+    public String printGroupWithVacancyInfo(String groupType, ArrayList<Group> groups) {
         int index;
         HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
         int selectedGroupNum;
@@ -204,4 +205,14 @@ public class HelpInfoMgr implements IHelpInfoMgr {
         return selectedGroupName;
     }
 
+    /**
+     * Get the instance of the HelpInfoMgr class.
+     * @return the singleton instance
+     */
+    public static HelpInfoMgr getInstance() {
+        if (instance == null) {
+            instance = new HelpInfoMgr();
+        }
+        return instance;
+    }
 }

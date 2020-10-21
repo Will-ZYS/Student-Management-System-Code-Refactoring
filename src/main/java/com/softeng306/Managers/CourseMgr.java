@@ -37,8 +37,8 @@ public class CourseMgr implements ICourseMgr {
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (ValidationMgr.checkValidCourseIDInput(courseID)) {
-                if (ValidationMgr.checkCourseExists(courseID) == null) {
+            if (ValidationMgr.getInstance().checkValidCourseIDInput(courseID)) {
+                if (ValidationMgr.getInstance().checkCourseExists(courseID) == null) {
                     break;
                 }
             }
@@ -85,10 +85,10 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Enter -h to print all the departments.");
             courseDepartment = scanner.nextLine();
             while ("-h".equals(courseDepartment)) {
-                HelpInfoMgr.printAllDepartment();
+                HelpInfoMgr.getInstance().printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if (ValidationMgr.checkDepartmentValidation(courseDepartment)) {
+            if (ValidationMgr.getInstance().checkDepartmentValidation(courseDepartment)) {
                 break;
             }
         }
@@ -99,10 +99,10 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Enter -h to print all the course types.");
             courseType = scanner.nextLine();
             while (courseType.equals("-h")) {
-                HelpInfoMgr.printAllCourseType();
+                HelpInfoMgr.getInstance().printAllCourseType();
                 courseType = scanner.nextLine();
             }
-            if (ValidationMgr.checkCourseTypeValidation(courseType)) {
+            if (ValidationMgr.getInstance().checkCourseTypeValidation(courseType)) {
                 break;
             }
         }
@@ -153,7 +153,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 lectureGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(lectureGroupName)) {
+                if (!ValidationMgr.getInstance().checkValidGroupNameInput(lectureGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -244,7 +244,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 tutorialGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(tutorialGroupName)) {
+                if (!ValidationMgr.getInstance().checkValidGroupNameInput(tutorialGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -327,7 +327,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 labGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(labGroupName)) {
+                if (!ValidationMgr.getInstance().checkValidGroupNameInput(labGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -362,18 +362,18 @@ public class CourseMgr implements ICourseMgr {
 
         Professor profInCharge;
         List<String> professorsInDepartment = new ArrayList<String>(0);
-        professorsInDepartment = HelpInfoMgr.printProfInDepartment(courseDepartment, false);
+        professorsInDepartment = HelpInfoMgr.getInstance().printProfInDepartment(courseDepartment, false);
         while (true) {
             System.out.println("Enter the ID for the professor in charge please:");
             System.out.println("Enter -h to print all the professors in " + courseDepartment + ".");
             profID = scanner.nextLine();
             while ("-h".equals(profID)) {
-                professorsInDepartment = HelpInfoMgr.printProfInDepartment(courseDepartment, true);
+                professorsInDepartment = HelpInfoMgr.getInstance().printProfInDepartment(courseDepartment, true);
                 profID = scanner.nextLine();
             }
 
             System.setOut(dummyStream);
-            profInCharge = ValidationMgr.checkProfExists(profID);
+            profInCharge = ValidationMgr.getInstance().checkProfExists(profID);
             System.setOut(originalStream);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
@@ -431,7 +431,7 @@ public class CourseMgr implements ICourseMgr {
         Course currentCourse;
 
         do {
-            currentCourse = ValidationMgr.checkCourseExists();
+            currentCourse = ValidationMgr.getInstance().checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
@@ -474,7 +474,7 @@ public class CourseMgr implements ICourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = ValidationMgr.checkCourseExists();
+            currentCourse = ValidationMgr.getInstance().checkCourseExists();
         }
 
 

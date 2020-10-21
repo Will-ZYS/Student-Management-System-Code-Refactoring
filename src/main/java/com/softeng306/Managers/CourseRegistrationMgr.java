@@ -27,16 +27,16 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = ValidationMgr.checkStudentExists();
+        Student currentStudent = ValidationMgr.getInstance().checkStudentExists();
         String studentID = currentStudent.getStudentID();
 
-        ValidationMgr.checkCourseDepartmentExists();
+        ValidationMgr.getInstance().checkCourseDepartmentExists();
 
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        Course currentCourse = ValidationMgr.getInstance().checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
 
-        if (ValidationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
+        if (ValidationMgr.getInstance().checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
         }
 
@@ -56,17 +56,17 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         ArrayList<Group> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
-        selectedLectureGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lecture", lecGroups);
+        selectedLectureGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("lecture", lecGroups);
 
         ArrayList<Group> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
-        selectedTutorialGroupName = HelpInfoMgr.printGroupWithVacancyInfo("tutorial", tutGroups);
+        selectedTutorialGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("tutorial", tutGroups);
 
         ArrayList<Group> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
-        selectedLabGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lab", labGroups);
+        selectedLabGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
         CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
@@ -93,7 +93,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      */
     public static void printStudents() {
         System.out.println("printStudent is called");
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        Course currentCourse = ValidationMgr.getInstance().checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
