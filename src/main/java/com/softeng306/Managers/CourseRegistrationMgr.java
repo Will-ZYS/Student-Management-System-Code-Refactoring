@@ -2,11 +2,10 @@ package com.softeng306.Managers;
 
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Group;
-import com.softeng306.Entity.Student;
+import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IMarkMgr;
 
 import java.util.*;
 
@@ -18,6 +17,10 @@ import static com.softeng306.Entity.CourseRegistration.TutComparator;
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
+    private ValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IMarkMgr markMgr = MarkMgr.getInstance();
+
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -30,16 +33,16 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = ValidationMgr.getInstance().checkStudentExists();
+        Student currentStudent = validationMgr.checkStudentExists();
         String studentID = currentStudent.getStudentID();
 
-        ValidationMgr.getInstance().checkCourseDepartmentExists();
+        validationMgr.checkCourseDepartmentExists();
 
-        Course currentCourse = ValidationMgr.getInstance().checkCourseExists();
+        Course currentCourse = validationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
 
-        if (ValidationMgr.getInstance().checkCourseRegistrationExists(studentID, courseID) != null) {
+        if (validationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
         }
 
@@ -59,25 +62,26 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         ArrayList<Group> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
-        selectedLectureGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("lecture", lecGroups);
+        selectedLectureGroupName = helpInfoMgr.printGroupWithVacancyInfo("lecture", lecGroups);
 
         ArrayList<Group> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
-        selectedTutorialGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("tutorial", tutGroups);
+        selectedTutorialGroupName = helpInfoMgr.printGroupWithVacancyInfo("tutorial", tutGroups);
 
         ArrayList<Group> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
-        selectedLabGroupName = HelpInfoMgr.getInstance().printGroupWithVacancyInfo("lab", labGroups);
+        selectedLabGroupName = helpInfoMgr.printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
         CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
+        // TOOD FILEMGR AGAIN
         FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
         Main.courseRegistrations.add(courseRegistration);
 
-        Main.marks.add(MarkMgr.getInstance().initializeMark(currentStudent, currentCourse));
+        Main.marks.add(markMgr.initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());
@@ -96,7 +100,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      */
     public void printStudents() {
         System.out.println("printStudent is called");
-        Course currentCourse = ValidationMgr.getInstance().checkCourseExists();
+        Course currentCourse = validationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -104,6 +108,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         System.out.println("(3) Lab group");
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
+        //TODO FILEMGR AGAIN
         ArrayList<CourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
 
 
