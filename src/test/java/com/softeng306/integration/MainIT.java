@@ -56,7 +56,12 @@ public class MainIT {
         inputsBuilder.append("11" + System.lineSeparator());
 
         preparingInputStream();
-        Main.main(new String[]{});
+//        Main.main(new String[]{});
+
+        System.out.println("abc");
+        System.out.println();
+        System.out.println("abc");
+
         expectedOutput.append(System.lineSeparator());
         expectedOutput.append("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
         expectedOutput.append("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
@@ -99,5 +104,5 @@ public class MainIT {
         System.setIn(in);
     }
 
-
+    private void appendLine
 }
