@@ -16,12 +16,15 @@ import static com.softeng306.Entity.CourseRegistration.TutComparator;
 
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
+
+    private static CourseRegistrationMgr instance = null;
+
     private static Scanner scanner = new Scanner(System.in);
 
     /**
      * Registers a course for a student
      */
-    public static void registerCourse() {
+    public void registerCourse() {
         System.out.println("registerCourse is called");
         String selectedLectureGroupName = null;
         String selectedTutorialGroupName = null;
@@ -74,7 +77,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         Main.courseRegistrations.add(courseRegistration);
 
-        Main.marks.add(MarkMgr.initializeMark(currentStudent, currentCourse));
+        Main.marks.add(MarkMgr.getInstance().initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());
@@ -91,7 +94,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     /**
      * Prints the students in a course according to their lecture group, tutorial group or lab group.
      */
-    public static void printStudents() {
+    public void printStudents() {
         System.out.println("printStudent is called");
         Course currentCourse = ValidationMgr.getInstance().checkCourseExists();
 
@@ -183,4 +186,14 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     }
 
 
+    /**
+     * get the instance of the CourseRegistrationMgr class
+     * @return the singleton instance
+     */
+    public static CourseRegistrationMgr getInstance() {
+        if (instance == null) {
+            instance = new CourseRegistrationMgr();
+        }
+        return instance;
+    }
 }

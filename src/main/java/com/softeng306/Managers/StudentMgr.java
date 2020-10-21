@@ -16,12 +16,13 @@ import java.util.Scanner;
 
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
+    private static StudentMgr instance = null;
 
 
     /**
      * Adds a student and put the student into file
      */
-    public static void addStudent() {
+    public void addStudent() {
         String studentName, studentSchool;
         String studentID = null;
         int choice, studentYear;
@@ -147,5 +148,16 @@ public class StudentMgr implements IStudentMgr {
             System.out.println(" " + student.getStudentID() + " | " + student.getStudentName() + " | " + student.getStudentSchool() + " | " + student.getGender() + " | " + student.getStudentYear() + " | " + GPA);
         }
 
+    }
+
+    /**
+     * get the instance of the StudentMgr class
+     * @return the singleton instance
+     */
+    public static StudentMgr getInstance() {
+        if (instance == null) {
+            instance = new StudentMgr();
+        }
+        return instance;
     }
 }

@@ -11,6 +11,7 @@ import java.util.Scanner;
 
  */
 public class ProfessorMgr implements IProfessorMgr {
+    private static ProfessorMgr instance = null;
     private Scanner scanner = new Scanner(System.in);
 
     /**
@@ -59,4 +60,14 @@ public class ProfessorMgr implements IProfessorMgr {
         return professor;
     }
 
+    /**
+     * get the instance of the ProfessorMgr class
+     * @return the singleton instance
+     */
+    public static ProfessorMgr getInstance() {
+        if (instance == null) {
+            instance = new ProfessorMgr();
+        }
+        return instance;
+    }
 }
