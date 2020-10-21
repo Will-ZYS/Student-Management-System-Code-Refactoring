@@ -4,6 +4,7 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.IProfessor;
 
 import java.util.*;
 import java.io.PrintStream;
@@ -356,7 +357,7 @@ public class CourseMgr {
             } while (true);
         }
 
-        Professor profInCharge;
+        IProfessor profInCharge;
         List<String> professorsInDepartment = new ArrayList<String>(0);
         professorsInDepartment = HelpInfoMgr.printProfInDepartment(courseDepartment, false);
         while (true) {

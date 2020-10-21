@@ -2,6 +2,8 @@ package com.softeng306.Database;
 
 
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.*;
 import java.util.*;
@@ -497,8 +499,8 @@ public class FILEMgr {
         try {
             String line;
             int thisProfessor = 0;
-            Professor currentProfessor = null;
-            ArrayList<Professor> professors = loadProfessors();
+            IProfessor currentProfessor = null;
+            ArrayList<IProfessor> professors = loadProfessors();
             fileReader = new BufferedReader(new FileReader(courseFileName));
             fileReader.readLine();//read the header to skip it
             while ((line = fileReader.readLine()) != null) {
@@ -507,7 +509,7 @@ public class FILEMgr {
                     String courseID = tokens[courseIdIndex];
                     String courseName = tokens[courseNameIndex];
                     String profInCharge = tokens[profInChargeIndex];
-                    for (Professor professor : professors) {
+                    for (IProfessor professor : professors) {
                         if (professor.getProfID().equals(profInCharge)) {
                             currentProfessor = professor;
                             break;
@@ -747,7 +749,7 @@ public class FILEMgr {
      *
      * @param professor professor to be added into file
      */
-    public static void writeProfIntoFile(Professor professor) {
+    public static void writeProfIntoFile(IProfessor professor) {
         File file;
         FileWriter fileWriter = null;
         try {
@@ -783,9 +785,9 @@ public class FILEMgr {
      *
      * @return an array list of all the professors.
      */
-    public static ArrayList<Professor> loadProfessors() {
+    public static ArrayList<IProfessor> loadProfessors() {
         BufferedReader fileReader = null;
-        ArrayList<Professor> professors = new ArrayList<Professor>(0);
+        ArrayList<IProfessor> professors = new ArrayList<>(0);
         try {
             String line;
             fileReader = new BufferedReader(new FileReader(professorFileName));
@@ -794,7 +796,7 @@ public class FILEMgr {
             while ((line = fileReader.readLine()) != null) {
                 String[] tokens = line.split(COMMA_DELIMITER);
                 if (tokens.length > 0) {
-                    Professor professor = new Professor(tokens[professorIdIndex], tokens[professorNameIndex]);
+                    IProfessor professor = new Professor(tokens[professorIdIndex], tokens[professorNameIndex]);
                     professor.setProfDepartment(tokens[professorDepartmentIndex]);
                     professors.add(professor);
                 }
@@ -863,7 +865,7 @@ public class FILEMgr {
         ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
         try {
             String line;
-            Student currentStudent = null;
+            IStudent currentStudent = null;
             Course currentCourse = null;
             ArrayList<Student> students = loadStudents();
 
