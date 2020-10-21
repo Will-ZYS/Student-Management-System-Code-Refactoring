@@ -18,6 +18,12 @@ public class StringBuilderPlus {
         sb.append(str != null ? str : "").append(System.getProperty("line.separator"));
     }
 
+    public void appendLine()
+    {
+        sb.append(System.getProperty("line.separator"));
+    }
+
+
     public String toString()
     {
         return sb.toString();

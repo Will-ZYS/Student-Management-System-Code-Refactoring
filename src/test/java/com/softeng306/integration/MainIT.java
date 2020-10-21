@@ -1,6 +1,7 @@
 package com.softeng306.integration;
 
 import com.softeng306.Main;
+import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,17 +27,17 @@ public class MainIT {
     private final PrintStream originalErr = System.err;
 
 
-    StringBuilder inputsBuilder;
-    StringBuilder expectedOutput;
+    StringBuilderPlus inputsBuilder;
+    StringBuilderPlus expectedOutput;
     InputStream sysInBackup;
 
     @Before
     public void setup() {
         // Set up a new string for series of inputs
-        inputsBuilder = new StringBuilder();
+        inputsBuilder = new StringBuilderPlus();
 
         // Set up an output builder
-        expectedOutput = new StringBuilder();
+        expectedOutput = new StringBuilderPlus();
 
         // Switch the output stream for testing purposes
         System.setOut(new PrintStream(outContent));
@@ -56,45 +57,43 @@ public class MainIT {
         inputsBuilder.append("11" + System.lineSeparator());
 
         preparingInputStream();
-//        Main.main(new String[]{});
+        Main.main(new String[]{});
 
-        System.out.println("abc");
-        System.out.println();
-        System.out.println("abc");
+        expectedOutput.appendLine();
+        expectedOutput.appendLine("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
+        expectedOutput.appendLine("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
+        expectedOutput.appendLine("Permission has been granted by the original developers to anonymize the code and use for education purposes.");
+        expectedOutput.appendLine("******************************************************************************************************************************");
+        expectedOutput.appendLine();
 
-        expectedOutput.append(System.lineSeparator());
-        expectedOutput.append("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
-        expectedOutput.append("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
-        expectedOutput.append("Permission has been granted by the original developers to anonymize the code and use for education purposes.");
-        expectedOutput.append("******************************************************************************************************************************");
-        expectedOutput.append(System.lineSeparator());
+        expectedOutput.appendLine("************ I can help you with these functions: *************");
+        expectedOutput.appendLine(" 0. Print Options");
+        expectedOutput.appendLine(" 1. Add a student");
+        expectedOutput.appendLine(" 2. Add a course");
+        expectedOutput.appendLine(" 3. Register student for a course including tutorial/lab classes");
+        expectedOutput.appendLine(" 4. Check available slots in a class (vacancy in a class)");
+        expectedOutput.appendLine(" 5. Print student list by lecture, tutorial or laboratory session for a course");
+        expectedOutput.appendLine(" 6. Enter course assessment components weightage");
+        expectedOutput.appendLine(" 7. Enter coursework mark – inclusive of its components");
+        expectedOutput.appendLine(" 8. Enter exam mark");
+        expectedOutput.appendLine(" 9. Print course statistics");
+        expectedOutput.appendLine("10. Print student transcript");
+        expectedOutput.appendLine("11. Quit Main System");
+        expectedOutput.appendLine();
 
-        expectedOutput.append("************ I can help you with these functions: *************");
-        expectedOutput.append(" 0. Print Options");
-        expectedOutput.append(" 1. Add a student");
-        expectedOutput.append(" 2. Add a course");
-        expectedOutput.append(" 3. Register student for a course including tutorial/lab classes");
-        expectedOutput.append(" 4. Check available slots in a class (vacancy in a class)");
-        expectedOutput.append(" 5. Print student list by lecture, tutorial or laboratory session for a course");
-        expectedOutput.append(" 6. Enter course assessment components weightage");
-        expectedOutput.append(" 7. Enter coursework mark – inclusive of its components");
-        expectedOutput.append(" 8. Enter exam mark");
-        expectedOutput.append(" 9. Print course statistics");
-        expectedOutput.append("10. Print student transcript");
-        expectedOutput.append("11. Quit Main System");
-        expectedOutput.append(System.lineSeparator());
+        expectedOutput.appendLine("Enter your choice, let me help you:");
 
-        expectedOutput.append("Backing up data before exiting...");
-        expectedOutput.append("********* Bye! Thank you for using Main! *********");
-        expectedOutput.append(System.lineSeparator());
-        expectedOutput.append("                 ######    #      #   #######                   ");
-        expectedOutput.append("                 #    ##    #    #    #                         ");
-        expectedOutput.append("                 #    ##     #  #     #                         ");
-        expectedOutput.append("                 ######       ##      #######                   ");
-        expectedOutput.append("                 #    ##      ##      #                         ");
-        expectedOutput.append("                 #    ##      ##      #                         ");
-        expectedOutput.append("                 ######       ##      #######                   ");
-        expectedOutput.append(System.lineSeparator());
+        expectedOutput.appendLine("Backing up data before exiting...");
+        expectedOutput.appendLine("********* Bye! Thank you for using Main! *********");
+        expectedOutput.appendLine();
+        expectedOutput.appendLine("                 ######    #      #   #######                   ");
+        expectedOutput.appendLine("                 #    ##    #    #    #                         ");
+        expectedOutput.appendLine("                 #    ##     #  #     #                         ");
+        expectedOutput.appendLine("                 ######       ##      #######                   ");
+        expectedOutput.appendLine("                 #    ##      ##      #                         ");
+        expectedOutput.appendLine("                 #    ##      ##      #                         ");
+        expectedOutput.appendLine("                 ######       ##      #######                   ");
+        expectedOutput.appendLine();
 
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
@@ -104,5 +103,4 @@ public class MainIT {
         System.setIn(in);
     }
 
-    private void appendLine
 }
