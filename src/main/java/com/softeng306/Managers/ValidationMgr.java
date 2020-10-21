@@ -5,6 +5,7 @@ import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -18,7 +19,7 @@ import java.util.regex.*;
 
  */
 
-public class ValidationMgr {
+public class ValidationMgr implements IValidationMgr {
 
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;

@@ -3,6 +3,7 @@ package com.softeng306.Managers;
 import com.softeng306.Entity.Course;
 import com.softeng306.Enum.*;
 import com.softeng306.Entity.Group;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Main;
 
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
  */
 
-public class HelpInfoMgr {
+public class HelpInfoMgr implements IHelpInfoMgr {
     private static Scanner scanner = new Scanner(System.in);
 
     /**

@@ -33,6 +33,7 @@ public class Main {
      */
     public static ArrayList<Professor> professors = new ArrayList<Professor>(0);
 
+
     /**
      * The main function of the system.
      * Command line interface.
@@ -73,19 +74,19 @@ public class Main {
                     StudentMgr.addStudent();
                     break;
                 case 2:
-                    CourseMgr.addCourse();
+                    CourseMgr.getInstance().addCourse();
                     break;
                 case 3:
                     CourseRegistrationMgr.registerCourse();
                     break;
                 case 4:
-                    CourseMgr.checkAvailableSlots();
+                    CourseMgr.getInstance().checkAvailableSlots();
                     break;
                 case 5:
                     CourseRegistrationMgr.printStudents();
                     break;
                 case 6:
-                    CourseMgr.enterCourseWorkComponentWeightage(null);
+                    CourseMgr.getInstance().enterCourseWorkComponentWeightage(null);
                     break;
                 case 7:
                     MarkMgr.setCourseWorkMark(false);

@@ -4,13 +4,17 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
 
 
-public class CourseMgr {
+public class CourseMgr implements ICourseMgr {
+
+    private static CourseMgr instance = null;
+
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
     private static PrintStream dummyStream = new PrintStream(new OutputStream() {
@@ -23,7 +27,7 @@ public class CourseMgr {
     /**
      * Creates a new course and stores it in the file.
      */
-    public static void addCourse() {
+    public void addCourse() {
         String courseID;
         String courseName;
         String profID;
@@ -421,7 +425,7 @@ public class CourseMgr {
     /**
      * Checks whether a course (with all of its groups) have available slots and displays the result.
      */
-    public static void checkAvailableSlots() {
+    public void checkAvailableSlots() {
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
         Course currentCourse;
@@ -460,7 +464,7 @@ public class CourseMgr {
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    public static void enterCourseWorkComponentWeightage(Course currentCourse) {
+    public void enterCourseWorkComponentWeightage(Course currentCourse) {
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
         int numberOfMain;
@@ -691,5 +695,12 @@ public class CourseMgr {
             System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
         }
         System.out.println();
+    }
+
+    public static CourseMgr getInstance() {
+        if (instance == null)
+            instance = new CourseMgr();
+
+        return instance;
     }
 }

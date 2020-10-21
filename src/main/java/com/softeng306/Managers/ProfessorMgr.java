@@ -1,6 +1,7 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Entity.Professor;
+import com.softeng306.Interfaces.Managers.IProfessorMgr;
 
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ import java.util.Scanner;
  *
 
  */
-public class ProfessorMgr {
+public class ProfessorMgr implements IProfessorMgr {
     private Scanner scanner = new Scanner(System.in);
 
     /**

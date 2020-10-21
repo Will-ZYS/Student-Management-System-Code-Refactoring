@@ -4,6 +4,7 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Managers.IMarkMgr;
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ import java.util.*;
 
  */
 
-public class MarkMgr {
+public class MarkMgr implements IMarkMgr {
     private static Scanner scanner = new Scanner(System.in);
 
     /**

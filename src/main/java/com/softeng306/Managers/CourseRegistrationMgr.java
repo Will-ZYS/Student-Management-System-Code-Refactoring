@@ -6,6 +6,7 @@ import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Group;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ import static com.softeng306.Entity.CourseRegistration.LecComparator;
 import static com.softeng306.Entity.CourseRegistration.TutComparator;
 
 
-public class CourseRegistrationMgr {
+public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private static Scanner scanner = new Scanner(System.in);
 
     /**

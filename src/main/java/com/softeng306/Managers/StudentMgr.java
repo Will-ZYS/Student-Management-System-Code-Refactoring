@@ -2,6 +2,7 @@ package com.softeng306.Managers;
 
 
 import com.softeng306.Database.FILEMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
  */
 
-public class StudentMgr {
+public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
 
 
