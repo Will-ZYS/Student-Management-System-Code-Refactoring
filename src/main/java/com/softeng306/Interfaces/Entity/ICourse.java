@@ -1,7 +1,6 @@
 package com.softeng306.Interfaces.Entity;
 
 import com.softeng306.Entity.MainComponent;
-import com.softeng306.Entity.Professor;
 
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public interface ICourse {
      * Gets the course's professor in charge.
      * @return the professor in charge of this course.
      */
-    public Professor getProfInCharge();
+    public IProfessor getProfInCharge();
 
     /**
      * Gets the course's current vacancy.
