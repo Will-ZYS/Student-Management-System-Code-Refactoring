@@ -2,9 +2,9 @@ package com.softeng306.Managers;
 
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
@@ -31,7 +31,7 @@ public class CourseRegistrationMgr {
 
         ValidationMgr.checkCourseDepartmentExists();
 
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = ValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
 
@@ -92,7 +92,7 @@ public class CourseRegistrationMgr {
      */
     public static void printStudents() {
         System.out.println("printStudent is called");
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = ValidationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");

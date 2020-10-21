@@ -2,6 +2,7 @@ package com.softeng306;
 
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
@@ -19,7 +20,7 @@ public class Main {
     /**
      * An array list of all the courses in this school.
      */
-    public static ArrayList<Course> courses = new ArrayList<Course>(0);
+    public static ArrayList<ICourse> courses = new ArrayList<>(0);
     /**
      * An array list of all the course registration records in this school.
      */

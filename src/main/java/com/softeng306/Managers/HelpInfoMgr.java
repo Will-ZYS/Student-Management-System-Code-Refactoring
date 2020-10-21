@@ -1,7 +1,7 @@
 package com.softeng306.Managers;
 
-import com.softeng306.Entity.Course;
 import com.softeng306.Enum.*;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Main;
 
@@ -140,7 +140,7 @@ public class HelpInfoMgr {
      * @return a list of all the department values.
      */
     public static List<String> printCourseInDepartment(String department) {
-        List<Course> validCourses = Main.courses.stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
+        List<ICourse> validCourses = Main.courses.stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {

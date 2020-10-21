@@ -4,6 +4,7 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
@@ -385,7 +386,7 @@ public class CourseMgr {
         }
 
 
-        Course course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
+        ICourse course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
 
 
         System.out.println("Create course components and set component weightage now?");
@@ -425,7 +426,7 @@ public class CourseMgr {
     public static void checkAvailableSlots() {
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
-        Course currentCourse;
+        ICourse currentCourse;
 
         do {
             currentCourse = ValidationMgr.checkCourseExists();
@@ -461,7 +462,7 @@ public class CourseMgr {
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    public static void enterCourseWorkComponentWeightage(Course currentCourse) {
+    public static void enterCourseWorkComponentWeightage(ICourse currentCourse) {
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
         int numberOfMain;
@@ -688,7 +689,7 @@ public class CourseMgr {
     public static void printCourses() {
         System.out.println("Course List: ");
         System.out.println("| Course ID | Course Name | Professor in Charge |");
-        for (Course course : Main.courses) {
+        for (ICourse course : Main.courses) {
             System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
         }
         System.out.println();

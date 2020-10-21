@@ -1,10 +1,10 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
-import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -189,9 +189,9 @@ public class ValidationMgr {
      * Prompts the user to input an existing course.
      * @return the inputted course.
      */
-    public static Course checkCourseExists(){
+    public static ICourse checkCourseExists(){
         String courseID;
-        Course currentCourse;
+        ICourse currentCourse;
         while(true){
             System.out.println("Enter course ID (-h to print all the course ID):");
             courseID = scanner.nextLine();
@@ -246,8 +246,8 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course or else null.
      */
-    public static Course checkCourseExists(String courseID){
-        List<Course> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+    public static ICourse checkCourseExists(String courseID){
+        List<ICourse> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
         if(anyCourse.size() == 0){
             return null;
         }

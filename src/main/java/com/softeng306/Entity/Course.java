@@ -1,11 +1,12 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.ArrayList;
 
 
-public class Course {
+public class Course implements ICourse {
     /**
      * The ID of this course.
      */

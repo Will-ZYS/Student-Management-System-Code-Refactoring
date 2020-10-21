@@ -2,6 +2,7 @@ package com.softeng306.Database;
 
 
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.io.*;
@@ -348,7 +349,7 @@ public class FILEMgr {
      *
      * @param course a course to be added into file
      */
-    public static void writeCourseIntoFile(Course course) {
+    public static void writeCourseIntoFile(ICourse course) {
         File file;
         FileWriter fileWriter = null;
         try {
@@ -492,8 +493,8 @@ public class FILEMgr {
      *
      * @return an array list of all the courses.
      */
-    public static ArrayList<Course> loadCourses() {
-        ArrayList<Course> courses = new ArrayList<Course>(0);
+    public static ArrayList<ICourse> loadCourses() {
+        ArrayList<ICourse> courses = new ArrayList<>(0);
         BufferedReader fileReader = null;
         try {
             String line;
@@ -532,7 +533,7 @@ public class FILEMgr {
                         lectureGroups.add(new Group(thisLectureGroup[0], Integer.parseInt(thisLectureGroup[1]), Integer.parseInt(thisLectureGroup[2])));
                     }
 
-                    Course course = new Course(courseID, courseName, currentProfessor, vacancies, totalSeats, lectureGroups, AU, courseDepartment, courseType, lecWeeklyHr);
+                    ICourse course = new Course(courseID, courseName, currentProfessor, vacancies, totalSeats, lectureGroups, AU, courseDepartment, courseType, lecWeeklyHr);
 
                     String tutorialGroupsString = tokens[tutorialGroupIndex];
                     ArrayList<IGroup> tutorialGroups = new ArrayList<>(0);
@@ -601,7 +602,7 @@ public class FILEMgr {
      *
      * @param courses courses to be backed up
      */
-    public static void backUpCourse(ArrayList<Course> courses) {
+    public static void backUpCourse(ArrayList<ICourse> courses) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(courseFileName);
@@ -610,7 +611,7 @@ public class FILEMgr {
             fileWriter.append(course_HEADER);
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            for (Course course : courses) {
+            for (ICourse course : courses) {
                 fileWriter.append(course.getCourseID());
                 fileWriter.append(COMMA_DELIMITER);
 
@@ -865,7 +866,7 @@ public class FILEMgr {
         try {
             String line;
             Student currentStudent = null;
-            Course currentCourse = null;
+            ICourse currentCourse = null;
             ArrayList<Student> students = loadStudents();
 
             fileReader = new BufferedReader(new FileReader(courseRegistrationFileName));
@@ -883,8 +884,8 @@ public class FILEMgr {
                         }
                     }
                     String courseID = tokens[courseIdInRegistrationIndex];
-                    ArrayList<Course> courses = loadCourses();
-                    for (Course course : courses) {
+                    ArrayList<ICourse> courses = loadCourses();
+                    for (ICourse course : courses) {
                         if (course.getCourseID().equals(courseID)) {
                             currentCourse = course;
                             break;
@@ -992,14 +993,14 @@ public class FILEMgr {
             String line;
 
             ArrayList<Student> students = loadStudents();
-            ArrayList<Course> courses = loadCourses();
+            ArrayList<ICourse> courses = loadCourses();
 
             fileReader = new BufferedReader(new FileReader(markFileName));
             //read the header to skip it
             fileReader.readLine();
             while ((line = fileReader.readLine()) != null) {
                 Student currentStudent = null;
-                Course currentCourse = null;
+                ICourse currentCourse = null;
 
                 HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>(0);
                 String[] thisCourseWorkMark;
@@ -1017,7 +1018,7 @@ public class FILEMgr {
 
                     String courseID = tokens[courseIdIndexInMarks];
 
-                    for (Course course : courses) {
+                    for (ICourse course : courses) {
                         if (course.getCourseID().equals(courseID)) {
                             currentCourse = course;
                             break;

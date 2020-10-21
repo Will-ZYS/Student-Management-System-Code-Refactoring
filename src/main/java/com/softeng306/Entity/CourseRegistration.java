@@ -1,16 +1,18 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.ICourse;
+
 import java.util.Comparator;
 
 
 public class CourseRegistration {
     private Student student;
-    private Course course;
+    private ICourse course;
     private String lectureGroup;
     private String tutorialGroup;
     private String labGroup;
 
-    public CourseRegistration(Student student, Course course, String lectureGroup, String tutorialGroup, String labGroup) {
+    public CourseRegistration(Student student, ICourse course, String lectureGroup, String tutorialGroup, String labGroup) {
         this.student = student;
         this.course = course;
         this.lectureGroup = lectureGroup;
@@ -22,7 +24,7 @@ public class CourseRegistration {
         return student;
     }
 
-    public Course getCourse() {
+    public ICourse getCourse() {
         return course;
     }
 
