@@ -697,6 +697,7 @@ public class CourseMgr implements ICourseMgr {
         System.out.println();
     }
 
+
     public static CourseMgr getInstance() {
         if (instance == null) {
             instance = new CourseMgr();
