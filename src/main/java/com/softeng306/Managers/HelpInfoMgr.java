@@ -2,7 +2,7 @@ package com.softeng306.Managers;
 
 import com.softeng306.Entity.Course;
 import com.softeng306.Enum.*;
-import com.softeng306.Entity.Group;
+import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Main;
 
 import java.util.*;
@@ -156,7 +156,7 @@ public class HelpInfoMgr {
      * @param groups    An array list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    public static String printGroupWithVacancyInfo(String groupType, ArrayList<Group> groups) {
+    public static String printGroupWithVacancyInfo(String groupType, ArrayList<IGroup> groups) {
         int index;
         HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
         int selectedGroupNum;
@@ -166,7 +166,7 @@ public class HelpInfoMgr {
             System.out.println("Here is a list of all the " + groupType + " groups with available slots:");
             do {
                 index = 0;
-                for (Group group : groups) {
+                for (IGroup group : groups) {
                     if (group.getAvailableVacancies() == 0) {
                         continue;
                     }
@@ -193,7 +193,7 @@ public class HelpInfoMgr {
                 }
             }
 
-            for (Group group : groups) {
+            for (IGroup group : groups) {
                 if (group.getGroupName().equals(selectedGroupName)) {
                     group.enrolledIn();
                     break;

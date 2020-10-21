@@ -4,6 +4,7 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
 import java.io.PrintStream;
@@ -139,7 +140,7 @@ public class CourseMgr {
         }
 
 
-        ArrayList<LectureGroup> lectureGroups = new ArrayList<LectureGroup>();
+        ArrayList<IGroup> lectureGroups = new ArrayList<>();
         String lectureGroupName;
         int lectureGroupCapacity;
         seatsLeft = totalSeats;
@@ -156,7 +157,7 @@ public class CourseMgr {
                 if (lectureGroups.size() == 0) {
                     break;
                 }
-                for (LectureGroup lectureGroup : lectureGroups) {
+                for (IGroup lectureGroup : lectureGroups) {
                     if (lectureGroup.getGroupName().equals(lectureGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lecture group already exist for this course.");
@@ -182,7 +183,7 @@ public class CourseMgr {
                 } while (true);
                 seatsLeft -= lectureGroupCapacity;
                 if ((seatsLeft > 0 && i != (noOfLectureGroups - 1)) || (seatsLeft == 0 && i == noOfLectureGroups - 1)) {
-                    LectureGroup lectureGroup = new LectureGroup(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
+                    IGroup lectureGroup = new Group(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
 
                     lectureGroups.add(lectureGroup);
                     break;
@@ -231,7 +232,7 @@ public class CourseMgr {
             }
         }
 
-        ArrayList<TutorialGroup> tutorialGroups = new ArrayList<TutorialGroup>();
+        ArrayList<IGroup> tutorialGroups = new ArrayList<>();
         String tutorialGroupName;
         int tutorialGroupCapacity;
         for (int i = 0; i < noOfTutorialGroups; i++) {
@@ -247,7 +248,7 @@ public class CourseMgr {
                 if (tutorialGroups.size() == 0) {
                     break;
                 }
-                for (TutorialGroup tutorialGroup : tutorialGroups) {
+                for (IGroup tutorialGroup : tutorialGroups) {
                     if (tutorialGroup.getGroupName().equals(tutorialGroupName)) {
                         groupNameExists = true;
                         System.out.println("This tutorial group already exist for this course.");
@@ -263,7 +264,7 @@ public class CourseMgr {
                     scanner.nextLine();
                     totalTutorialSeats += tutorialGroupCapacity;
                     if ((i != noOfTutorialGroups - 1) || (totalTutorialSeats >= totalSeats)) {
-                        TutorialGroup tutorialGroup = new TutorialGroup(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
+                        IGroup tutorialGroup = new Group(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
                         tutorialGroups.add(tutorialGroup);
                         break;
                     } else {
@@ -314,7 +315,7 @@ public class CourseMgr {
             }
         }
 
-        ArrayList<LabGroup> labGroups = new ArrayList<LabGroup>();
+        ArrayList<IGroup> labGroups = new ArrayList<>();
         String labGroupName;
         int labGroupCapacity;
         for (int i = 0; i < noOfLabGroups; i++) {
@@ -330,7 +331,7 @@ public class CourseMgr {
                 if (labGroups.size() == 0) {
                     break;
                 }
-                for (LabGroup labGroup : labGroups) {
+                for (IGroup labGroup : labGroups) {
                     if (labGroup.getGroupName().equals(labGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lab group already exist for this course.");
@@ -345,7 +346,7 @@ public class CourseMgr {
                 scanner.nextLine();
                 totalLabSeats += labGroupCapacity;
                 if ((i != noOfLabGroups - 1) || (totalLabSeats >= totalSeats)) {
-                    LabGroup labGroup = new LabGroup(labGroupName, labGroupCapacity, labGroupCapacity);
+                    IGroup labGroup = new Group(labGroupName, labGroupCapacity, labGroupCapacity);
                     labGroups.add(labGroup);
                     break;
                 } else {
@@ -431,18 +432,18 @@ public class CourseMgr {
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
-                for (LectureGroup lectureGroup : currentCourse.getLectureGroups()) {
+                for (IGroup lectureGroup : currentCourse.getLectureGroups()) {
                     System.out.println("Lecture group " + lectureGroup.getGroupName() + " (Available/Total): " + lectureGroup.getAvailableVacancies() + "/" + lectureGroup.getTotalSeats());
                 }
                 if (currentCourse.getTutorialGroups() != null) {
                     System.out.println();
-                    for (TutorialGroup tutorialGroup : currentCourse.getTutorialGroups()) {
+                    for (IGroup tutorialGroup : currentCourse.getTutorialGroups()) {
                         System.out.println("Tutorial group " + tutorialGroup.getGroupName() + " (Available/Total):  " + tutorialGroup.getAvailableVacancies() + "/" + tutorialGroup.getTotalSeats());
                     }
                 }
                 if (currentCourse.getLabGroups() != null) {
                     System.out.println();
-                    for (LabGroup labGroup : currentCourse.getLabGroups()) {
+                    for (IGroup labGroup : currentCourse.getLabGroups()) {
                         System.out.println("Lab group " + labGroup.getGroupName() + " (Available/Total): " + labGroup.getAvailableVacancies() + "/" + labGroup.getTotalSeats());
                     }
                 }
