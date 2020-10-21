@@ -71,19 +71,19 @@ public class Main {
                 case 0:
                     break;
                 case 1:
-                    StudentMgr.addStudent();
+                    StudentMgr.getInstance().addStudent();
                     break;
                 case 2:
                     CourseMgr.getInstance().addCourse();
                     break;
                 case 3:
-                    CourseRegistrationMgr.registerCourse();
+                    CourseRegistrationMgr.getInstance().registerCourse();
                     break;
                 case 4:
                     CourseMgr.getInstance().checkAvailableSlots();
                     break;
                 case 5:
-                    CourseRegistrationMgr.printStudents();
+                    CourseRegistrationMgr.getInstance().printStudents();
                     break;
                 case 6:
                     CourseMgr.getInstance().enterCourseWorkComponentWeightage(null);
