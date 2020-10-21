@@ -5,6 +5,7 @@ import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.io.OutputStream;
@@ -28,6 +29,9 @@ public class ValidationMgr implements IValidationMgr {
         }
     });
     private static ValidationMgr instance = null;
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+
 
     /**
      * Checks whether the inputted department is valid.
@@ -35,7 +39,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted department is valid.
      */
     public boolean checkDepartmentValidation(String department) {
-        if(HelpInfoMgr.getInstance().getAllDepartment().contains(department)){
+        if(helpInfoMgr.getAllDepartment().contains(department)){
             return true;
         }
         System.out.println("The department is invalid. Please re-enter.");
@@ -48,7 +52,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted gender is valid.
      */
     public boolean checkGenderValidation(String gender) {
-        if(HelpInfoMgr.getInstance().getAllGender().contains(gender)){
+        if(helpInfoMgr.getAllGender().contains(gender)){
             return true;
         }
         System.out.println("The gender is invalid. Please re-enter.");
@@ -61,7 +65,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted course type is valid.
      */
     public boolean checkCourseTypeValidation(String courseType) {
-        if(HelpInfoMgr.getInstance().getAllCourseType().contains(courseType)){
+        if(helpInfoMgr.getAllCourseType().contains(courseType)){
             return true;
         }
         System.out.println("The course type is invalid. Please re-enter.");
@@ -168,7 +172,7 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();
             while("-h".equals(studentID)){
-                HelpInfoMgr.getInstance().printAllStudents();
+                helpInfoMgr.printAllStudents();
                 studentID = scanner.nextLine();
             }
 
@@ -196,12 +200,12 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Enter course ID (-h to print all the course ID):");
             courseID = scanner.nextLine();
             while("-h".equals(courseID)){
-                HelpInfoMgr.getInstance().printAllCourses();
+                helpInfoMgr.printAllCourses();
                 courseID = scanner.nextLine();
             }
 
             System.setOut(dummyStream);
-            currentCourse = ValidationMgr.getInstance().checkCourseExists(courseID);
+            currentCourse = validationMgr.checkCourseExists(courseID);
             if (currentCourse == null) {
                 System.setOut(originalStream);
                 System.out.println("Invalid Course ID. Please re-enter.");
@@ -223,13 +227,13 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Which department's courses are you interested? (-h to print all the departments)");
             courseDepartment = scanner.nextLine();
             while("-h".equals(courseDepartment)){
-                HelpInfoMgr.getInstance().printAllDepartment();
+                helpInfoMgr.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if(ValidationMgr.getInstance().checkDepartmentValidation(courseDepartment)){
+            if(validationMgr.checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
                 System.setOut(dummyStream);
-                validCourseString = HelpInfoMgr.getInstance().printCourseInDepartment(courseDepartment);
+                validCourseString = helpInfoMgr.printCourseInDepartment(courseDepartment);
                 System.setOut(originalStream);
                 if(validCourseString.size() == 0){
                     System.out.println("Invalid choice of department.");
