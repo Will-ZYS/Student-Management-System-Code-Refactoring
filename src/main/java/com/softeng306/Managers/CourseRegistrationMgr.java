@@ -6,6 +6,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ import static com.softeng306.Entity.CourseRegistration.TutComparator;
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
-    private ValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
 
