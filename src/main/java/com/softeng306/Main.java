@@ -49,6 +49,8 @@ public class Main {
         // it feels cleaning to have them in some collection
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
+
+        // TODO maybe remove these fields as they are not used
         IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
         IProfessorMgr professorMgr = ProfessorMgr.getInstance();
