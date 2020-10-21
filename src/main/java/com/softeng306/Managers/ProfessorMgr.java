@@ -1,7 +1,9 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Entity.Professor;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.util.Scanner;
 
@@ -13,6 +15,8 @@ import java.util.Scanner;
 public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
     private Scanner scanner = new Scanner(System.in);
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
     /**
      * Adds a professor.
@@ -24,8 +28,8 @@ public class ProfessorMgr implements IProfessorMgr {
         while (true) {
             System.out.println("Give this professor an ID: ");
             profID = scanner.nextLine();
-            if (ValidationMgr.getInstance().checkValidProfIDInput(profID)) {
-                if (ValidationMgr.getInstance().checkProfExists(profID) == null) {
+            if (validationMgr.checkValidProfIDInput(profID)) {
+                if (validationMgr.checkProfExists(profID) == null) {
                     break;
                 }
             }
@@ -35,7 +39,7 @@ public class ProfessorMgr implements IProfessorMgr {
         while (true) {
             System.out.println("Enter the professor's name: ");
             profName = scanner.nextLine();
-            if (ValidationMgr.getInstance().checkValidPersonNameInput(profName)) {
+            if (validationMgr.checkValidPersonNameInput(profName)) {
                 break;
             }
         }
@@ -46,11 +50,11 @@ public class ProfessorMgr implements IProfessorMgr {
             System.out.println("Enter -h to print all the departments.");
             department = scanner.nextLine();
             while (department.equals("-h")) {
-                HelpInfoMgr.getInstance().getAllDepartment();
+                helpInfoMgr.getAllDepartment();
                 department = scanner.nextLine();
             }
 
-            if (ValidationMgr.getInstance().checkDepartmentValidation(department)) {
+            if (validationMgr.checkDepartmentValidation(department)) {
                 professor.setProfDepartment(department);
                 break;
             }

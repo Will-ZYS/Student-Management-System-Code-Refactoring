@@ -2,7 +2,9 @@ package com.softeng306.Managers;
 
 
 import com.softeng306.Database.FILEMgr;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
 
@@ -17,6 +19,8 @@ import java.util.Scanner;
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
     private static StudentMgr instance = null;
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
 
     /**
@@ -57,8 +61,8 @@ public class StudentMgr implements IStudentMgr {
                 System.out.println();
                 System.out.println("Give this student an ID: ");
                 studentID = scanner.nextLine();
-                if (ValidationMgr.getInstance().checkValidStudentIDInput(studentID)) {
-                    if (ValidationMgr.getInstance().checkStudentExists(studentID) == null) {
+                if (validationMgr.checkValidStudentIDInput(studentID)) {
+                    if (validationMgr.checkStudentExists(studentID) == null) {
                         break;
                     }
                 }
@@ -68,7 +72,7 @@ public class StudentMgr implements IStudentMgr {
         while (true) {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
-            if (ValidationMgr.getInstance().checkValidPersonNameInput(studentName)) {
+            if (validationMgr.checkValidPersonNameInput(studentName)) {
                 break;
             }
         }
@@ -85,11 +89,11 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the schools.");
             studentSchool = scanner.nextLine();
             while ("-h".equals(studentSchool)) {
-                HelpInfoMgr.getInstance().printAllDepartment();
+                helpInfoMgr.printAllDepartment();
                 studentSchool = scanner.nextLine();
             }
 
-            if (ValidationMgr.getInstance().checkDepartmentValidation(studentSchool)) {
+            if (validationMgr.checkDepartmentValidation(studentSchool)) {
                 currentStudent.setStudentSchool(studentSchool);
                 break;
             }
@@ -103,11 +107,11 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the genders.");
             studentGender = scanner.nextLine();
             while ("-h".equals(studentGender)) {
-                HelpInfoMgr.getInstance().printAllGender();
+                helpInfoMgr.printAllGender();
                 studentGender = scanner.nextLine();
             }
 
-            if (ValidationMgr.getInstance().checkGenderValidation(studentGender)) {
+            if (validationMgr.checkGenderValidation(studentGender)) {
                 currentStudent.setGender(studentGender);
                 break;
             }
