@@ -34,7 +34,7 @@ public class Option1IT {
         expectedOutput = new StringBuilderPlus();
 
         // Switch the output stream for testing purposes
-        System.setOut(new PrintStream(outContent));
+//        System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
@@ -54,9 +54,19 @@ public class Option1IT {
     }
 
     @Test
-    public void testAddStudent(){
+    public void testAddStudentAuto(){
+        // Store current student list as string
+
         inputsBuilder.append("1").append(System.lineSeparator());
-        inputsBuilder.append("1").append(System.lineSeparator());
+        inputsBuilder.append("1").append(System.lineSeparator()); // Enter ID manually
+        inputsBuilder.append("U1234567A").append(System.lineSeparator()); // Student ID
+        inputsBuilder.append("Wongabe").append(System.lineSeparator()); // Name
+        inputsBuilder.append("ECSE").append(System.lineSeparator()); // School
+        inputsBuilder.append("MALE").append(System.lineSeparator()); // Gender
+        inputsBuilder.append("1").append(System.lineSeparator()); // School year
+        inputsBuilder.append("11").append(System.lineSeparator()); // School year
+
+        System.out.println(inputsBuilder.toString());
 
         preparingInputStream();
         Main.main(new String[]{});
@@ -85,7 +95,30 @@ public class Option1IT {
 
         expectedOutput.appendLine("Enter your choice, let me help you:");
 
-        expectedOutput.appendLine("Backing up data before exiting...");
+        expectedOutput.appendLine("addStudent is called");
+        expectedOutput.appendLine("Choose the way you want to add a student:");
+        expectedOutput.appendLine("1. Manually input the student ID.");
+        expectedOutput.appendLine("2. Let the system self-generate the student ID.");
+        expectedOutput.appendLine("Please input your choice:");
+
+        expectedOutput.appendLine("The student ID should follow:");
+        expectedOutput.appendLine("Length is exactly 9");
+        expectedOutput.appendLine("Start with U (Undergraduate)");
+        expectedOutput.appendLine("End with a uppercase letter between A and L");
+        expectedOutput.appendLine("Seven digits in the middle");
+        expectedOutput.appendLine();
+        expectedOutput.appendLine("Give this student an ID: ");
+
+        expectedOutput.appendLine("Enter student Name: ");
+
+        expectedOutput.appendLine("Enter student's school (uppercase): ");
+        expectedOutput.appendLine("Enter -h to print all the schools.");
+
+        expectedOutput.appendLine("Enter student gender (uppercase): ");
+        expectedOutput.appendLine("Enter -h to print all the genders.");
+
+        expectedOutput.appendLine("Enter student's school year (1-4) : ");
+
         expectedOutput.appendLine("********* Bye! Thank you for using Main! *********");
         expectedOutput.appendLine();
         expectedOutput.appendLine("                 ######    #      #   #######                   ");
