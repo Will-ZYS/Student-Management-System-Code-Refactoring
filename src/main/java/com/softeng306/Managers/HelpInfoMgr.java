@@ -4,6 +4,7 @@ import com.softeng306.Entity.Course;
 import com.softeng306.Enum.*;
 import com.softeng306.Entity.Group;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Main;
 
 import java.util.*;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class HelpInfoMgr implements IHelpInfoMgr {
     private static Scanner scanner = new Scanner(System.in);
     private static HelpInfoMgr instance = null;
+    private ValidationMgr validationMgr = ValidationMgr.getInstance();
 
     /**
      * Displays all the professors in the inputted department.
@@ -26,7 +28,7 @@ public class HelpInfoMgr implements IHelpInfoMgr {
      * @return A list of all the names of professors in the inputted department or else null.
      */
     public List<String> printProfInDepartment(String department, boolean printOut) {
-        if (ValidationMgr.getInstance().checkDepartmentValidation(department)) {
+        if (validationMgr.checkDepartmentValidation(department)) {
             List<String> validProfString = Main.professors.stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);

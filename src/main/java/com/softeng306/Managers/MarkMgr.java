@@ -4,6 +4,7 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 
 import java.util.*;
@@ -16,6 +17,9 @@ import java.util.*;
 public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
+    private ValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -39,6 +43,7 @@ public class MarkMgr implements IMarkMgr {
             }
         }
         Mark mark = new Mark(student, course, courseWorkMarks, totalMark);
+        //TODO FILEMGR AGAIN
         FILEMgr.updateStudentMarks(mark);
         return mark;
     }
@@ -50,8 +55,8 @@ public class MarkMgr implements IMarkMgr {
     public void setCourseWorkMark(boolean isExam) {
         System.out.println("enterCourseWorkMark is called");
 
-        String studentID = ValidationMgr.checkStudentExists().getStudentID();
-        String courseID = ValidationMgr.checkCourseExists().getCourseID();
+        String studentID = validationMgr.checkStudentExists().getStudentID();
+        String courseID = validationMgr.checkCourseExists().getCourseID();
 
         for(Mark mark: Main.marks) {
             if (mark.getCourse().getCourseID().equals(courseID) && mark.getStudent().getStudentID().equals(studentID)) {
@@ -169,7 +174,8 @@ public class MarkMgr implements IMarkMgr {
     public static void printCourseStatistics() {
         System.out.println("printCourseStatistics is called");
 
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        //TODO VALIDATIONMGR NEEDS TO BE INSTANTIATED WHEN REFACTORED INTO PRINTING CLASS
+        Course currentCourse = validationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
         ArrayList<Mark> thisCourseMark = new ArrayList<Mark>(0);
@@ -208,7 +214,8 @@ public class MarkMgr implements IMarkMgr {
                 System.out.print("Main Component: " + courseworkComponent.getComponentName());
                 System.out.print("\tWeight: " + courseworkComponent.getComponentWeight() + "%");
 
-                averageMark += MarkMgr.getInstance().computeMark(thisCourseMark, thisComponentName);
+                // TODO SIMILAR TO ABOVE, NEED TO INSTANTIATE
+                averageMark += markMgr.getInstance().computeMark(thisCourseMark, thisComponentName);
 
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
@@ -221,6 +228,7 @@ public class MarkMgr implements IMarkMgr {
                     System.out.print("\tWeight: " + subComponent.getComponentWeight() + "% (in main component)");
                     String thisSubComponentName = subComponent.getComponentName();
 
+                    //TODO SAME AS ABOVE
                     averageMark += MarkMgr.getInstance().computeMark(thisCourseMark, thisSubComponentName);
 
                     averageMark = averageMark / thisCourseMark.size();
@@ -275,7 +283,8 @@ public class MarkMgr implements IMarkMgr {
      * Prints transcript (Results of course taken) for a particular student
      */
     public static void  printStudentTranscript() {
-        String studentID = ValidationMgr.checkStudentExists().getStudentID();
+        //TODO SIMILAR TO PRINTCOURSESTATISITCS
+        String studentID = validationMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
@@ -327,7 +336,8 @@ public class MarkMgr implements IMarkMgr {
             }
 
             System.out.println("Course Total: " + mark.getTotalMark());
-            studentGPA += MarkMgr.getInstance().gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
+            // TODO SAME
+            studentGPA += markMgr.getInstance().gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
             System.out.println();
         }
         studentGPA /= thisStudentAU;
