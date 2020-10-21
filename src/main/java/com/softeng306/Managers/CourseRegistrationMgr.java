@@ -5,6 +5,7 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
@@ -68,7 +69,7 @@ public class CourseRegistrationMgr {
         selectedLabGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
-        CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
+        ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
         FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
         Main.courseRegistrations.add(courseRegistration);
@@ -100,11 +101,11 @@ public class CourseRegistrationMgr {
         System.out.println("(3) Lab group");
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
-        ArrayList<CourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
+        ArrayList<ICourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
 
 
-        ArrayList<CourseRegistration> stuArray = new ArrayList<CourseRegistration>(0);
-        for (CourseRegistration courseRegistration : allStuArray) {
+        ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);
+        for (ICourseRegistration courseRegistration : allStuArray) {
             if (courseRegistration.getCourse().getCourseID().equals(currentCourse.getCourseID())) {
                 stuArray.add(courseRegistration);
             }

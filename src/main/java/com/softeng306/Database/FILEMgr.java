@@ -2,10 +2,7 @@ package com.softeng306.Database;
 
 
 import com.softeng306.Entity.*;
-import com.softeng306.Interfaces.Entity.ICourse;
-import com.softeng306.Interfaces.Entity.IMark;
-import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Interfaces.Entity.*;
 
 import java.io.*;
 import java.util.*;
@@ -822,7 +819,7 @@ public class FILEMgr {
      *
      * @param courseRegistration courseRegistration to be added into file
      */
-    public static void writeCourseRegistrationIntoFile(CourseRegistration courseRegistration) {
+    public static void writeCourseRegistrationIntoFile(ICourseRegistration courseRegistration) {
         File file;
         FileWriter fileWriter = null;
         try {
@@ -862,9 +859,9 @@ public class FILEMgr {
      *
      * @return an array list of all the course registration records.
      */
-    public static ArrayList<CourseRegistration> loadCourseRegistration() {
+    public static ArrayList<ICourseRegistration> loadCourseRegistration() {
         BufferedReader fileReader = null;
-        ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
+        ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
         try {
             String line;
             Student currentStudent = null;

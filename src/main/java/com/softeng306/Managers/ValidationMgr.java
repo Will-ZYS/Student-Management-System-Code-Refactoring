@@ -1,10 +1,9 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IProfessor;
 
 import java.io.OutputStream;
@@ -278,8 +277,8 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course registration record or else null.
      */
-    public static CourseRegistration checkCourseRegistrationExists(String studentID, String courseID){
-        List<CourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+    public static ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID){
+        List<ICourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
         if(courseRegistrations.size() == 0){
             return null;
         }
