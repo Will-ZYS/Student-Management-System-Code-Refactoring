@@ -698,9 +698,9 @@ public class CourseMgr implements ICourseMgr {
     }
 
     public static CourseMgr getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new CourseMgr();
-
+        }
         return instance;
     }
 }
