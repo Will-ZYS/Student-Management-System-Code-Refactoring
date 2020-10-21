@@ -3,7 +3,6 @@ package com.softeng306.Database;
 
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.io.*;
@@ -866,7 +865,7 @@ public class FILEMgr {
         ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
         try {
             String line;
-            IStudent currentStudent = null;
+            Student currentStudent = null;
             Course currentCourse = null;
             ArrayList<Student> students = loadStudents();
 
