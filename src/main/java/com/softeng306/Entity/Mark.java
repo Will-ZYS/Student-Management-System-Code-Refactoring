@@ -1,6 +1,8 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IMark;
+
 import java.util.HashMap;
 
 /**
@@ -9,7 +11,7 @@ import java.util.HashMap;
 
  */
 
-public class Mark {
+public class Mark implements IMark {
     /**
      * The student of this student mark record.
      */

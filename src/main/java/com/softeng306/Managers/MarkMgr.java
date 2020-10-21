@@ -5,6 +5,7 @@ import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IMark;
 
 import java.util.*;
 
@@ -22,7 +23,7 @@ public class MarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    public static Mark initializeMark(Student student, ICourse course) {
+    public static IMark initializeMark(Student student, ICourse course) {
         HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>();
         double totalMark = 0d;
         ArrayList<MainComponent> mainComponents = course.getMainComponents();
@@ -35,7 +36,7 @@ public class MarkMgr {
                 }
             }
         }
-        Mark mark = new Mark(student, course, courseWorkMarks, totalMark);
+        IMark mark = new Mark(student, course, courseWorkMarks, totalMark);
         FILEMgr.updateStudentMarks(mark);
         return mark;
     }
@@ -50,7 +51,7 @@ public class MarkMgr {
         String studentID = ValidationMgr.checkStudentExists().getStudentID();
         String courseID = ValidationMgr.checkCourseExists().getCourseID();
 
-        for(Mark mark: Main.marks) {
+        for(IMark mark: Main.marks) {
             if (mark.getCourse().getCourseID().equals(courseID) && mark.getStudent().getStudentID().equals(studentID)) {
                 //put the set mark function here
                 if (!isExam) {
@@ -144,9 +145,9 @@ public class MarkMgr {
      * @param thisComponentName the component name interested.
      * @return the sum of component marks
      */
-    public static double computeMark(ArrayList<Mark> thisCourseMark, String thisComponentName){
+    public static double computeMark(ArrayList<IMark> thisCourseMark, String thisComponentName){
         double averageMark = 0;
-        for (Mark mark : thisCourseMark) {
+        for (IMark mark : thisCourseMark) {
             HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
             for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
                 CourseworkComponent key = entry.getKey();
@@ -169,8 +170,8 @@ public class MarkMgr {
         ICourse currentCourse = ValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
-        ArrayList<Mark> thisCourseMark = new ArrayList<Mark>(0);
-        for(Mark mark : Main.marks) {
+        ArrayList<IMark> thisCourseMark = new ArrayList<>(0);
+        for(IMark mark : Main.marks) {
             if (mark.getCourse().getCourseID().equals(courseID)) {
                 thisCourseMark.add(mark);
             }
@@ -232,7 +233,7 @@ public class MarkMgr {
             averageMark = 0;
             System.out.print("Final Exam");
             System.out.print("\tWeight: " + examWeight + "%");
-            for (Mark mark : thisCourseMark) {
+            for (IMark mark : thisCourseMark) {
                 HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
                 for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
                     CourseworkComponent key = entry.getKey();
@@ -254,7 +255,7 @@ public class MarkMgr {
 
         System.out.print("Overall Performance: ");
         averageMark = 0;
-        for (Mark mark : thisCourseMark) {
+        for (IMark mark : thisCourseMark) {
             averageMark += mark.getTotalMark();
         }
         averageMark = averageMark / thisCourseMark.size();
@@ -276,8 +277,8 @@ public class MarkMgr {
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
-        ArrayList<Mark> thisStudentMark = new ArrayList<Mark>(0);
-        for(Mark mark : Main.marks) {
+        ArrayList<IMark> thisStudentMark = new ArrayList<>(0);
+        for(IMark mark : Main.marks) {
             if (mark.getStudent().getStudentID().equals(studentID)) {
                 thisStudentMark.add(mark);
                 thisStudentAU += mark.getCourse().getAU();
@@ -295,7 +296,7 @@ public class MarkMgr {
         System.out.println();
 
 
-        for (Mark mark : thisStudentMark) {
+        for (IMark mark : thisStudentMark) {
             System.out.print("Course ID: " + mark.getCourse().getCourseID());
             System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
 

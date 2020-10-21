@@ -3,6 +3,7 @@ package com.softeng306.Database;
 
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
 
@@ -915,7 +916,7 @@ public class FILEMgr {
      *
      * @param mark mark to be updated into the file
      */
-    public static void updateStudentMarks(Mark mark) {
+    public static void updateStudentMarks(IMark mark) {
         File file;
         FileWriter fileWriter = null;
         try {
@@ -987,9 +988,9 @@ public class FILEMgr {
      *
      * @return an array list of all the student mark records.
      */
-    public static ArrayList<Mark> loadStudentMarks() {
+    public static ArrayList<IMark> loadStudentMarks() {
         BufferedReader fileReader = null;
-        ArrayList<Mark> marks = new ArrayList<Mark>(0);
+        ArrayList<IMark> marks = new ArrayList<>(0);
         try {
             String line;
 
@@ -1056,7 +1057,7 @@ public class FILEMgr {
                         }
                     }
                     Double totalMark = Double.parseDouble(tokens[totalMarkIndex]);
-                    Mark mark = new Mark(currentStudent, currentCourse, courseWorkMarks, totalMark);
+                    IMark mark = new Mark(currentStudent, currentCourse, courseWorkMarks, totalMark);
 //                    System.out.println();
 //                    System.out.println("Loaded mark...");
 //                    System.out.println("Student ID: " + mark.getStudent().getStudentID() + " Student name: " + mark.getStudent().getStudentName());
@@ -1088,7 +1089,7 @@ public class FILEMgr {
      *
      * @param marks marks to be backed up into file
      */
-    public static void backUpMarks(ArrayList<Mark> marks) {
+    public static void backUpMarks(ArrayList<IMark> marks) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(markFileName);
@@ -1096,7 +1097,7 @@ public class FILEMgr {
             fileWriter.append(mark_HEADER);
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            for (Mark mark : marks) {
+            for (IMark mark : marks) {
                 fileWriter.append(mark.getStudent().getStudentID());
                 fileWriter.append(COMMA_DELIMITER);
 

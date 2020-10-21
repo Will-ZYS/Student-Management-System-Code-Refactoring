@@ -3,6 +3,7 @@ package com.softeng306;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
@@ -29,7 +30,7 @@ public class Main {
     /**
      * An array list of all the student mark records in this school.
      */
-    public static ArrayList<Mark> marks = new ArrayList<Mark>(0);
+    public static ArrayList<IMark> marks = new ArrayList<>(0);
     /**
      * An array list of all the professors in this school.
      */
