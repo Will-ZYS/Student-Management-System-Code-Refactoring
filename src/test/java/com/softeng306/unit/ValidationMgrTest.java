@@ -15,7 +15,7 @@ public class ValidationMgrTest {
 
     @Test
     public void testCheckDepartmentValidation(){
-        ValidationMgr vmgr = new ValidationMgr();
+        ValidationMgr vmgr = ValidationMgr.getInstance();
         Assert.assertTrue(vmgr.checkDepartmentValidation("ECSE"));
     }
 

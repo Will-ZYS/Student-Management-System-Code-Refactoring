@@ -1,5 +1,7 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Database.Database;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Main;
 
 /**
@@ -10,6 +12,8 @@ import com.softeng306.Main;
  */
 
 public class Student {
+
+    private static IDatabase database = Database.getInstance();
 
     /**
      * Uses idNumber to generate student ID.
@@ -176,7 +180,7 @@ public class Student {
             idNumber += 1;
             generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
             studentIDUsed = false;
-            for(Student student: Main.students){
+            for(Student student: database.getStudents()){
                 if(generateStudentID.equals(student.getStudentID())){
                     studentIDUsed = true;
                     break;

@@ -21,7 +21,6 @@ public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
 

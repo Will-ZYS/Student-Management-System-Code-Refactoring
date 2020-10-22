@@ -35,7 +35,6 @@ public class ValidationMgr implements IValidationMgr {
     private static ValidationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
 
@@ -212,7 +211,7 @@ public class ValidationMgr implements IValidationMgr {
             }
 
             System.setOut(dummyStream);
-            currentCourse = validationMgr.checkCourseExists(courseID);
+            currentCourse = checkCourseExists(courseID);
             if (currentCourse == null) {
                 System.setOut(originalStream);
                 System.out.println("Invalid Course ID. Please re-enter.");
@@ -237,7 +236,7 @@ public class ValidationMgr implements IValidationMgr {
                 printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if(validationMgr.checkDepartmentValidation(courseDepartment)){
+            if(checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
                 System.setOut(dummyStream);
                 validCourseString = printer.printCourseInDepartment(courseDepartment);
@@ -297,6 +296,8 @@ public class ValidationMgr implements IValidationMgr {
         return courseRegistrations.get(0);
 
     }
+
+    private ValidationMgr(){}
 
     /**
      * Get the instance of the ValidationMgr class.
