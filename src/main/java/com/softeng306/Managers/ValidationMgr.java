@@ -297,8 +297,6 @@ public class ValidationMgr implements IValidationMgr {
 
     }
 
-    private ValidationMgr(){}
-
     /**
      * Get the instance of the ValidationMgr class.
      * @return the singleton instance
