@@ -1,6 +1,7 @@
 package com.softeng306.integration;
 
 import com.softeng306.Main;
+import com.softeng306.helper.CommonPrintingHelper;
 import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class Option1IT {
         expectedOutput = new StringBuilderPlus();
 
         // Switch the output stream for testing purposes
-//        System.setOut(new PrintStream(outContent));
+        System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
@@ -66,34 +67,11 @@ public class Option1IT {
         inputsBuilder.append("1").append(System.lineSeparator()); // School year
         inputsBuilder.append("11").append(System.lineSeparator()); // School year
 
-        System.out.println(inputsBuilder.toString());
-
         preparingInputStream();
         Main.main(new String[]{});
 
-        expectedOutput.appendLine();
-        expectedOutput.appendLine("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
-        expectedOutput.appendLine("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
-        expectedOutput.appendLine("Permission has been granted by the original developers to anonymize the code and use for education purposes.");
-        expectedOutput.appendLine("******************************************************************************************************************************");
-        expectedOutput.appendLine();
-
-        expectedOutput.appendLine("************ I can help you with these functions: *************");
-        expectedOutput.appendLine(" 0. Print Options");
-        expectedOutput.appendLine(" 1. Add a student");
-        expectedOutput.appendLine(" 2. Add a course");
-        expectedOutput.appendLine(" 3. Register student for a course including tutorial/lab classes");
-        expectedOutput.appendLine(" 4. Check available slots in a class (vacancy in a class)");
-        expectedOutput.appendLine(" 5. Print student list by lecture, tutorial or laboratory session for a course");
-        expectedOutput.appendLine(" 6. Enter course assessment components weightage");
-        expectedOutput.appendLine(" 7. Enter coursework mark – inclusive of its components");
-        expectedOutput.appendLine(" 8. Enter exam mark");
-        expectedOutput.appendLine(" 9. Print course statistics");
-        expectedOutput.appendLine("10. Print student transcript");
-        expectedOutput.appendLine("11. Quit Main System");
-        expectedOutput.appendLine();
-
-        expectedOutput.appendLine("Enter your choice, let me help you:");
+        CommonPrintingHelper.appendWelcomeMessage(expectedOutput);
+        CommonPrintingHelper.appendMenu(expectedOutput);
 
         expectedOutput.appendLine("addStudent is called");
         expectedOutput.appendLine("Choose the way you want to add a student:");
@@ -119,18 +97,39 @@ public class Option1IT {
 
         expectedOutput.appendLine("Enter student's school year (1-4) : ");
 
-        expectedOutput.appendLine("********* Bye! Thank you for using Main! *********");
-        expectedOutput.appendLine();
-        expectedOutput.appendLine("                 ######    #      #   #######                   ");
-        expectedOutput.appendLine("                 #    ##    #    #    #                         ");
-        expectedOutput.appendLine("                 #    ##     #  #     #                         ");
-        expectedOutput.appendLine("                 ######       ##      #######                   ");
-        expectedOutput.appendLine("                 #    ##      ##      #                         ");
-        expectedOutput.appendLine("                 #    ##      ##      #                         ");
-        expectedOutput.appendLine("                 ######       ##      #######                   ");
-        expectedOutput.appendLine();
+        // Printing results
+        expectedOutput.appendLine("Student named: Wongabe is added, with ID: U1234567A");
+        expectedOutput.appendLine("Student List: ");
+        expectedOutput.appendLine("| Student ID | Student Name | Student School | Gender | Year | GPA |");
+        expectedOutput.appendLine(" U1734756J | Eric | SCSE | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1822832L | Chloe | SPMS | FEMALE | 3 | not available");
+        expectedOutput.appendLine(" U1723456K | Ashley | SBS | MALE | 4 | not available");
+        expectedOutput.appendLine(" U1234567J | Daniel | SCSE | MALE | 2 | not available");
+        expectedOutput.appendLine(" U1822835D | Charlie | NIE | MALE | 3 | not available");
+        expectedOutput.appendLine(" U1822836B | Gauss | ADM | MALE | 3 | not available");
+        expectedOutput.appendLine(" U1822837K | Clara | HSS | FEMALE | 1 | not available");
+        expectedOutput.appendLine(" U1822838J | Kevin | SCSE | MALE | 2 | not available");
+        expectedOutput.appendLine(" U1822839K | Shannon | NBS | FEMALE | 1 | not available");
+        expectedOutput.appendLine(" U1822840D | Shaun | WKWSCI | MALE | 3 | not available");
+        expectedOutput.appendLine(" U1822841A | Steven | EEE | MALE | 4 | not available");
+        expectedOutput.appendLine(" U1822842F | Stefan | NBS | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1822843I | Sebas | SCSE | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1822821E | Freddy | EEE | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1712312B | Leigh | EEE | MALE | 2 | not available");
+        expectedOutput.appendLine(" U1812312D | Hakeem | SCSE | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1829392I | Kourtney | MAE | FEMALE | 1 | not available");
+        expectedOutput.appendLine(" U1822023E | Elaina | MAE | FEMALE | 1 | not available");
+        expectedOutput.appendLine(" U1829393K | Chloe | CBE | MALE | 1 | not available");
+        expectedOutput.appendLine(" U1722744J | Chloe | SCSE | FEMALE | 2 | not available");
+        expectedOutput.appendLine(" U1800001L | Eric | SCSE | MALE | 2 | not available");
+        expectedOutput.appendLine(" U1234567L | Eric | SCSE | MALE | 2 | not available");
+        expectedOutput.appendLine(" U1234567A | Wongabe | ECSE | MALE | 1 | not available");
+
+        CommonPrintingHelper.appendMenu(expectedOutput);
+        CommonPrintingHelper.appendByeMessage(expectedOutput);
 
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
+
 
 }
