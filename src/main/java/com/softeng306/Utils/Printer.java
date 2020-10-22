@@ -1,10 +1,12 @@
 package com.softeng306.Utils;
 
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
@@ -23,6 +25,9 @@ public class Printer implements IPrinter {
     private static Printer instance = null;
     private static IValidationMgr validationMgr = ValidationMgr.getInstance();
     private static IMarkMgr markMgr = MarkMgr.getInstance();
+
+    private static IDatabase database = Database.getInstance();
+
 
     public void print(String content) {
         System.out.println(content);
@@ -85,7 +90,7 @@ public class Printer implements IPrinter {
      */
     public List<String> printProfInDepartment(String department, boolean printOut) {
         if (validationMgr.checkDepartmentValidation(department)) {
-            List<String> validProfString = Main.professors.stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
+            List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);
             }
@@ -99,14 +104,14 @@ public class Printer implements IPrinter {
      * Displays a list of IDs of all the students.
      */
     public void printAllStudents() {
-        Main.students.stream().map(s -> s.getStudentID()).forEach(System.out::println);
+        database.getStudents().stream().map(s -> s.getStudentID()).forEach(System.out::println);
     }
 
     /**
      * Displays a list of IDs of all the courses.
      */
     public void printAllCourses() {
-        Main.courses.stream().map(c -> c.getCourseID()).forEach(System.out::println);
+        database.getCourses().stream().map(c -> c.getCourseID()).forEach(System.out::println);
 
     }
 
@@ -152,7 +157,7 @@ public class Printer implements IPrinter {
      * @return a list of all the department values.
      */
     public List<String> printCourseInDepartment(String department) {
-        List<Course> validCourses = Main.courses.stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
+        List<Course> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
@@ -221,7 +226,7 @@ public class Printer implements IPrinter {
     public void printCourses() {
         System.out.println("Course List: ");
         System.out.println("| Course ID | Course Name | Professor in Charge |");
-        for (Course course : Main.courses) {
+        for (Course course : database.getCourses()) {
             System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
         }
         System.out.println();
@@ -322,6 +327,83 @@ public class Printer implements IPrinter {
     }
 
     /**
+     * Prints transcript (Results of course taken) for a particular student
+     */
+    public void  printStudentTranscript() {
+        String studentID = validationMgr.checkStudentExists().getStudentID();
+
+        double studentGPA = 0d;
+        int thisStudentAU = 0;
+        ArrayList<Mark> thisStudentMark = new ArrayList<Mark>(0);
+        for(Mark mark : database.getMarks()) {
+            if (mark.getStudent().getStudentID().equals(studentID)) {
+                thisStudentMark.add(mark);
+                thisStudentAU += mark.getCourse().getAU();
+            }
+        }
+
+        if (thisStudentMark.size() == 0) {
+            System.out.println("------ No transcript ready for this student yet ------");
+            return;
+        }
+        System.out.println("----------------- Official Transcript ------------------");
+        System.out.print("Student Name: " + thisStudentMark.get(0).getStudent().getStudentName());
+        System.out.println("\tStudent ID: " + thisStudentMark.get(0).getStudent().getStudentID());
+        System.out.println("AU for this semester: " + thisStudentAU);
+        System.out.println();
+
+
+        for (Mark mark : thisStudentMark) {
+            System.out.print("Course ID: " + mark.getCourse().getCourseID());
+            System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
+
+            for (HashMap.Entry<CourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
+                CourseworkComponent assessment = entry.getKey();
+                Double result = entry.getValue();
+                if(assessment instanceof MainComponent) {
+                    System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
+                    int mainAssessmentWeight = assessment.getComponentWeight();
+                    ArrayList<SubComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
+                    for (SubComponent subAssessment : subAssessments) {
+                        System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
+                        String subAssessmentName = subAssessment.getComponentName();
+                        for (HashMap.Entry<CourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
+                            CourseworkComponent subKey = subEntry.getKey();
+                            Double subValue = subEntry.getValue();
+                            if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
+                                System.out.println("Mark: " + String.valueOf(subValue));
+                                break;
+                            }
+                        }
+                    }
+                    System.out.println("Main Assessment Total: " + result);
+                    System.out.println();
+                }
+            }
+
+            System.out.println("Course Total: " + mark.getTotalMark());
+            // TODO SAME
+            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
+            System.out.println();
+        }
+        studentGPA /= thisStudentAU;
+        System.out.println("GPA for this semester: " + studentGPA);
+        if (studentGPA >= 4.50) {
+            System.out.println("On track of First Class Honor!");
+        } else if (studentGPA >= 4.0) {
+            System.out.println("On track of Second Upper Class Honor!");
+        } else if (studentGPA >= 3.5) {
+            System.out.println("On track of Second Lower Class Honor!");
+        } else if (studentGPA >= 3) {
+            System.out.println("On track of Third Class Honor!");
+        } else {
+            System.out.println("Advice: Study hard");
+        }
+        System.out.println("------------------ End of Transcript -------------------");
+    }
+
+
+    /**
      * Prints the course statics including enrollment rate, average result for every assessment component and the average overall performance of this course.
      */
     public void printCourseStatistics() {
@@ -332,7 +414,7 @@ public class Printer implements IPrinter {
         String courseID = currentCourse.getCourseID();
 
         ArrayList<Mark> thisCourseMark = new ArrayList<Mark>(0);
-        for(Mark mark : Main.marks) {
+        for(Mark mark : database.getMarks()) {
             if (mark.getCourse().getCourseID().equals(courseID)) {
                 thisCourseMark.add(mark);
             }
@@ -429,84 +511,6 @@ public class Printer implements IPrinter {
         System.out.println();
 
 
-    }
-
-
-    /**
-     * Prints transcript (Results of course taken) for a particular student
-     */
-    public void  printStudentTranscript() {
-        //TODO SIMILAR TO PRINTCOURSESTATISITCS
-        String studentID = validationMgr.checkStudentExists().getStudentID();
-
-        double studentGPA = 0d;
-        int thisStudentAU = 0;
-        ArrayList<Mark> thisStudentMark = new ArrayList<Mark>(0);
-        for(Mark mark : Main.marks) {
-            if (mark.getStudent().getStudentID().equals(studentID)) {
-                thisStudentMark.add(mark);
-                thisStudentAU += mark.getCourse().getAU();
-            }
-        }
-
-        if (thisStudentMark.size() == 0) {
-            System.out.println("------ No transcript ready for this student yet ------");
-            return;
-        }
-        System.out.println("----------------- Official Transcript ------------------");
-        System.out.print("Student Name: " + thisStudentMark.get(0).getStudent().getStudentName());
-        System.out.println("\tStudent ID: " + thisStudentMark.get(0).getStudent().getStudentID());
-        System.out.println("AU for this semester: " + thisStudentAU);
-        System.out.println();
-
-
-        for (Mark mark : thisStudentMark) {
-            System.out.print("Course ID: " + mark.getCourse().getCourseID());
-            System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
-
-            for (HashMap.Entry<CourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
-                CourseworkComponent assessment = entry.getKey();
-                Double result = entry.getValue();
-                if(assessment instanceof MainComponent) {
-                    System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
-                    int mainAssessmentWeight = assessment.getComponentWeight();
-                    ArrayList<SubComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
-                    for (SubComponent subAssessment : subAssessments) {
-                        System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
-                        String subAssessmentName = subAssessment.getComponentName();
-                        for (HashMap.Entry<CourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
-                            CourseworkComponent subKey = subEntry.getKey();
-                            Double subValue = subEntry.getValue();
-                            if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
-                                System.out.println("Mark: " + String.valueOf(subValue));
-                                break;
-                            }
-                        }
-                    }
-                    System.out.println("Main Assessment Total: " + result);
-                    System.out.println();
-                }
-            }
-
-            System.out.println("Course Total: " + mark.getTotalMark());
-            // TODO SAME
-            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
-            System.out.println();
-        }
-        studentGPA /= thisStudentAU;
-        System.out.println("GPA for this semester: " + studentGPA);
-        if (studentGPA >= 4.50) {
-            System.out.println("On track of First Class Honor!");
-        } else if (studentGPA >= 4.0) {
-            System.out.println("On track of Second Upper Class Honor!");
-        } else if (studentGPA >= 3.5) {
-            System.out.println("On track of Second Lower Class Honor!");
-        } else if (studentGPA >= 3) {
-            System.out.println("On track of Third Class Honor!");
-        } else {
-            System.out.println("Advice: Study hard");
-        }
-        System.out.println("------------------ End of Transcript -------------------");
     }
 
     /**
