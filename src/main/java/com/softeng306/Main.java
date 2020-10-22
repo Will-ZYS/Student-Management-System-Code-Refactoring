@@ -53,13 +53,13 @@ public class Main {
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
 
-        // TODO maybe remove these fields as they are not used
-        IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
-        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
-        IValidationMgr validationMgr = ValidationMgr.getInstance();
 
+        // TODO maybe remove these fields as they are not used
+//        IValidationMgr validationMgr = ValidationMgr.getInstance();
+//        IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+//        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
 
         printer.printWelcome();
 
