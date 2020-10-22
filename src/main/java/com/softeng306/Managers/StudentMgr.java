@@ -5,8 +5,10 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
+import com.softeng306.Utils.Printer;
 
 import java.util.Scanner;
 
@@ -19,6 +21,7 @@ import java.util.Scanner;
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
     private static StudentMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
@@ -89,7 +92,7 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the schools.");
             studentSchool = scanner.nextLine();
             while ("-h".equals(studentSchool)) {
-                helpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 studentSchool = scanner.nextLine();
             }
 
@@ -107,7 +110,7 @@ public class StudentMgr implements IStudentMgr {
             System.out.println("Enter -h to print all the genders.");
             studentGender = scanner.nextLine();
             while ("-h".equals(studentGender)) {
-                helpInfoMgr.printAllGender();
+                printer.printAllGender();
                 studentGender = scanner.nextLine();
             }
 

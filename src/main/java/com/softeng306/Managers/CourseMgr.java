@@ -7,6 +7,8 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Utils.Printer;
 
 import java.util.*;
 import java.io.PrintStream;
@@ -16,6 +18,7 @@ import java.io.OutputStream;
 public class CourseMgr implements ICourseMgr {
 
     private static CourseMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
@@ -90,7 +93,7 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Enter -h to print all the departments.");
             courseDepartment = scanner.nextLine();
             while ("-h".equals(courseDepartment)) {
-                helpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
             if (validationMgr.checkDepartmentValidation(courseDepartment)) {
@@ -104,7 +107,7 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Enter -h to print all the course types.");
             courseType = scanner.nextLine();
             while (courseType.equals("-h")) {
-                helpInfoMgr.printAllCourseType();
+                printer.printAllCourseType();
                 courseType = scanner.nextLine();
             }
             if (validationMgr.checkCourseTypeValidation(courseType)) {
@@ -367,13 +370,13 @@ public class CourseMgr implements ICourseMgr {
 
         Professor profInCharge;
         List<String> professorsInDepartment = new ArrayList<String>(0);
-        professorsInDepartment = helpInfoMgr.printProfInDepartment(courseDepartment, false);
+        professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
         while (true) {
             System.out.println("Enter the ID for the professor in charge please:");
             System.out.println("Enter -h to print all the professors in " + courseDepartment + ".");
             profID = scanner.nextLine();
             while ("-h".equals(profID)) {
-                professorsInDepartment = helpInfoMgr.printProfInDepartment(courseDepartment, true);
+                professorsInDepartment = printer.printProfInDepartment(courseDepartment, true);
                 profID = scanner.nextLine();
             }
 
@@ -416,7 +419,7 @@ public class CourseMgr implements ICourseMgr {
             FILEMgr.writeCourseIntoFile(course);
             Main.courses.add(course);
             System.out.println("Course " + courseID + " is added, but assessment components are not initialized.");
-            printCourses();
+            printer.printCourses();
             return;
         }
 
@@ -426,7 +429,7 @@ public class CourseMgr implements ICourseMgr {
         FILEMgr.writeCourseIntoFile(course);
         Main.courses.add(course);
         System.out.println("Course " + courseID + " is added");
-        printCourses();
+        printer.printCourses();
     }
 
     /**
@@ -690,18 +693,6 @@ public class CourseMgr implements ICourseMgr {
             }
         }
         // Update course into course.csv
-    }
-
-    /**
-     * Prints the list of courses
-     */
-    public static void printCourses() {
-        System.out.println("Course List: ");
-        System.out.println("| Course ID | Course Name | Professor in Charge |");
-        for (Course course : Main.courses) {
-            System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
-        }
-        System.out.println();
     }
 
     /**
