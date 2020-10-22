@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
     private Scanner scanner = new Scanner(System.in);
+
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
