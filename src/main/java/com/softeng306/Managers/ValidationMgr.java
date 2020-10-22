@@ -9,6 +9,8 @@ import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Utils.Printer;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -31,6 +33,7 @@ public class ValidationMgr implements IValidationMgr {
         }
     });
     private static ValidationMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
 
@@ -176,7 +179,7 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();
             while("-h".equals(studentID)){
-                helpInfoMgr.printAllStudents();
+                printer.printAllStudents();
                 studentID = scanner.nextLine();
             }
 
@@ -204,7 +207,7 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Enter course ID (-h to print all the course ID):");
             courseID = scanner.nextLine();
             while("-h".equals(courseID)){
-                helpInfoMgr.printAllCourses();
+                printer.printAllCourses();
                 courseID = scanner.nextLine();
             }
 
@@ -231,13 +234,13 @@ public class ValidationMgr implements IValidationMgr {
             System.out.println("Which department's courses are you interested? (-h to print all the departments)");
             courseDepartment = scanner.nextLine();
             while("-h".equals(courseDepartment)){
-                helpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
             if(validationMgr.checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
                 System.setOut(dummyStream);
-                validCourseString = helpInfoMgr.printCourseInDepartment(courseDepartment);
+                validCourseString = printer.printCourseInDepartment(courseDepartment);
                 System.setOut(originalStream);
                 if(validCourseString.size() == 0){
                     System.out.println("Invalid choice of department.");

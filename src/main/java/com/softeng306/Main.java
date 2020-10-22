@@ -5,14 +5,20 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
+import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.*;
+import com.softeng306.Utils.Printer;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
+
     private static IDatabase database = Database.getInstance();
+
+    private static IPrinter printer = Printer.getInstance();
+
 
     /**
      * The main function of the system.
@@ -40,11 +46,11 @@ public class Main {
 //        IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 //        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
 
-        printWelcome();
+        printer.printWelcome();
 
         int choice;
         do {
-            printOptions();
+            printer.printOptions();
             do {
                 System.out.println("Enter your choice, let me help you:");
                 while (!scanner.hasNextInt()) {
@@ -76,8 +82,7 @@ public class Main {
                     courseMgr.checkAvailableSlots();
                     break;
                 case 5:
-                    // TODO currently, interface does not have print methods, due to future refactoring
-                    courseRegistrationMgr.printStudents();
+                    printer.printStudents();
                     break;
                 case 6:
                     courseMgr.enterCourseWorkComponentWeightage(null);
@@ -89,12 +94,10 @@ public class Main {
                     markMgr.setCourseWorkMark(true);
                     break;
                 case 9:
-                    // TODO same as case 5
-                    markMgr.printCourseStatistics();
+                    printer.printCourseStatistics();
                     break;
                 case 10:
-                    // TODO same as case 5
-                    markMgr.printStudentTranscript();
+                    printer.printStudentTranscript();
                     break;
                 case 11:
                     exitApplication();
@@ -106,55 +109,14 @@ public class Main {
     }
 
     /**
-     * Displays the welcome message.
-     */
-
-    public static void printWelcome() {
-        System.out.println();
-        System.out.println("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
-        System.out.println("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
-        System.out.println("Permission has been granted by the original developers to anonymize the code and use for education purposes.");
-        System.out.println("******************************************************************************************************************************");
-        System.out.println();
-    }
-    /**
      * Displays the exiting message.
      */
     public static void exitApplication() {
-
-        System.out.println("Backing up data before exiting...");
+        printer.print("Backing up data before exiting...");
         FILEMgr.backUpCourse(database.getCourses());
         FILEMgr.backUpMarks(database.getMarks());
-        System.out.println("********* Bye! Thank you for using Main! *********");
-        System.out.println();
-        System.out.println("                 ######    #      #   #######                   ");
-        System.out.println("                 #    ##    #    #    #                         ");
-        System.out.println("                 #    ##     #  #     #                         ");
-        System.out.println("                 ######       ##      #######                   ");
-        System.out.println("                 #    ##      ##      #                         ");
-        System.out.println("                 #    ##      ##      #                         ");
-        System.out.println("                 ######       ##      #######                   ");
-        System.out.println();
+        printer.printExitMessage();
 
     }
 
-    /**
-     * Displays all the options of the system.
-     */
-    public static void printOptions() {
-        System.out.println("************ I can help you with these functions: *************");
-        System.out.println(" 0. Print Options");
-        System.out.println(" 1. Add a student");
-        System.out.println(" 2. Add a course");
-        System.out.println(" 3. Register student for a course including tutorial/lab classes");
-        System.out.println(" 4. Check available slots in a class (vacancy in a class)");
-        System.out.println(" 5. Print student list by lecture, tutorial or laboratory session for a course");
-        System.out.println(" 6. Enter course assessment components weightage");
-        System.out.println(" 7. Enter coursework mark – inclusive of its components");
-        System.out.println(" 8. Enter exam mark");
-        System.out.println(" 9. Print course statistics");
-        System.out.println("10. Print student transcript");
-        System.out.println("11. Quit Main System");
-        System.out.println();
-    }
 }
