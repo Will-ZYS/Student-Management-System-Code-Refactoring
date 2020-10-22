@@ -3,13 +3,13 @@ package com.softeng306.Interfaces.Entity;
 
 public interface ICourseRegistration {
 
-    public IStudent getStudent();
+    IStudent getStudent();
 
-    public ICourse getCourse();
+    ICourse getCourse();
 
-    public String getLectureGroup();
+    String getLectureGroup();
 
-    public String getTutorialGroup();
+    String getTutorialGroup();
 
-    public String getLabGroup();
+    String getLabGroup();
 }
