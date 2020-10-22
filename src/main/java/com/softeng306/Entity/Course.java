@@ -1,9 +1,14 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IGroup;
+
 import java.util.ArrayList;
 
 
-public class Course {
+public class Course implements ICourse {
     /**
      * The ID of this course.
      */
@@ -22,7 +27,7 @@ public class Course {
     /**
      * The professor in charge of this course.
      */
-    private Professor profInCharge;
+    private IProfessor profInCharge;
 
     /**
      * The department this course belongs to.
@@ -52,7 +57,7 @@ public class Course {
     /**
      * The lecture groups of this course.
      */
-    private ArrayList<LectureGroup> lectureGroups;
+    private ArrayList<IGroup> lectureGroups;
 
 
     /**
@@ -64,7 +69,7 @@ public class Course {
     /**
      * The tutorial groups of this course.
      */
-    private ArrayList<TutorialGroup> tutorialGroups = new ArrayList<TutorialGroup>(0);
+    private ArrayList<IGroup> tutorialGroups = new ArrayList<>(0);
 
     /**
      * The weekly lab hour of this course.
@@ -74,12 +79,12 @@ public class Course {
     /**
      * The lab groups of this course.
      */
-    private ArrayList<LabGroup> labGroups = new ArrayList<LabGroup>(0);
+    private ArrayList<IGroup> labGroups = new ArrayList<>(0);
 
     /**
      * The assessment components of this course.
      */
-    private ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+    private ArrayList<ICourseworkComponent> mainComponents = new ArrayList<ICourseworkComponent>(0);
 
 
     /**
@@ -95,7 +100,8 @@ public class Course {
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
      */
-    public Course(String courseID, String courseName, Professor profInCharge, int vacancies, int totalSeats, ArrayList<LectureGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
+
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -125,7 +131,7 @@ public class Course {
      * @param tutWeeklyHour The tutorial weekly hour of this course.
      * @param labWeeklyHour The lab weekly hour of this course.
      */
-    public Course(String courseID, String courseName, Professor profInCharge, int vacancies, int totalSeats, ArrayList<LectureGroup> lectureGroups, ArrayList<TutorialGroup> tutorialGroups, ArrayList<LabGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -168,7 +174,7 @@ public class Course {
      * Gets the course's professor in charge.
      * @return the professor in charge of this course.
      */
-    public Professor getProfInCharge() {
+    public IProfessor getProfInCharge() {
         return profInCharge;
     }
 
@@ -230,7 +236,7 @@ public class Course {
      * Gets the course's lecture groups.
      * @return the lecture groups of this course.
      */
-    public ArrayList<LectureGroup> getLectureGroups() {
+    public ArrayList<IGroup> getLectureGroups() {
         return lectureGroups;
     }
 
@@ -238,7 +244,7 @@ public class Course {
      * Gets the course's tutorial groups
      * @return the tutorial groups of this course
      */
-    public ArrayList<TutorialGroup> getTutorialGroups() {
+    public ArrayList<IGroup> getTutorialGroups() {
         return this.tutorialGroups;
     }
 
@@ -246,7 +252,7 @@ public class Course {
      * Gets the course's lab groups.
      * @return the lab groups of this course.
      */
-    public ArrayList<LabGroup> getLabGroups() {
+    public ArrayList<IGroup> getLabGroups() {
         return this.labGroups;
     }
 
@@ -254,7 +260,7 @@ public class Course {
      * Gets the course's main assessment components.
      * @return the main assessment components of this course.
      */
-    public ArrayList<MainComponent> getMainComponents() {
+    public ArrayList<ICourseworkComponent> getMainComponents() {
         return this.mainComponents;
     }
 
@@ -275,7 +281,7 @@ public class Course {
      * Sets the tutorial groups of the lecture groups.
      * @param tutorialGroups this course's tutorial groups.
      */
-    public void setTutorialGroups(ArrayList<TutorialGroup> tutorialGroups) {
+    public void setTutorialGroups(ArrayList<IGroup> tutorialGroups) {
         this.tutorialGroups = tutorialGroups;
     }
 
@@ -283,7 +289,7 @@ public class Course {
      * Sets the lab groups of the lecture groups.
      * @param labGroups this course's lab groups.
      */
-    public void setLabGroups(ArrayList<LabGroup> labGroups) {
+    public void setLabGroups(ArrayList<IGroup> labGroups) {
         this.labGroups = labGroups;
     }
 
@@ -291,7 +297,7 @@ public class Course {
      * Sets the main assessment of the lecture groups.
      * @param mainComponents this course's main assessment.
      */
-    public void setMainComponents(ArrayList<MainComponent> mainComponents) {
+    public void setMainComponents(ArrayList<ICourseworkComponent> mainComponents) {
         this.mainComponents = mainComponents;
     }
 

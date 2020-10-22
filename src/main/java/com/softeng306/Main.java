@@ -1,7 +1,7 @@
 package com.softeng306;
 
 import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
@@ -15,23 +15,23 @@ public class Main {
     /**
      * An array list of all the students in this school.
      */
-    public static ArrayList<Student> students = new ArrayList<Student>(0);
+    public static ArrayList<IStudent> students = new ArrayList<com.softeng306.Interfaces.Entity.IStudent>(0);
     /**
      * An array list of all the courses in this school.
      */
-    public static ArrayList<Course> courses = new ArrayList<Course>(0);
+    public static ArrayList<ICourse> courses = new ArrayList<>(0);
     /**
      * An array list of all the course registration records in this school.
      */
-    public static ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
+    public static ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
     /**
      * An array list of all the student mark records in this school.
      */
-    public static ArrayList<Mark> marks = new ArrayList<Mark>(0);
+    public static ArrayList<IMark> marks = new ArrayList<>(0);
     /**
      * An array list of all the professors in this school.
      */
-    public static ArrayList<Professor> professors = new ArrayList<Professor>(0);
+    public static ArrayList<IProfessor> professors = new ArrayList<>(0);
 
     /**
      * The main function of the system.

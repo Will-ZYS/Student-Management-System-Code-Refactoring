@@ -1,6 +1,10 @@
 package com.softeng306.Entity;
 
-public abstract class CourseworkComponent {
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+
+import java.util.ArrayList;
+
+public abstract class CourseworkComponent implements ICourseworkComponent {
     /**
      * The name of this coursework.
      */
@@ -26,9 +30,7 @@ public abstract class CourseworkComponent {
      *
      * @return the name of this component
      */
-    public String getComponentName() {
-        return this.componentName;
-    }
+    public String getComponentName() { return this.componentName; }
 
     /**
      * Gets the weight of this component
@@ -40,7 +42,8 @@ public abstract class CourseworkComponent {
     }
 
     /**
-     * Prints the component type
+     * Gets the sub components of this main component.
+     * @return the sub components of this main component.
      */
-    public abstract void printComponentType();
+    public abstract ArrayList<ICourseworkComponent> getSubComponents();
 }

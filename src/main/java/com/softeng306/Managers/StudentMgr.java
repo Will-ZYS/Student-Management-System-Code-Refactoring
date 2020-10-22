@@ -2,6 +2,7 @@ package com.softeng306.Managers;
 
 
 import com.softeng306.Database.FILEMgr;
+import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
 
@@ -15,6 +16,10 @@ import java.util.Scanner;
 
 public class StudentMgr {
     private static Scanner scanner = new Scanner(System.in);
+    /**
+     * Uses idNumber to generate student ID.
+     */
+    private static int idNumber = 1800000;
 
 
     /**
@@ -26,7 +31,7 @@ public class StudentMgr {
         int choice, studentYear;
         boolean studentExists;
         String GPA = "not available";
-        Student currentStudent = null;
+        IStudent currentStudent = null;
         System.out.println("addStudent is called");
         System.out.println("Choose the way you want to add a student:");
         System.out.println("1. Manually input the student ID.");
@@ -139,12 +144,46 @@ public class StudentMgr {
 
         System.out.println("Student List: ");
         System.out.println("| Student ID | Student Name | Student School | Gender | Year | GPA |");
-        for (Student student : Main.students) {
+        for (IStudent student : Main.students) {
             if (Double.compare(student.getGPA(), 0.0) != 0) {
                 GPA = String.valueOf(student.getGPA());
             }
             System.out.println(" " + student.getStudentID() + " | " + student.getStudentName() + " | " + student.getStudentSchool() + " | " + student.getGender() + " | " + student.getStudentYear() + " | " + GPA);
         }
 
+    }
+
+    /**
+     * Generates the ID of a new student.
+     * @return the generated student ID.
+     */
+    public static String generateStudentID() {
+        String generateStudentID;
+        boolean studentIDUsed;
+        do{
+            int rand = (int)(Math.random() * ((76 - 65) + 1)) + 65;
+            String lastPlace = Character.toString ((char) rand);
+            idNumber += 1;
+            generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
+            studentIDUsed = false;
+            for(IStudent student: Main.students){
+                if(generateStudentID.equals(student.getStudentID())){
+                    studentIDUsed = true;
+                    break;
+                }
+            }
+            if(!studentIDUsed){
+                break;
+            }
+        }while(true);
+        return generateStudentID;
+    }
+
+    /**
+     * Sets the idNumber variable of this student class.
+     * @param idNumber static variable idNumber of this class.
+     */
+    public static void setIdNumber(int idNumber) {
+        idNumber = idNumber;
     }
 }

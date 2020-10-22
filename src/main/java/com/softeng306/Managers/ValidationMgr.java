@@ -1,10 +1,10 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Professor;
-import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -147,8 +147,8 @@ public class ValidationMgr {
      * @param studentID This student's ID.
      * @return the existing student or else null.
      */
-    public static Student checkStudentExists(String studentID){
-        List<Student> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
+    public static IStudent checkStudentExists(String studentID){
+        List<IStudent> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
         if(anyStudent.size() == 0){
             return null;
         }
@@ -161,9 +161,9 @@ public class ValidationMgr {
      * Prompts the user to input an existing student.
      * @return the inputted student.
      */
-    public static Student checkStudentExists(){
+    public static IStudent checkStudentExists(){
         String studentID;
-        Student currentStudent = null;
+        IStudent currentStudent = null;
         while (true) {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();
@@ -189,9 +189,9 @@ public class ValidationMgr {
      * Prompts the user to input an existing course.
      * @return the inputted course.
      */
-    public static Course checkCourseExists(){
+    public static ICourse checkCourseExists(){
         String courseID;
-        Course currentCourse;
+        ICourse currentCourse;
         while(true){
             System.out.println("Enter course ID (-h to print all the course ID):");
             courseID = scanner.nextLine();
@@ -246,8 +246,8 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course or else null.
      */
-    public static Course checkCourseExists(String courseID){
-        List<Course> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+    public static ICourse checkCourseExists(String courseID){
+        List<ICourse> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
         if(anyCourse.size() == 0){
             return null;
         }
@@ -261,8 +261,8 @@ public class ValidationMgr {
      * @param profID The inputted professor ID.
      * @return the existing professor or else null.
      */
-    public static Professor checkProfExists(String profID){
-        List<Professor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+    public static IProfessor checkProfExists(String profID){
+        List<IProfessor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
         if(anyProf.size() == 0){
             return null;
         }
@@ -277,8 +277,8 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course registration record or else null.
      */
-    public static CourseRegistration checkCourseRegistrationExists(String studentID, String courseID){
-        List<CourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+    public static ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID){
+        List<ICourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
         if(courseRegistrations.size() == 0){
             return null;
         }

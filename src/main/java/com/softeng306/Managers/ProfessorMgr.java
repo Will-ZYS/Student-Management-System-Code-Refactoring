@@ -1,6 +1,7 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Entity.Professor;
+import com.softeng306.Interfaces.Entity.IProfessor;
 
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class ProfessorMgr {
      *
      * @return a newly added professor
      */
-    public Professor addProfessor() {
+    public IProfessor addProfessor() {
         String department, profID;
         while (true) {
             System.out.println("Give this professor an ID: ");
@@ -38,7 +39,7 @@ public class ProfessorMgr {
             }
         }
 
-        Professor professor = new Professor(profID, profName);
+        IProfessor professor = new Professor(profID, profName);
         while (true) {
             System.out.println("Enter professor's Department: ");
             System.out.println("Enter -h to print all the departments.");

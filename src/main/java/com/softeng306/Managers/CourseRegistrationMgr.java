@@ -2,10 +2,11 @@ package com.softeng306.Managers;
 
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Group;
-import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
+import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
@@ -26,12 +27,12 @@ public class CourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = ValidationMgr.checkStudentExists();
+        IStudent currentStudent = ValidationMgr.checkStudentExists();
         String studentID = currentStudent.getStudentID();
 
         ValidationMgr.checkCourseDepartmentExists();
 
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = ValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
 
@@ -52,23 +53,23 @@ public class CourseRegistrationMgr {
         System.out.println("Student " + currentStudent.getStudentName() + " with ID: " + currentStudent.getStudentID() +
                 " wants to register " + currentCourse.getCourseID() + " " + currentCourse.getCourseName());
 
-        ArrayList<Group> lecGroups = new ArrayList<>(0);
+        ArrayList<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
         selectedLectureGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lecture", lecGroups);
 
-        ArrayList<Group> tutGroups = new ArrayList<>(0);
+        ArrayList<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
         selectedTutorialGroupName = HelpInfoMgr.printGroupWithVacancyInfo("tutorial", tutGroups);
 
-        ArrayList<Group> labGroups = new ArrayList<>(0);
+        ArrayList<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
         selectedLabGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
-        CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
+        ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
         FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
         Main.courseRegistrations.add(courseRegistration);
@@ -92,7 +93,7 @@ public class CourseRegistrationMgr {
      */
     public static void printStudents() {
         System.out.println("printStudent is called");
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = ValidationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -100,11 +101,11 @@ public class CourseRegistrationMgr {
         System.out.println("(3) Lab group");
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
-        ArrayList<CourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
+        ArrayList<ICourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
 
 
-        ArrayList<CourseRegistration> stuArray = new ArrayList<CourseRegistration>(0);
-        for (CourseRegistration courseRegistration : allStuArray) {
+        ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);
+        for (ICourseRegistration courseRegistration : allStuArray) {
             if (courseRegistration.getCourse().getCourseID().equals(currentCourse.getCourseID())) {
                 stuArray.add(courseRegistration);
             }

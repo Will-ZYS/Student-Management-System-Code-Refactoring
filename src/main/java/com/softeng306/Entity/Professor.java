@@ -1,10 +1,12 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.IProfessor;
+
 /**
  * Represents a professor at school
  */
 
-public class Professor {
+public class Professor implements IProfessor {
     /**
      * this professor's ID
      */
