@@ -2,8 +2,10 @@ package com.softeng306.Managers;
 
 
 import com.softeng306.*;
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
@@ -20,6 +22,8 @@ public class MarkMgr implements IMarkMgr {
     private static MarkMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -58,7 +62,7 @@ public class MarkMgr implements IMarkMgr {
         String studentID = validationMgr.checkStudentExists().getStudentID();
         String courseID = validationMgr.checkCourseExists().getCourseID();
 
-        for(Mark mark: Main.marks) {
+        for(Mark mark: database.getMarks()) {
             if (mark.getCourse().getCourseID().equals(courseID) && mark.getStudent().getStudentID().equals(studentID)) {
                 //put the set mark function here
                 if (!isExam) {
@@ -282,7 +286,7 @@ public class MarkMgr implements IMarkMgr {
     /**
      * Prints transcript (Results of course taken) for a particular student
      */
-    public void  printStudentTranscript() {
+    public void printStudentTranscript() {
         //TODO SIMILAR TO PRINTCOURSESTATISITCS
         String studentID = validationMgr.checkStudentExists().getStudentID();
 

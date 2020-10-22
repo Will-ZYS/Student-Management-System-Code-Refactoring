@@ -600,7 +600,7 @@ public class FILEMgr {
      *
      * @param courses courses to be backed up
      */
-    public static void backUpCourse(ArrayList<Course> courses) {
+    public static void backUpCourse(List<Course> courses) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(courseFileName);
@@ -1085,7 +1085,7 @@ public class FILEMgr {
      *
      * @param marks marks to be backed up into file
      */
-    public static void backUpMarks(ArrayList<Mark> marks) {
+    public static void backUpMarks(List<Mark> marks) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(markFileName);

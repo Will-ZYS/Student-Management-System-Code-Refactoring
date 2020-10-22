@@ -4,6 +4,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Holds data retrieved the database for reference
@@ -12,26 +13,30 @@ public class Database implements IDatabase {
     private static Database instance = null;
 
     /**
-     * An array list of all the students in this school.
+     * An list of all the students in this school.
      */
-    public ArrayList<Student> students = new ArrayList<Student>(0);
+    public List<Student> students = new ArrayList<Student>(0);
     /**
-     * An array list of all the courses in this school.
+     * An list of all the courses in this school.
      */
-    public ArrayList<Course> courses = new ArrayList<Course>(0);
+    public List<Course> courses = new ArrayList<Course>(0);
     /**
-     * An array list of all the course registration records in this school.
+     * An list of all the course registration records in this school.
      */
-    public ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
+    public List<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
     /**
-     * An array list of all the student mark records in this school.
+     * An list of all the student mark records in this school.
      */
-    public ArrayList<Mark> marks = new ArrayList<Mark>(0);
+    public List<Mark> marks = new ArrayList<Mark>(0);
     /**
-     * An array list of all the professors in this school.
+     * An list of all the professors in this school.
      */
-    public ArrayList<Professor> professors = new ArrayList<Professor>(0);
+    public List<Professor> professors = new ArrayList<Professor>(0);
 
+    /**
+     * default constructor for database
+     * instantiates the collections required for this system
+     */
     public Database() {
         //TODO change FILEMgr to something else
         students = FILEMgr.loadStudents();
@@ -41,43 +46,83 @@ public class Database implements IDatabase {
         professors = FILEMgr.loadProfessors();
     }
 
-    public ArrayList<Student> getStudents() {
+    /**
+     * returns a list of Students in the system
+     * @return list of students
+     */
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(ArrayList<Student> students) {
+    /**
+     * sets student collection
+     * @param students
+     */
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
-    public ArrayList<Course> getCourses() {
+    /**
+     * returns a list of courses in the system
+     * @return list of courses
+     */
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(ArrayList<Course> courses) {
+    /**
+     * sets course collection
+     * @param courses
+     */
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 
-    public ArrayList<CourseRegistration> getCourseRegistrations() {
+    /**
+     * returns a list of course registrations in the system
+     * @return list of course registrations
+     */
+    public List<CourseRegistration> getCourseRegistrations() {
         return courseRegistrations;
     }
 
-    public void setCourseRegistrations(ArrayList<CourseRegistration> courseRegistrations) {
+    /**
+     * sets courseRegistrations collection
+     * @param courseRegistrations
+     */
+    public void setCourseRegistrations(List<CourseRegistration> courseRegistrations) {
         this.courseRegistrations = courseRegistrations;
     }
 
-    public ArrayList<Mark> getMarks() {
+    /**
+     * returns a list of marks in the system
+     * @return list of marks
+     */
+    public List<Mark> getMarks() {
         return marks;
     }
 
-    public void setMarks(ArrayList<Mark> marks) {
+    /**
+     * sets marks collection
+     * @param marks
+     */
+    public void setMarks(List<Mark> marks) {
         this.marks = marks;
     }
 
-    public ArrayList<Professor> getProfessors() {
+    /**
+     * returns a list of professors in the system
+     * @return list of marks
+     */
+    public List<Professor> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(ArrayList<Professor> professors) {
+    /**
+     * sets professor collection
+     * @param professors
+     */
+    public void setProfessors(List<Professor> professors) {
         this.professors = professors;
     }
 

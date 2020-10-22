@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 /**
  * Manages all the help information display in the system.
-
  */
 
 public class HelpInfoMgr implements IHelpInfoMgr {

@@ -1,10 +1,12 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
+import com.softeng306.Database.Database;
 import com.softeng306.Entity.Course;
 import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Entity.Professor;
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 
@@ -31,6 +33,8 @@ public class ValidationMgr implements IValidationMgr {
     private static ValidationMgr instance = null;
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
 
 
     /**
@@ -152,7 +156,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return the existing student or else null.
      */
     public Student checkStudentExists(String studentID) {
-        List<Student> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
+        List<Student> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
         if(anyStudent.size() == 0){
             return null;
         }
@@ -251,7 +255,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return the existing course or else null.
      */
     public Course checkCourseExists(String courseID) {
-        List<Course> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+        List<Course> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
         if(anyCourse.size() == 0){
             return null;
         }
@@ -266,7 +270,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return the existing professor or else null.
      */
     public Professor checkProfExists(String profID) {
-        List<Professor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+        List<Professor> anyProf = database.getProfessors().stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
         if(anyProf.size() == 0){
             return null;
         }
@@ -282,7 +286,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return the existing course registration record or else null.
      */
     public CourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
-        List<CourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+        List<CourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
         if(courseRegistrations.size() == 0){
             return null;
         }

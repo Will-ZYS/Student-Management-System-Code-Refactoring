@@ -1,7 +1,9 @@
 package com.softeng306.Managers;
 
 
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
@@ -21,6 +23,8 @@ public class StudentMgr implements IStudentMgr {
     private static StudentMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
 
 
     /**
@@ -140,12 +144,12 @@ public class StudentMgr implements IStudentMgr {
 
         FILEMgr.writeStudentsIntoFile(currentStudent);
 
-        Main.students.add(currentStudent);
+        database.getStudents().add(currentStudent);
         System.out.println("Student named: " + studentName + " is added, with ID: " + currentStudent.getStudentID());
 
         System.out.println("Student List: ");
         System.out.println("| Student ID | Student Name | Student School | Gender | Year | GPA |");
-        for (Student student : Main.students) {
+        for (Student student : database.getStudents()) {
             if (Double.compare(student.getGPA(), 0.0) != 0) {
                 GPA = String.valueOf(student.getGPA());
             }

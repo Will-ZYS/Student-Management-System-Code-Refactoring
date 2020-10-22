@@ -3,26 +3,68 @@ package com.softeng306.Interfaces.Database;
 import com.softeng306.Entity.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IDatabase {
+    // TODO I DONT THINK WE EVER USE THE SET METHODS NEED TO CHECK
 
-    ArrayList<Student> getStudents();
+    /**
+     * returns a list of Students in the system
+     * @return list of students
+     */
+    List<Student> getStudents();
 
-    void setStudents(ArrayList<Student> students);
+    /**
+     * sets student collection
+     * @param students
+     */
+    void setStudents(List<Student> students);
 
-    ArrayList<Course> getCourses() ;
+    /**
+     * returns a list of courses in the system
+     * @return list of courses
+     */
+    List<Course> getCourses() ;
 
-    void setCourses(ArrayList<Course> courses);
+    /**
+     * sets course collection
+     * @param courses
+     */
+    void setCourses(List<Course> courses);
 
-    ArrayList<CourseRegistration> getCourseRegistrations();
+    /**
+     * returns a list of course registrations in the system
+     * @return list of course registrations
+     */
+    List<CourseRegistration> getCourseRegistrations();
 
-    void setCourseRegistrations(ArrayList<CourseRegistration> courseRegistrations);
+    /**
+     * sets courseRegistrations collection
+     * @param courseRegistrations
+     */
+    void setCourseRegistrations(List<CourseRegistration> courseRegistrations);
 
-    ArrayList<Mark> getMarks();
+    /**
+     * returns a list of marks in the system
+     * @return list of marks
+     */
+    List<Mark> getMarks();
 
-    void setMarks(ArrayList<Mark> marks) ;
+    /**
+     * sets marks collection
+     * @param marks
+     */
+    void setMarks(List<Mark> marks) ;
 
-    ArrayList<Professor> getProfessors() ;
+    /**
+     * returns a list of professors in the system
+     * @return list of marks
+     */
+    List<Professor> getProfessors() ;
 
-    void setProfessors(ArrayList<Professor> professors);
+    /**
+     * sets professor collection
+     * @param professors
+     */
+    void setProfessors(List<Professor> professors);
 }

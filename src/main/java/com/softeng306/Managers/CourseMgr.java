@@ -2,8 +2,10 @@ package com.softeng306.Managers;
 
 
 import com.softeng306.*;
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
@@ -18,6 +20,7 @@ public class CourseMgr implements ICourseMgr {
     private static CourseMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IDatabase database = Database.getInstance();
 
 
     private static Scanner scanner = new Scanner(System.in);
@@ -414,7 +417,7 @@ public class CourseMgr implements ICourseMgr {
             //add course into file
             // TODO FILEMGR SHOULD BE SINGLETON SOONTM?
             FILEMgr.writeCourseIntoFile(course);
-            Main.courses.add(course);
+            database.getCourses().add(course);
             System.out.println("Course " + courseID + " is added, but assessment components are not initialized.");
             printCourses();
             return;
@@ -424,7 +427,7 @@ public class CourseMgr implements ICourseMgr {
 
         // TODO SAME AS ABOVE
         FILEMgr.writeCourseIntoFile(course);
-        Main.courses.add(course);
+        database.getCourses().add(course);
         System.out.println("Course " + courseID + " is added");
         printCourses();
     }

@@ -1,8 +1,10 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
@@ -21,6 +23,8 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
 
 
     private static Scanner scanner = new Scanner(System.in);
@@ -80,9 +84,9 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         // TOOD FILEMGR AGAIN
         FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
-        Main.courseRegistrations.add(courseRegistration);
+        database.getCourseRegistrations().add(courseRegistration);
 
-        Main.marks.add(markMgr.initializeMark(currentStudent, currentCourse));
+        database.getMarks().add(markMgr.initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());

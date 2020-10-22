@@ -1,7 +1,9 @@
 package com.softeng306;
 
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
 import com.softeng306.Managers.*;
 
@@ -10,27 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
-    /**
-     * An array list of all the students in this school.
-     */
-    public static ArrayList<Student> students = new ArrayList<Student>(0);
-    /**
-     * An array list of all the courses in this school.
-     */
-    public static ArrayList<Course> courses = new ArrayList<Course>(0);
-    /**
-     * An array list of all the course registration records in this school.
-     */
-    public static ArrayList<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
-    /**
-     * An array list of all the student mark records in this school.
-     */
-    public static ArrayList<Mark> marks = new ArrayList<Mark>(0);
-    /**
-     * An array list of all the professors in this school.
-     */
-    public static ArrayList<Professor> professors = new ArrayList<Professor>(0);
-
+    private static IDatabase database = Database.getInstance();
 
     /**
      * The main function of the system.
@@ -39,17 +21,17 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        students = FILEMgr.loadStudents();
-        courses = FILEMgr.loadCourses();
-        courseRegistrations = FILEMgr.loadCourseRegistration();
-        marks = FILEMgr.loadStudentMarks();
-        professors = FILEMgr.loadProfessors();
+        //refactored to database. Now refer to database object
+//        students = FILEMgr.loadStudents();
+//        courses = FILEMgr.loadCourses();
+//        courseRegistrations = FILEMgr.loadCourseRegistration();
+//        marks = FILEMgr.loadStudentMarks();
+//        professors = FILEMgr.loadProfessors();
 
         // I personally dont like having all managers just in fields
         // it feels cleaning to have them in some collection
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
-
         IMarkMgr markMgr = MarkMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
 
@@ -141,8 +123,8 @@ public class Main {
     public static void exitApplication() {
 
         System.out.println("Backing up data before exiting...");
-        FILEMgr.backUpCourse(courses);
-        FILEMgr.backUpMarks(marks);
+        FILEMgr.backUpCourse(database.getCourses());
+        FILEMgr.backUpMarks(database.getMarks());
         System.out.println("********* Bye! Thank you for using Main! *********");
         System.out.println();
         System.out.println("                 ######    #      #   #######                   ");
