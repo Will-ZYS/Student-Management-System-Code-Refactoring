@@ -433,17 +433,17 @@ public class FILEMgr {
             }
             fileWriter.append(COMMA_DELIMITER);
 
-            ArrayList<MainComponent> mainComponents = course.getMainComponents();
+            ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
             if (mainComponents.size() != 0) {
                 int index = 0;
-                for (MainComponent mainComponent : mainComponents) {
+                for (ICourseworkComponent mainComponent : mainComponents) {
                     fileWriter.append(mainComponent.getComponentName());
                     fileWriter.append(EQUAL_SIGN);
                     fileWriter.append(String.valueOf(mainComponent.getComponentWeight()));
                     fileWriter.append(EQUAL_SIGN);
-                    ArrayList<SubComponent> subComponents = mainComponent.getSubComponents();
+                    ArrayList<ICourseworkComponent> subComponents = mainComponent.getSubComponents();
                     int inner_index = 0;
-                    for (SubComponent subComponent : subComponents) {
+                    for (ICourseworkComponent subComponent : subComponents) {
                         fileWriter.append(subComponent.getComponentName());
                         fileWriter.append(HYPHEN);
                         fileWriter.append(String.valueOf(subComponent.getComponentWeight()));
@@ -561,12 +561,12 @@ public class FILEMgr {
                     course.setLabWeeklyHour(labWeeklyHr);
 
                     String mainComponentsString = tokens[mainComponentsIndex];
-                    ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+                    ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
                     if (!mainComponentsString.equals("NULL")) {
                         String[] eachMainComponentsString = mainComponentsString.split(Pattern.quote(LINE_DELIMITER));
                         for (int i = 0; i < eachMainComponentsString.length; i++) {
                             String[] thisMainComponent = eachMainComponentsString[i].split(EQUAL_SIGN);
-                            ArrayList<SubComponent> subComponents = new ArrayList<SubComponent>(0);
+                            ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
                             if (thisMainComponent.length > 2) {
                                 String[] subComponentsString = thisMainComponent[2].split(SLASH);
                                 for (int j = 0; j < subComponentsString.length; j++) {
@@ -687,17 +687,17 @@ public class FILEMgr {
 
                 fileWriter.append(COMMA_DELIMITER);
 
-                ArrayList<MainComponent> mainComponents = course.getMainComponents();
+                ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
                 if (mainComponents.size() != 0) {
                     int index = 0;
-                    for (MainComponent mainComponent : mainComponents) {
+                    for (ICourseworkComponent mainComponent : mainComponents) {
                         fileWriter.append(mainComponent.getComponentName());
                         fileWriter.append(EQUAL_SIGN);
                         fileWriter.append(String.valueOf(mainComponent.getComponentWeight()));
                         fileWriter.append(EQUAL_SIGN);
-                        ArrayList<SubComponent> subComponents = mainComponent.getSubComponents();
+                        ArrayList<ICourseworkComponent> subComponents = mainComponent.getSubComponents();
                         int inner_index = 0;
-                        for (SubComponent subComponent : subComponents) {
+                        for (ICourseworkComponent subComponent : subComponents) {
                             fileWriter.append(subComponent.getComponentName());
                             fileWriter.append(HYPHEN);
                             fileWriter.append(String.valueOf(subComponent.getComponentWeight()));
@@ -929,11 +929,11 @@ public class FILEMgr {
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(mark.getCourse().getCourseID());
             fileWriter.append(COMMA_DELIMITER);
-            HashMap<CourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
+            HashMap<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
             if (!courseworkMarks.isEmpty()) {
                 int index = 0;
-                for (HashMap.Entry<CourseworkComponent, Double> entry : courseworkMarks.entrySet()) {
-                    CourseworkComponent key = entry.getKey();
+                for (Map.Entry<ICourseworkComponent, Double> entry : courseworkMarks.entrySet()) {
+                    ICourseworkComponent key = entry.getKey();
                     Double value = entry.getValue();
                     if (key instanceof MainComponent) {
                         fileWriter.append(key.getComponentName());
@@ -942,9 +942,9 @@ public class FILEMgr {
                         fileWriter.append(EQUAL_SIGN);
                         fileWriter.append(String.valueOf(value));
                         fileWriter.append(EQUAL_SIGN);
-                        ArrayList<SubComponent> subComponents = ((MainComponent) key).getSubComponents();
+                        ArrayList<ICourseworkComponent> subComponents = key.getSubComponents();
                         int subComponent_index = 0;
-                        for (SubComponent subComponent : subComponents) {
+                        for (ICourseworkComponent subComponent : subComponents) {
                             fileWriter.append(subComponent.getComponentName());
                             fileWriter.append(SLASH);
                             fileWriter.append(String.valueOf(subComponent.getComponentWeight()));
@@ -1002,7 +1002,7 @@ public class FILEMgr {
                 IStudent currentStudent = null;
                 ICourse currentCourse = null;
 
-                HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>(0);
+                HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>(0);
                 String[] thisCourseWorkMark;
 
                 String[] tokens = line.split(COMMA_DELIMITER);
@@ -1035,8 +1035,8 @@ public class FILEMgr {
                     for (int i = 0; i < eachCourseWorkMark.length; i++) {
                         thisCourseWorkMark = eachCourseWorkMark[i].split(EQUAL_SIGN);
 
-                        ArrayList<SubComponent> subComponents = new ArrayList<SubComponent>(0);
-                        HashMap<SubComponent, Double> subComponentMarks = new HashMap<SubComponent, Double>();
+                        ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
+                        HashMap<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
                         for (int j = 3; j < thisCourseWorkMark.length; j++) {
                             if (thisCourseWorkMark[3].equals("")) {
                                 break;
@@ -1048,8 +1048,8 @@ public class FILEMgr {
 
                         courseWorkMarks.put(new MainComponent(thisCourseWorkMark[0], Integer.parseInt(thisCourseWorkMark[1]), subComponents), Double.parseDouble(thisCourseWorkMark[2]));
                         // Put sub component
-                        for (HashMap.Entry<SubComponent, Double> entry : subComponentMarks.entrySet()) {
-                            SubComponent subComponent = entry.getKey();
+                        for (Map.Entry<ICourseworkComponent, Double> entry : subComponentMarks.entrySet()) {
+                            ICourseworkComponent subComponent = entry.getKey();
                             Double subComponentResult = entry.getValue();
                             courseWorkMarks.put(subComponent, subComponentResult);
                         }
@@ -1104,8 +1104,8 @@ public class FILEMgr {
 
                 if (!mark.getCourseWorkMarks().isEmpty()) {
                     int index = 0;
-                    for (HashMap.Entry<CourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
-                        CourseworkComponent key = entry.getKey();
+                    for (Map.Entry<ICourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
+                        ICourseworkComponent key = entry.getKey();
                         Double value = entry.getValue();
                         if (key instanceof MainComponent) {
                             fileWriter.append(key.getComponentName());
@@ -1114,17 +1114,17 @@ public class FILEMgr {
                             fileWriter.append(EQUAL_SIGN);
                             fileWriter.append(String.valueOf(value));
                             fileWriter.append(EQUAL_SIGN);
-                            ArrayList<SubComponent> subComponents = ((MainComponent) key).getSubComponents();
+                            ArrayList<ICourseworkComponent> subComponents = key.getSubComponents();
                             int subComponent_index = 0;
-                            for (SubComponent subComponent : subComponents) {
+                            for (ICourseworkComponent subComponent : subComponents) {
                                 fileWriter.append(subComponent.getComponentName());
                                 fileWriter.append(SLASH);
                                 fileWriter.append(String.valueOf(subComponent.getComponentWeight()));
                                 fileWriter.append(SLASH);
                                 String subComponentName = subComponent.getComponentName();
                                 double subComponentMark = 0d;
-                                for (HashMap.Entry<CourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
-                                    CourseworkComponent subKey = subEntry.getKey();
+                                for (Map.Entry<ICourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
+                                    ICourseworkComponent subKey = subEntry.getKey();
                                     Double subValue = subEntry.getValue();
                                     if (subKey instanceof SubComponent && subKey.getComponentName().equals(subComponentName)) {
                                         subComponentMark = subValue;

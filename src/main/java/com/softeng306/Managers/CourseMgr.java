@@ -5,6 +5,7 @@ import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
 
@@ -477,7 +478,7 @@ public class CourseMgr {
         }
 
 
-        ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+        ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
         // Check if mainComponent is empty
         if (currentCourse.getMainComponents().size() == 0) {
             // empty course
@@ -503,7 +504,7 @@ public class CourseMgr {
                         examWeight = scanner.nextInt();
                         scanner.nextLine();
                     }
-                    MainComponent exam = new MainComponent("Exam", examWeight, new ArrayList<SubComponent>(0));
+                    ICourseworkComponent exam = new MainComponent("Exam", examWeight, new ArrayList<>(0));
                     mainComponents.add(exam);
                     break;
                 } else if (hasFinalExamChoice == 2) {
@@ -534,7 +535,7 @@ public class CourseMgr {
             do {
                 int totalWeightage = 100 - examWeight;
                 for (int i = 0; i < numberOfMain; i++) {
-                    ArrayList<SubComponent> subComponents = new ArrayList<SubComponent>(0);
+                    ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
                     do {
                         componentExist = false;
                         System.out.println("Total weightage left to assign: " + totalWeightage);
@@ -549,7 +550,7 @@ public class CourseMgr {
                             componentExist = true;
                             continue;
                         }
-                        for (MainComponent mainComponent : mainComponents) {
+                        for (ICourseworkComponent mainComponent : mainComponents) {
                             if (mainComponent.getComponentName().equals(mainComponentName)) {
                                 componentExist = true;
                                 System.out.println("This sub component already exist. Please enter.");
@@ -610,7 +611,7 @@ public class CourseMgr {
                                     componentExist = true;
                                     continue;
                                 }
-                                for (SubComponent subComponent : subComponents) {
+                                for (ICourseworkComponent subComponent : subComponents) {
                                     if (subComponent.getComponentName().equals(subComponentName)) {
                                         componentExist = true;
                                         System.out.println("This sub component already exist. Please enter.");
@@ -638,7 +639,7 @@ public class CourseMgr {
 
                             //Create Subcomponent
 
-                            SubComponent sub = new SubComponent(subComponentName, sub_weight);
+                            ICourseworkComponent sub = new SubComponent(subComponentName, sub_weight);
                             subComponents.add(sub);
                             sub_totWeight -= sub_weight;
                         }
@@ -653,7 +654,7 @@ public class CourseMgr {
                         //exit if weight is fully allocated
                     }
                     //Create main component
-                    MainComponent main = new MainComponent(mainComponentName, weight, subComponents);
+                    ICourseworkComponent main = new MainComponent(mainComponentName, weight, subComponents);
                     mainComponents.add(main);
                 }
 
@@ -675,9 +676,9 @@ public class CourseMgr {
             System.out.println("Course Assessment has been settled already!");
         }
         System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " components: ");
-        for (MainComponent each_comp : currentCourse.getMainComponents()) {
+        for (ICourseworkComponent each_comp : currentCourse.getMainComponents()) {
             System.out.println("    " + each_comp.getComponentName() + " : " + each_comp.getComponentWeight() + "%");
-            for (SubComponent each_sub : each_comp.getSubComponents()) {
+            for (ICourseworkComponent each_sub : each_comp.getSubComponents()) {
                 System.out.println("        " + each_sub.getComponentName() + " : " + each_sub.getComponentWeight() + "%");
             }
         }

@@ -1,7 +1,5 @@
 package com.softeng306.Interfaces.Entity;
 
-import com.softeng306.Entity.MainComponent;
-
 import java.util.ArrayList;
 
 public interface ICourse {
@@ -93,7 +91,7 @@ public interface ICourse {
      * Gets the course's main assessment components.
      * @return the main assessment components of this course.
      */
-    ArrayList<MainComponent> getMainComponents();
+    ArrayList<ICourseworkComponent> getMainComponents();
 
     /**
      * Sets the course's current current vacancy.
@@ -122,7 +120,7 @@ public interface ICourse {
      * Sets the main assessment of the lecture groups.
      * @param mainComponents this course's main assessment.
      */
-    void setMainComponents(ArrayList<MainComponent> mainComponents);
+    void setMainComponents(ArrayList<ICourseworkComponent> mainComponents);
 
     /**
      * Sets the weekly hour of the tutorials.

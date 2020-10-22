@@ -5,6 +5,7 @@ import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 
@@ -25,14 +26,14 @@ public class MarkMgr {
      * @return the new added mark.
      */
     public static IMark initializeMark(IStudent student, ICourse course) {
-        HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>();
+        HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
         double totalMark = 0d;
-        ArrayList<MainComponent> mainComponents = course.getMainComponents();
+        ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
 
-        for (MainComponent mainComponent : mainComponents) {
+        for (ICourseworkComponent mainComponent : mainComponents) {
             courseWorkMarks.put(mainComponent, 0d);
             if (mainComponent.getSubComponents().size() > 0) {
-                for (SubComponent subComponent : mainComponent.getSubComponents()) {
+                for (ICourseworkComponent subComponent : mainComponent.getSubComponents()) {
                     courseWorkMarks.put(subComponent, 0d);
                 }
             }
@@ -60,15 +61,15 @@ public class MarkMgr {
                     ArrayList<String> availableChoices = new ArrayList<String>(0);
                     ArrayList<Double> weights = new ArrayList<Double>(0);
                     ArrayList<Boolean> isMainAss = new ArrayList<Boolean>(0);
-                    for (HashMap.Entry<CourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
-                        CourseworkComponent key = assessmentResult.getKey();
+                    for (Map.Entry<ICourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
+                        ICourseworkComponent key = assessmentResult.getKey();
                         if (key instanceof MainComponent) {
-                            if ((!key.getComponentName().equals("Exam")) && ((MainComponent) key).getSubComponents().size() == 0) {
+                            if ((!key.getComponentName().equals("Exam")) && key.getSubComponents().size() == 0) {
                                 availableChoices.add(key.getComponentName());
                                 weights.add((double)key.getComponentWeight());
                                 isMainAss.add(true);
                             } else {
-                                for (SubComponent subComponent : ((MainComponent) key).getSubComponents()) {
+                                for (ICourseworkComponent subComponent : key.getSubComponents()) {
                                     availableChoices.add(key.getComponentName() + "-" + subComponent.getComponentName());
                                     weights.add((double)key.getComponentWeight() * (double)subComponent.getComponentWeight() / 100d);
                                     isMainAss.add(false);
@@ -149,9 +150,9 @@ public class MarkMgr {
     public static double computeMark(ArrayList<IMark> thisCourseMark, String thisComponentName){
         double averageMark = 0;
         for (IMark mark : thisCourseMark) {
-            HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
-            for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
-                CourseworkComponent key = entry.getKey();
+            HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+            for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
+                ICourseworkComponent key = entry.getKey();
                 double value = entry.getValue();
                 if (key.getComponentName().equals(thisComponentName)) {
                     averageMark += value;
@@ -193,7 +194,7 @@ public class MarkMgr {
         boolean hasExam = false;
         double averageMark = 0;
         // Find marks for every assessment components
-        for (CourseworkComponent courseworkComponent : currentCourse.getMainComponents()) {
+        for (ICourseworkComponent courseworkComponent : currentCourse.getMainComponents()) {
             String thisComponentName = courseworkComponent.getComponentName();
 
             if (thisComponentName.equals("Exam")) {
@@ -212,9 +213,9 @@ public class MarkMgr {
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
 
-                ArrayList<SubComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
+                ArrayList<ICourseworkComponent> thisSubComponents = courseworkComponent.getSubComponents();
                 if (thisSubComponents.size() == 0) { continue; }
-                for (SubComponent subComponent : thisSubComponents) {
+                for (ICourseworkComponent subComponent : thisSubComponents) {
                     averageMark = 0;
                     System.out.print("Sub Component: " + subComponent.getComponentName());
                     System.out.print("\tWeight: " + subComponent.getComponentWeight() + "% (in main component)");
@@ -235,9 +236,9 @@ public class MarkMgr {
             System.out.print("Final Exam");
             System.out.print("\tWeight: " + examWeight + "%");
             for (IMark mark : thisCourseMark) {
-                HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
-                for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
-                    CourseworkComponent key = entry.getKey();
+                HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+                for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
+                    ICourseworkComponent key = entry.getKey();
                     double value = entry.getValue();
                     if (key.getComponentName().equals("Exam")) {
                         averageMark += value;
@@ -301,18 +302,18 @@ public class MarkMgr {
             System.out.print("Course ID: " + mark.getCourse().getCourseID());
             System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
 
-            for (HashMap.Entry<CourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
-                CourseworkComponent assessment = entry.getKey();
+            for (Map.Entry<ICourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
+                ICourseworkComponent assessment = entry.getKey();
                 Double result = entry.getValue();
                 if(assessment instanceof MainComponent) {
                     System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
                     int mainAssessmentWeight = assessment.getComponentWeight();
-                    ArrayList<SubComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
-                    for (SubComponent subAssessment : subAssessments) {
+                    ArrayList<ICourseworkComponent> subAssessments = assessment.getSubComponents();
+                    for (ICourseworkComponent subAssessment : subAssessments) {
                         System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
                         String subAssessmentName = subAssessment.getComponentName();
-                        for (HashMap.Entry<CourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
-                            CourseworkComponent subKey = subEntry.getKey();
+                        for (Map.Entry<ICourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
+                            ICourseworkComponent subKey = subEntry.getKey();
                             Double subValue = subEntry.getValue();
                             if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
                                 System.out.println("Mark: " + String.valueOf(subValue));

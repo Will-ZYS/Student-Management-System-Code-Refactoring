@@ -1,6 +1,7 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
 
@@ -83,7 +84,7 @@ public class Course implements ICourse {
     /**
      * The assessment components of this course.
      */
-    private ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+    private ArrayList<ICourseworkComponent> mainComponents = new ArrayList<ICourseworkComponent>(0);
 
 
     /**
@@ -259,7 +260,7 @@ public class Course implements ICourse {
      * Gets the course's main assessment components.
      * @return the main assessment components of this course.
      */
-    public ArrayList<MainComponent> getMainComponents() {
+    public ArrayList<ICourseworkComponent> getMainComponents() {
         return this.mainComponents;
     }
 
@@ -296,7 +297,7 @@ public class Course implements ICourse {
      * Sets the main assessment of the lecture groups.
      * @param mainComponents this course's main assessment.
      */
-    public void setMainComponents(ArrayList<MainComponent> mainComponents) {
+    public void setMainComponents(ArrayList<ICourseworkComponent> mainComponents) {
         this.mainComponents = mainComponents;
     }
 

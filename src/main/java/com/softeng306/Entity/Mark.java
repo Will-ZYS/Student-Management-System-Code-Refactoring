@@ -1,10 +1,12 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a student mark record associated with one student and a course.
@@ -24,7 +26,7 @@ public class Mark implements IMark {
     /**
      * The course work marks of this student mark record.
      */
-    private HashMap<CourseworkComponent, Double> courseWorkMarks;
+    private HashMap<ICourseworkComponent, Double> courseWorkMarks;
     /**
      * The total mark of this student mark record.
      */
@@ -38,7 +40,7 @@ public class Mark implements IMark {
      * @param courseWorkMarks The course work marks of this student mark record.
      * @param totalMark The total mark of this student mark record.
      */
-    public Mark(IStudent student, ICourse course, HashMap<CourseworkComponent, Double> courseWorkMarks, double totalMark) {
+    public Mark(IStudent student, ICourse course, HashMap<ICourseworkComponent, Double> courseWorkMarks, double totalMark) {
         this.student = student;
         this.course = course;
         this.courseWorkMarks = courseWorkMarks;
@@ -65,7 +67,7 @@ public class Mark implements IMark {
      * Gets the course work marks of this student mark record.
      * @return a hashmap contains the course work marks of this student mark record.
      */
-    public HashMap<CourseworkComponent, Double> getCourseWorkMarks() {
+    public HashMap<ICourseworkComponent, Double> getCourseWorkMarks() {
         return courseWorkMarks;
     }
 
@@ -84,14 +86,14 @@ public class Mark implements IMark {
      */
     public void setMainCourseWorkMarks(String courseWorkName, double result) {
 
-        for (HashMap.Entry<CourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
-            CourseworkComponent courseworkComponent = entry.getKey();
+        for (Map.Entry<ICourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
+            ICourseworkComponent courseworkComponent = entry.getKey();
             double previousResult = entry.getValue();
             if (!(courseworkComponent instanceof MainComponent)) {
                 continue;
             }
             if (courseworkComponent.getComponentName().equals(courseWorkName)) {
-                if (((MainComponent) courseworkComponent).getSubComponents().size() != 0) {
+                if (courseworkComponent.getSubComponents().size() != 0) {
                     System.out.println("This main assessment is not stand alone");
                     return;
                 }
@@ -115,8 +117,8 @@ public class Mark implements IMark {
      */
     public void setSubCourseWorkMarks(String courseWorkName, double result) {
         double markIncInMain = 0d;
-        for (HashMap.Entry<CourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
-            CourseworkComponent courseworkComponent = entry.getKey();
+        for (Map.Entry<ICourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
+            ICourseworkComponent courseworkComponent = entry.getKey();
             double previousResult = entry.getValue();
             if (!(courseworkComponent instanceof SubComponent)) {
                 continue;
@@ -131,11 +133,11 @@ public class Mark implements IMark {
             }
         }
         // Find its main component and update
-        for (HashMap.Entry<CourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
-            CourseworkComponent courseworkComponent = entry.getKey();
+        for (Map.Entry<ICourseworkComponent, Double> entry : courseWorkMarks.entrySet()) {
+            ICourseworkComponent courseworkComponent = entry.getKey();
             double previousResult = entry.getValue();
-            if ((courseworkComponent instanceof MainComponent) && ((MainComponent) courseworkComponent).getSubComponents().size() != 0) {
-                for (SubComponent subComponent : ((MainComponent) courseworkComponent).getSubComponents()) {
+            if ((courseworkComponent instanceof MainComponent) && courseworkComponent.getSubComponents().size() != 0) {
+                for (ICourseworkComponent subComponent : courseworkComponent.getSubComponents()) {
                     if (subComponent.getComponentName().equals(courseWorkName)) {
                         // We find the main component it is in
                         this.totalMark += markIncInMain * courseworkComponent.getComponentWeight() / 100d;
