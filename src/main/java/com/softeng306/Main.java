@@ -2,10 +2,8 @@ package com.softeng306;
 
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
-import com.softeng306.Managers.CourseMgr;
-import com.softeng306.Managers.CourseRegistrationMgr;
-import com.softeng306.Managers.MarkMgr;
-import com.softeng306.Managers.StudentMgr;
+import com.softeng306.Interfaces.Managers.*;
+import com.softeng306.Managers.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -47,6 +45,19 @@ public class Main {
         marks = FILEMgr.loadStudentMarks();
         professors = FILEMgr.loadProfessors();
 
+        // I personally dont like having all managers just in fields
+        // it feels cleaning to have them in some collection
+        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
+
+        IMarkMgr markMgr = MarkMgr.getInstance();
+        IStudentMgr studentMgr = StudentMgr.getInstance();
+
+        // TODO maybe remove these fields as they are not used
+//        IValidationMgr validationMgr = ValidationMgr.getInstance();
+//        IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+//        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
+
         printWelcome();
 
         int choice;
@@ -71,34 +82,37 @@ public class Main {
                 case 0:
                     break;
                 case 1:
-                    StudentMgr.getInstance().addStudent();
+                    studentMgr.addStudent();
                     break;
                 case 2:
-                    CourseMgr.getInstance().addCourse();
+                    courseMgr.addCourse();
                     break;
                 case 3:
-                    CourseRegistrationMgr.getInstance().registerCourse();
+                    courseRegistrationMgr.registerCourse();
                     break;
                 case 4:
-                    CourseMgr.getInstance().checkAvailableSlots();
+                    courseMgr.checkAvailableSlots();
                     break;
                 case 5:
-                    CourseRegistrationMgr.getInstance().printStudents();
+                    // TODO currently, interface does not have print methods, due to future refactoring
+                    courseRegistrationMgr.printStudents();
                     break;
                 case 6:
-                    CourseMgr.getInstance().enterCourseWorkComponentWeightage(null);
+                    courseMgr.enterCourseWorkComponentWeightage(null);
                     break;
                 case 7:
-                    MarkMgr.getInstance().setCourseWorkMark(false);
+                    markMgr.setCourseWorkMark(false);
                     break;
                 case 8:
-                    MarkMgr.getInstance().setCourseWorkMark(true);
+                    markMgr.setCourseWorkMark(true);
                     break;
                 case 9:
-                    MarkMgr.printCourseStatistics();
+                    // TODO same as case 5
+                    markMgr.printCourseStatistics();
                     break;
                 case 10:
-                    MarkMgr.printStudentTranscript();
+                    // TODO same as case 5
+                    markMgr.printStudentTranscript();
                     break;
                 case 11:
                     exitApplication();

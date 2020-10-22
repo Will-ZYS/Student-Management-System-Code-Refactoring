@@ -6,6 +6,7 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ import java.util.*;
 public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
-    private ValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private static Scanner scanner = new Scanner(System.in);
