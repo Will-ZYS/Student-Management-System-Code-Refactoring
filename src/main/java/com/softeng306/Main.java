@@ -1,11 +1,7 @@
 package com.softeng306;
 
 import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.*;
-import com.softeng306.Interfaces.Entity.ICourse;
-import com.softeng306.Interfaces.Entity.ICourseRegistration;
-import com.softeng306.Interfaces.Entity.IMark;
-import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
@@ -19,7 +15,7 @@ public class Main {
     /**
      * An array list of all the students in this school.
      */
-    public static ArrayList<Student> students = new ArrayList<Student>(0);
+    public static ArrayList<IStudent> students = new ArrayList<com.softeng306.Interfaces.Entity.IStudent>(0);
     /**
      * An array list of all the courses in this school.
      */

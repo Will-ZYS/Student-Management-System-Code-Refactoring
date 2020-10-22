@@ -10,7 +10,7 @@ public interface IMark {
      * Gets the student of this student mark record.
      * @return the student of this student mark record.
      */
-    public Student getStudent();
+    public IStudent getStudent();
 
     /**
      * Gets the course of this student mark record.

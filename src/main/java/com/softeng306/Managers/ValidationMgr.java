@@ -1,10 +1,10 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
-import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -147,8 +147,8 @@ public class ValidationMgr {
      * @param studentID This student's ID.
      * @return the existing student or else null.
      */
-    public static Student checkStudentExists(String studentID){
-        List<Student> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
+    public static IStudent checkStudentExists(String studentID){
+        List<IStudent> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
         if(anyStudent.size() == 0){
             return null;
         }
@@ -161,9 +161,9 @@ public class ValidationMgr {
      * Prompts the user to input an existing student.
      * @return the inputted student.
      */
-    public static Student checkStudentExists(){
+    public static IStudent checkStudentExists(){
         String studentID;
-        Student currentStudent = null;
+        IStudent currentStudent = null;
         while (true) {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();

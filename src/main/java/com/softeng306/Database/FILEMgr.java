@@ -3,6 +3,7 @@ package com.softeng306.Database;
 
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.*;
+import com.softeng306.Managers.StudentMgr;
 
 import java.io.*;
 import java.util.*;
@@ -262,7 +263,7 @@ public class FILEMgr {
      *
      * @param student a student to be added into the file
      */
-    public static void writeStudentsIntoFile(Student student) {
+    public static void writeStudentsIntoFile(IStudent student) {
         File file;
         FileWriter fileWriter = null;
         try {
@@ -305,9 +306,9 @@ public class FILEMgr {
      *
      * @return an array list of all the students.
      */
-    public static ArrayList<Student> loadStudents() {
+    public static ArrayList<IStudent> loadStudents() {
         BufferedReader fileReader = null;
-        ArrayList<Student> students = new ArrayList<Student>(0);
+        ArrayList<IStudent> students = new ArrayList<>(0);
         try {
             String line;
             fileReader = new BufferedReader(new FileReader(studentFileName));
@@ -317,7 +318,7 @@ public class FILEMgr {
                 String[] tokens = line.split(COMMA_DELIMITER);
                 if (tokens.length > 0) {
                     recentStudentID = Math.max(recentStudentID, Integer.parseInt(tokens[studentIdIndex].substring(1, 8)));
-                    Student student = new Student(tokens[studentIdIndex], tokens[studentNameIndex]);
+                    IStudent student = new Student(tokens[studentIdIndex], tokens[studentNameIndex]);
                     student.setStudentSchool(tokens[studentSchoolIndex]);
                     student.setGender(tokens[studentGenderIndex]);
                     student.setGPA(Double.parseDouble(tokens[studentGPAIndex]));
@@ -328,7 +329,7 @@ public class FILEMgr {
             // Set the recent student ID, let the newly added student have the ID onwards.
             // If there is no student in DB, set recentStudentID to 1800000 (2018 into Uni)
 
-            Student.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
+            StudentMgr.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
         } catch (Exception e) {
             System.out.println("Error occurs when loading students.");
             e.printStackTrace();
@@ -864,9 +865,9 @@ public class FILEMgr {
         ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
         try {
             String line;
-            Student currentStudent = null;
+            IStudent currentStudent = null;
             ICourse currentCourse = null;
-            ArrayList<Student> students = loadStudents();
+            ArrayList<IStudent> students = loadStudents();
 
             fileReader = new BufferedReader(new FileReader(courseRegistrationFileName));
             fileReader.readLine();//read the header to skip it
@@ -876,7 +877,7 @@ public class FILEMgr {
                 if (tokens.length > 0) {
                     String studentID = tokens[studentIdInRegistrationIndex];
 
-                    for (Student student : students) {
+                    for (IStudent student : students) {
                         if (student.getStudentID().equals(studentID)) {
                             currentStudent = student;
                             break;
@@ -991,14 +992,14 @@ public class FILEMgr {
         try {
             String line;
 
-            ArrayList<Student> students = loadStudents();
+            ArrayList<IStudent> students = loadStudents();
             ArrayList<ICourse> courses = loadCourses();
 
             fileReader = new BufferedReader(new FileReader(markFileName));
             //read the header to skip it
             fileReader.readLine();
             while ((line = fileReader.readLine()) != null) {
-                Student currentStudent = null;
+                IStudent currentStudent = null;
                 ICourse currentCourse = null;
 
                 HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>(0);
@@ -1008,7 +1009,7 @@ public class FILEMgr {
                 if (tokens.length > 0) {
                     String studentID = tokens[studentIdIndexInMarks];
 
-                    for (Student student : students) {
+                    for (IStudent student : students) {
                         if (student.getStudentID().equals(studentID)) {
                             currentStudent = student;
                             break;

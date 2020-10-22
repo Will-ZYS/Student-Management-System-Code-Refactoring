@@ -2,6 +2,7 @@ package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.HashMap;
 
@@ -15,7 +16,7 @@ public class Mark implements IMark {
     /**
      * The student of this student mark record.
      */
-    private Student student;
+    private IStudent student;
     /**
      * The course of this student mark record.
      */
@@ -37,7 +38,7 @@ public class Mark implements IMark {
      * @param courseWorkMarks The course work marks of this student mark record.
      * @param totalMark The total mark of this student mark record.
      */
-    public Mark(Student student, ICourse course, HashMap<CourseworkComponent, Double> courseWorkMarks, double totalMark) {
+    public Mark(IStudent student, ICourse course, HashMap<CourseworkComponent, Double> courseWorkMarks, double totalMark) {
         this.student = student;
         this.course = course;
         this.courseWorkMarks = courseWorkMarks;
@@ -48,7 +49,7 @@ public class Mark implements IMark {
      * Gets the student of this student mark record.
      * @return the student of this student mark record.
      */
-    public Student getStudent() {
+    public IStudent getStudent() {
         return student;
     }
 

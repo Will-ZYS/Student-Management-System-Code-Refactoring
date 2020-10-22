@@ -3,10 +3,10 @@ package com.softeng306.Managers;
 import com.softeng306.*;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class CourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = ValidationMgr.checkStudentExists();
+        IStudent currentStudent = ValidationMgr.checkStudentExists();
         String studentID = currentStudent.getStudentID();
 
         ValidationMgr.checkCourseDepartmentExists();

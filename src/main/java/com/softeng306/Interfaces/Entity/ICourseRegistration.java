@@ -1,10 +1,9 @@
 package com.softeng306.Interfaces.Entity;
-import com.softeng306.Entity.Student;
 
 
 public interface ICourseRegistration {
 
-    public Student getStudent();
+    public IStudent getStudent();
 
     public ICourse getCourse();
 

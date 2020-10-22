@@ -6,6 +6,7 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class MarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    public static IMark initializeMark(Student student, ICourse course) {
+    public static IMark initializeMark(IStudent student, ICourse course) {
         HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>();
         double totalMark = 0d;
         ArrayList<MainComponent> mainComponents = course.getMainComponents();
