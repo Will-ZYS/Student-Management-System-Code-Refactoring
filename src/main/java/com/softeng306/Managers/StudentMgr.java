@@ -1,10 +1,17 @@
 package com.softeng306.Managers;
 
-
+import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
+import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
+
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
+import com.softeng306.Utils.Printer;
 
 import java.util.Scanner;
 
@@ -14,18 +21,27 @@ import java.util.Scanner;
 
  */
 
-public class StudentMgr {
+public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
+
+    private static StudentMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
+  
     /**
      * Uses idNumber to generate student ID.
      */
     private static int idNumber = 1800000;
 
 
+
     /**
      * Adds a student and put the student into file
      */
-    public static void addStudent() {
+    public void addStudent() {
         String studentName, studentSchool;
         String studentID = null;
         int choice, studentYear;
@@ -60,8 +76,8 @@ public class StudentMgr {
                 System.out.println();
                 System.out.println("Give this student an ID: ");
                 studentID = scanner.nextLine();
-                if (ValidationMgr.checkValidStudentIDInput(studentID)) {
-                    if (ValidationMgr.checkStudentExists(studentID) == null) {
+                if (validationMgr.checkValidStudentIDInput(studentID)) {
+                    if (validationMgr.checkStudentExists(studentID) == null) {
                         break;
                     }
                 }
@@ -71,7 +87,7 @@ public class StudentMgr {
         while (true) {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
-            if (ValidationMgr.checkValidPersonNameInput(studentName)) {
+            if (validationMgr.checkValidPersonNameInput(studentName)) {
                 break;
             }
         }
@@ -88,11 +104,11 @@ public class StudentMgr {
             System.out.println("Enter -h to print all the schools.");
             studentSchool = scanner.nextLine();
             while ("-h".equals(studentSchool)) {
-                HelpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 studentSchool = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkDepartmentValidation(studentSchool)) {
+            if (validationMgr.checkDepartmentValidation(studentSchool)) {
                 currentStudent.setStudentSchool(studentSchool);
                 break;
             }
@@ -106,11 +122,11 @@ public class StudentMgr {
             System.out.println("Enter -h to print all the genders.");
             studentGender = scanner.nextLine();
             while ("-h".equals(studentGender)) {
-                HelpInfoMgr.printAllGender();
+                printer.printAllGender();
                 studentGender = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkGenderValidation(studentGender)) {
+            if (validationMgr.checkGenderValidation(studentGender)) {
                 currentStudent.setGender(studentGender);
                 break;
             }
@@ -139,12 +155,14 @@ public class StudentMgr {
 
         FILEMgr.writeStudentsIntoFile(currentStudent);
 
-        Main.students.add(currentStudent);
+        database.getStudents().add(currentStudent);
         System.out.println("Student named: " + studentName + " is added, with ID: " + currentStudent.getStudentID());
 
         System.out.println("Student List: ");
         System.out.println("| Student ID | Student Name | Student School | Gender | Year | GPA |");
-        for (IStudent student : Main.students) {
+
+        for (IStudent student : database.getStudents()) {
+
             if (Double.compare(student.getGPA(), 0.0) != 0) {
                 GPA = String.valueOf(student.getGPA());
             }
@@ -154,6 +172,17 @@ public class StudentMgr {
     }
 
     /**
+     * get the instance of the StudentMgr class
+     * @return the singleton instance
+     */
+    public static StudentMgr getInstance() {
+        if (instance == null) {
+            instance = new StudentMgr();
+        }
+        return instance;
+    }
+  
+     /**
      * Generates the ID of a new student.
      * @return the generated student ID.
      */

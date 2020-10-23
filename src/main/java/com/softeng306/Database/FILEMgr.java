@@ -1,6 +1,5 @@
 package com.softeng306.Database;
 
-
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Managers.StudentMgr;
@@ -8,8 +7,6 @@ import com.softeng306.Managers.StudentMgr;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
-
-
 
 public class FILEMgr {
 
@@ -602,7 +599,8 @@ public class FILEMgr {
      *
      * @param courses courses to be backed up
      */
-    public static void backUpCourse(ArrayList<ICourse> courses) {
+
+    public static void backUpCourse(List<ICourse> courses) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(courseFileName);
@@ -1087,7 +1085,8 @@ public class FILEMgr {
      *
      * @param marks marks to be backed up into file
      */
-    public static void backUpMarks(ArrayList<IMark> marks) {
+
+    public static void backUpMarks(List<IMark> marks) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(markFileName);

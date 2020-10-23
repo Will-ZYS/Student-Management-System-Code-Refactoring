@@ -1,6 +1,17 @@
 package com.softeng306.Managers;
 
 import com.softeng306.*;
+
+import com.softeng306.Database.Database;
+import com.softeng306.Entity.Course;
+import com.softeng306.Entity.CourseRegistration;
+import com.softeng306.Entity.Professor;
+import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IProfessor;
@@ -15,10 +26,9 @@ import java.util.regex.*;
 
 /**
  * Manages all the validation check in this system.
-
  */
 
-public class ValidationMgr {
+public class ValidationMgr implements IValidationMgr {
 
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
@@ -27,14 +37,20 @@ public class ValidationMgr {
             // NO-OP
         }
     });
+    private static ValidationMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+
+    private IDatabase database = Database.getInstance();
+
 
     /**
      * Checks whether the inputted department is valid.
      * @param department The inputted department.
      * @return boolean indicates whether the inputted department is valid.
      */
-    public static boolean checkDepartmentValidation(String department){
-        if(HelpInfoMgr.getAllDepartment().contains(department)){
+    public boolean checkDepartmentValidation(String department) {
+        if(helpInfoMgr.getAllDepartment().contains(department)){
             return true;
         }
         System.out.println("The department is invalid. Please re-enter.");
@@ -46,8 +62,8 @@ public class ValidationMgr {
      * @param gender The inputted gender.
      * @return boolean indicates whether the inputted gender is valid.
      */
-    public static boolean checkGenderValidation(String gender){
-        if(HelpInfoMgr.getAllGender().contains(gender)){
+    public boolean checkGenderValidation(String gender) {
+        if(helpInfoMgr.getAllGender().contains(gender)){
             return true;
         }
         System.out.println("The gender is invalid. Please re-enter.");
@@ -59,8 +75,8 @@ public class ValidationMgr {
      * @param courseType The inputted course type.
      * @return boolean indicates whether the inputted course type is valid.
      */
-    public static boolean checkCourseTypeValidation(String courseType){
-        if(HelpInfoMgr.getAllCourseType().contains(courseType)){
+    public boolean checkCourseTypeValidation(String courseType) {
+        if(helpInfoMgr.getAllCourseType().contains(courseType)){
             return true;
         }
         System.out.println("The course type is invalid. Please re-enter.");
@@ -72,7 +88,7 @@ public class ValidationMgr {
      * @param studentID The inputted student ID.
      * @return boolean indicates whether the inputted student ID is valid.
      */
-    public static boolean checkValidStudentIDInput(String studentID){
+    public boolean checkValidStudentIDInput(String studentID) {
         String REGEX = "^U[0-9]{7}[A-Z]$";
         boolean valid = Pattern.compile(REGEX).matcher(studentID).matches();
         if(!valid){
@@ -82,13 +98,12 @@ public class ValidationMgr {
 
     }
 
-
     /**
      * Checks whether the inputted course ID is in the correct format.
      * @param courseID The inputted course ID.
      * @return boolean indicates whether the inputted course ID is valid.
      */
-    public static boolean checkValidCourseIDInput(String courseID){
+    public boolean checkValidCourseIDInput(String courseID) {
         String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
         boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
         if(!valid){
@@ -103,7 +118,7 @@ public class ValidationMgr {
      * @param profID The inputted professor ID.
      * @return boolean indicates whether the inputted professor ID is valid.
      */
-    public static boolean checkValidProfIDInput(String profID){
+    public boolean checkValidProfIDInput(String profID) {
         String REGEX = "^P[0-9]{7}[A-Z]$";
         boolean valid =  Pattern.compile(REGEX).matcher(profID).matches();
         if(!valid){
@@ -119,7 +134,7 @@ public class ValidationMgr {
      * @param personName The inputted person name.
      * @return boolean indicates whether the inputted person name is valid.
      */
-    public static boolean checkValidPersonNameInput(String personName){
+    public boolean checkValidPersonNameInput(String personName) {
         String REGEX = "^[ a-zA-Z]+$";
         boolean valid =  Pattern.compile(REGEX).matcher(personName).matches();
         if(!valid){
@@ -133,7 +148,7 @@ public class ValidationMgr {
      * @param groupName The inputted group name.
      * @return boolean indicates whether the inputted group name is valid.
      */
-    public static boolean checkValidGroupNameInput(String groupName){
+    public boolean checkValidGroupNameInput(String groupName) {
         String REGEX = "^[a-zA-Z0-9]+$";
         boolean valid =  Pattern.compile(REGEX).matcher(groupName).matches();
         if(!valid){
@@ -147,8 +162,8 @@ public class ValidationMgr {
      * @param studentID This student's ID.
      * @return the existing student or else null.
      */
-    public static IStudent checkStudentExists(String studentID){
-        List<IStudent> anyStudent = Main.students.stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
+    public IStudent checkStudentExists(String studentID) {
+        List<IStudent> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
         if(anyStudent.size() == 0){
             return null;
         }
@@ -161,14 +176,15 @@ public class ValidationMgr {
      * Prompts the user to input an existing student.
      * @return the inputted student.
      */
-    public static IStudent checkStudentExists(){
+
+    public IStudent checkStudentExists() {
         String studentID;
         IStudent currentStudent = null;
         while (true) {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();
             while("-h".equals(studentID)){
-                HelpInfoMgr.printAllStudents();
+                printer.printAllStudents();
                 studentID = scanner.nextLine();
             }
 
@@ -189,19 +205,19 @@ public class ValidationMgr {
      * Prompts the user to input an existing course.
      * @return the inputted course.
      */
-    public static ICourse checkCourseExists(){
+    public ICourse checkCourseExists() {
         String courseID;
         ICourse currentCourse;
         while(true){
             System.out.println("Enter course ID (-h to print all the course ID):");
             courseID = scanner.nextLine();
             while("-h".equals(courseID)){
-                HelpInfoMgr.printAllCourses();
+                printer.printAllCourses();
                 courseID = scanner.nextLine();
             }
 
             System.setOut(dummyStream);
-            currentCourse = ValidationMgr.checkCourseExists(courseID);
+            currentCourse = checkCourseExists(courseID);
             if (currentCourse == null) {
                 System.setOut(originalStream);
                 System.out.println("Invalid Course ID. Please re-enter.");
@@ -217,19 +233,19 @@ public class ValidationMgr {
      * Prompts the user to input an existing department.
      * @return the inputted department.
      */
-    public static String checkCourseDepartmentExists(){
+    public String checkCourseDepartmentExists() {
         String courseDepartment;
         while(true){
             System.out.println("Which department's courses are you interested? (-h to print all the departments)");
             courseDepartment = scanner.nextLine();
             while("-h".equals(courseDepartment)){
-                HelpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if(ValidationMgr.checkDepartmentValidation(courseDepartment)){
+            if(checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
                 System.setOut(dummyStream);
-                validCourseString = HelpInfoMgr.printCourseInDepartment(courseDepartment);
+                validCourseString = printer.printCourseInDepartment(courseDepartment);
                 System.setOut(originalStream);
                 if(validCourseString.size() == 0){
                     System.out.println("Invalid choice of department.");
@@ -246,8 +262,9 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course or else null.
      */
-    public static ICourse checkCourseExists(String courseID){
-        List<ICourse> anyCourse = Main.courses.stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+    public ICourse checkCourseExists(String courseID) {
+        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+
         if(anyCourse.size() == 0){
             return null;
         }
@@ -261,8 +278,9 @@ public class ValidationMgr {
      * @param profID The inputted professor ID.
      * @return the existing professor or else null.
      */
-    public static IProfessor checkProfExists(String profID){
-        List<IProfessor> anyProf = Main.professors.stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+    public IProfessor checkProfExists(String profID) {
+        List<IProfessor> anyProf = database.getProfessors().stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+      
         if(anyProf.size() == 0){
             return null;
         }
@@ -277,8 +295,9 @@ public class ValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course registration record or else null.
      */
-    public static ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID){
-        List<ICourseRegistration> courseRegistrations = Main.courseRegistrations.stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+    public ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
+        List<ICourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+
         if(courseRegistrations.size() == 0){
             return null;
         }
@@ -287,6 +306,14 @@ public class ValidationMgr {
 
     }
 
-
-
+    /**
+     * Get the instance of the ValidationMgr class.
+     * @return the singleton instance
+     */
+    public static ValidationMgr getInstance() {
+        if (instance == null) {
+            instance = new ValidationMgr();
+        }
+        return instance;
+    }
 }
