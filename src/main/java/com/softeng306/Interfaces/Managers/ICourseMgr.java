@@ -1,6 +1,6 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Entity.Course;
+import com.softeng306.Interfaces.Entity.ICourse;
 
 public interface ICourseMgr {
 
@@ -19,5 +19,5 @@ public interface ICourseMgr {
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    void enterCourseWorkComponentWeightage(Course currentCourse);
+    void enterCourseWorkComponentWeightage(ICourse currentCourse);
 }

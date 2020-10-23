@@ -7,10 +7,10 @@ import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Main;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.ValidationMgr;
 
@@ -157,7 +157,7 @@ public class Printer implements IPrinter {
      * @return a list of all the department values.
      */
     public List<String> printCourseInDepartment(String department) {
-        List<Course> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
+        List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
@@ -173,7 +173,7 @@ public class Printer implements IPrinter {
      * @param groups    An array list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    public String printGroupWithVacancyInfo(String groupType, ArrayList<Group> groups) {
+    public String printGroupWithVacancyInfo(String groupType, ArrayList<IGroup> groups) {
         int index;
         HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
         int selectedGroupNum;
@@ -183,7 +183,7 @@ public class Printer implements IPrinter {
             System.out.println("Here is a list of all the " + groupType + " groups with available slots:");
             do {
                 index = 0;
-                for (Group group : groups) {
+                for (IGroup group : groups) {
                     if (group.getAvailableVacancies() == 0) {
                         continue;
                     }
@@ -210,7 +210,7 @@ public class Printer implements IPrinter {
                 }
             }
 
-            for (Group group : groups) {
+            for (IGroup group : groups) {
                 if (group.getGroupName().equals(selectedGroupName)) {
                     group.enrolledIn();
                     break;
@@ -226,7 +226,7 @@ public class Printer implements IPrinter {
     public void printCourses() {
         System.out.println("Course List: ");
         System.out.println("| Course ID | Course Name | Professor in Charge |");
-        for (Course course : database.getCourses()) {
+        for (ICourse course : database.getCourses()) {
             System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
         }
         System.out.println();
@@ -237,7 +237,7 @@ public class Printer implements IPrinter {
      */
     public void printStudents() {
         System.out.println("printStudent is called");
-        Course currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = validationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -246,11 +246,11 @@ public class Printer implements IPrinter {
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
         //TODO FILEMGR AGAIN
-        ArrayList<CourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
+        ArrayList<ICourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
 
 
-        ArrayList<CourseRegistration> stuArray = new ArrayList<CourseRegistration>(0);
-        for (CourseRegistration courseRegistration : allStuArray) {
+        ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);
+        for (ICourseRegistration courseRegistration : allStuArray) {
             if (courseRegistration.getCourse().getCourseID().equals(currentCourse.getCourseID())) {
                 stuArray.add(courseRegistration);
             }
@@ -334,8 +334,8 @@ public class Printer implements IPrinter {
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
-        ArrayList<Mark> thisStudentMark = new ArrayList<Mark>(0);
-        for(Mark mark : database.getMarks()) {
+        ArrayList<IMark> thisStudentMark = new ArrayList<>(0);
+        for(IMark mark : database.getMarks()) {
             if (mark.getStudent().getStudentID().equals(studentID)) {
                 thisStudentMark.add(mark);
                 thisStudentAU += mark.getCourse().getAU();
@@ -353,22 +353,22 @@ public class Printer implements IPrinter {
         System.out.println();
 
 
-        for (Mark mark : thisStudentMark) {
+        for (IMark mark : thisStudentMark) {
             System.out.print("Course ID: " + mark.getCourse().getCourseID());
             System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
 
-            for (HashMap.Entry<CourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
-                CourseworkComponent assessment = entry.getKey();
+            for (HashMap.Entry<ICourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
+                ICourseworkComponent assessment = entry.getKey();
                 Double result = entry.getValue();
                 if(assessment instanceof MainComponent) {
                     System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
                     int mainAssessmentWeight = assessment.getComponentWeight();
-                    ArrayList<SubComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
-                    for (SubComponent subAssessment : subAssessments) {
+                    ArrayList<ICourseworkComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
+                    for (ICourseworkComponent subAssessment : subAssessments) {
                         System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
                         String subAssessmentName = subAssessment.getComponentName();
-                        for (HashMap.Entry<CourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
-                            CourseworkComponent subKey = subEntry.getKey();
+                        for (HashMap.Entry<ICourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
+                            ICourseworkComponent subKey = subEntry.getKey();
                             Double subValue = subEntry.getValue();
                             if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
                                 System.out.println("Mark: " + String.valueOf(subValue));
@@ -410,11 +410,11 @@ public class Printer implements IPrinter {
         System.out.println("printCourseStatistics is called");
 
         //TODO VALIDATIONMGR NEEDS TO BE INSTANTIATED WHEN REFACTORED INTO PRINTING CLASS
-        Course currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = validationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
-        ArrayList<Mark> thisCourseMark = new ArrayList<Mark>(0);
-        for(Mark mark : database.getMarks()) {
+        ArrayList<IMark> thisCourseMark = new ArrayList<>(0);
+        for(IMark mark : database.getMarks()) {
             if (mark.getCourse().getCourseID().equals(courseID)) {
                 thisCourseMark.add(mark);
             }
@@ -435,7 +435,7 @@ public class Printer implements IPrinter {
         boolean hasExam = false;
         double averageMark = 0;
         // Find marks for every assessment components
-        for (CourseworkComponent courseworkComponent : currentCourse.getMainComponents()) {
+        for (ICourseworkComponent courseworkComponent : currentCourse.getMainComponents()) {
             String thisComponentName = courseworkComponent.getComponentName();
 
             if (thisComponentName.equals("Exam")) {
@@ -455,9 +455,9 @@ public class Printer implements IPrinter {
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
 
-                ArrayList<SubComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
+                ArrayList<ICourseworkComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
                 if (thisSubComponents.size() == 0) { continue; }
-                for (SubComponent subComponent : thisSubComponents) {
+                for (ICourseworkComponent subComponent : thisSubComponents) {
                     averageMark = 0;
                     System.out.print("Sub Component: " + subComponent.getComponentName());
                     System.out.print("\tWeight: " + subComponent.getComponentWeight() + "% (in main component)");
@@ -478,10 +478,10 @@ public class Printer implements IPrinter {
             averageMark = 0;
             System.out.print("Final Exam");
             System.out.print("\tWeight: " + examWeight + "%");
-            for (Mark mark : thisCourseMark) {
-                HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
-                for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
-                    CourseworkComponent key = entry.getKey();
+            for (IMark mark : thisCourseMark) {
+                HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+                for (HashMap.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
+                    ICourseworkComponent key = entry.getKey();
                     double value = entry.getValue();
                     if (key.getComponentName().equals("Exam")) {
                         averageMark += value;
@@ -500,7 +500,7 @@ public class Printer implements IPrinter {
 
         System.out.print("Overall Performance: ");
         averageMark = 0;
-        for (Mark mark : thisCourseMark) {
+        for (IMark mark : thisCourseMark) {
             averageMark += mark.getTotalMark();
         }
         averageMark = averageMark / thisCourseMark.size();
@@ -509,7 +509,6 @@ public class Printer implements IPrinter {
         System.out.println();
         System.out.println("***********************************************");
         System.out.println();
-
 
     }
 

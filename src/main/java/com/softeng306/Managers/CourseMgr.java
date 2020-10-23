@@ -1,6 +1,5 @@
 package com.softeng306.Managers;
 
-import com.softeng306.*;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;

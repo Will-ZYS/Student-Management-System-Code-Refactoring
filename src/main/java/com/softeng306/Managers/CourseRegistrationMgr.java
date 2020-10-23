@@ -1,6 +1,5 @@
 package com.softeng306.Managers;
 
-import com.softeng306.*;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
@@ -18,10 +17,6 @@ import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
-import static com.softeng306.Entity.CourseRegistration.LabComparator;
-import static com.softeng306.Entity.CourseRegistration.LecComparator;
-import static com.softeng306.Entity.CourseRegistration.TutComparator;
-
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
@@ -31,7 +26,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
-
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -44,16 +38,15 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        IStudent currentStudent = ValidationMgr.checkStudentExists();
+        IStudent currentStudent = validationMgr.checkStudentExists();
 
         String studentID = currentStudent.getStudentID();
 
         validationMgr.checkCourseDepartmentExists();
 
-        ICourse currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = validationMgr.checkCourseExists();
 
         String courseID = currentCourse.getCourseID();
-
 
         if (validationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
