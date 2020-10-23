@@ -9,7 +9,6 @@ import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-import com.softeng306.Main;
 import com.softeng306.Entity.Student;
 import com.softeng306.Utils.Printer;
 
@@ -186,7 +185,7 @@ public class StudentMgr implements IStudentMgr {
      * Generates the ID of a new student.
      * @return the generated student ID.
      */
-    public static String generateStudentID() {
+    public String generateStudentID() {
         String generateStudentID;
         boolean studentIDUsed;
         do{
@@ -195,7 +194,7 @@ public class StudentMgr implements IStudentMgr {
             idNumber += 1;
             generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
             studentIDUsed = false;
-            for(IStudent student: Main.students){
+            for(IStudent student: database.getStudents()){
                 if(generateStudentID.equals(student.getStudentID())){
                     studentIDUsed = true;
                     break;

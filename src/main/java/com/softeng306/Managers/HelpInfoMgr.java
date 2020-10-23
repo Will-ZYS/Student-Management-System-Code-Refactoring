@@ -2,16 +2,9 @@ package com.softeng306.Managers;
 
 import com.softeng306.Enum.*;
 
-import com.softeng306.Entity.Group;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
-import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
-import com.softeng306.Interfaces.Entity.ICourse;
-import com.softeng306.Interfaces.Entity.IGroup;
-import com.softeng306.Main;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Manages all the help information display in the system.

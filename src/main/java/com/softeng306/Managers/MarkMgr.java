@@ -1,12 +1,10 @@
 package com.softeng306.Managers;
 
-import com.softeng306.*;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -36,7 +34,7 @@ public class MarkMgr implements IMarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    public Mark initializeMark(IStudent student, ICourse course) {
+    public IMark initializeMark(IStudent student, ICourse course) {
         HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
         double totalMark = 0d;
         ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();

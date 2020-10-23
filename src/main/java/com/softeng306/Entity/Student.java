@@ -55,7 +55,8 @@ public class Student implements IStudent {
      */
     public Student(String studentName) {
         this.studentName = studentName;
-        this.studentID = StudentMgr.generateStudentID();
+        StudentMgr studentMgr = StudentMgr.getInstance();
+        this.studentID = studentMgr.generateStudentID();
     }
 
     /**

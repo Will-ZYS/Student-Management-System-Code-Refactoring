@@ -1,6 +1,6 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Entity.Professor;
+import com.softeng306.Interfaces.Entity.IProfessor;
 
 public interface IProfessorMgr {
 
@@ -9,5 +9,5 @@ public interface IProfessorMgr {
      *
      * @return a newly added professor
      */
-    Professor addProfessor();
+    IProfessor addProfessor();
 }

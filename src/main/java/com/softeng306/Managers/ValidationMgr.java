@@ -1,12 +1,6 @@
 package com.softeng306.Managers;
 
-import com.softeng306.*;
-
 import com.softeng306.Database.Database;
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Professor;
-import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
