@@ -1,8 +1,7 @@
 package com.softeng306.Interfaces.Database;
 
-import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Entity.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IDatabase {
@@ -12,59 +11,59 @@ public interface IDatabase {
      * returns a list of Students in the system
      * @return list of students
      */
-    List<Student> getStudents();
+    List<IStudent> getStudents();
 
     /**
      * sets student collection
      * @param students
      */
-    void setStudents(List<Student> students);
+    void setStudents(List<IStudent> students);
 
     /**
      * returns a list of courses in the system
      * @return list of courses
      */
-    List<Course> getCourses() ;
+    List<ICourse> getCourses() ;
 
     /**
      * sets course collection
      * @param courses
      */
-    void setCourses(List<Course> courses);
+    void setCourses(List<ICourse> courses);
 
     /**
      * returns a list of course registrations in the system
      * @return list of course registrations
      */
-    List<CourseRegistration> getCourseRegistrations();
+    List<ICourseRegistration> getCourseRegistrations();
 
     /**
      * sets courseRegistrations collection
      * @param courseRegistrations
      */
-    void setCourseRegistrations(List<CourseRegistration> courseRegistrations);
+    void setCourseRegistrations(List<ICourseRegistration> courseRegistrations);
 
     /**
      * returns a list of marks in the system
      * @return list of marks
      */
-    List<Mark> getMarks();
+    List<IMark> getMarks();
 
     /**
      * sets marks collection
      * @param marks
      */
-    void setMarks(List<Mark> marks) ;
+    void setMarks(List<IMark> marks) ;
 
     /**
      * returns a list of professors in the system
      * @return list of marks
      */
-    List<Professor> getProfessors() ;
+    List<IProfessor> getProfessors() ;
 
     /**
      * sets professor collection
      * @param professors
      */
-    void setProfessors(List<Professor> professors);
+    void setProfessors(List<IProfessor> professors);
 }

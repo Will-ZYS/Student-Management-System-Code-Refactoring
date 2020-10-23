@@ -1,7 +1,7 @@
 package com.softeng306.Database;
 
-import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,23 +15,23 @@ public class Database implements IDatabase {
     /**
      * An list of all the students in this school.
      */
-    public List<Student> students = new ArrayList<Student>(0);
+    public List<IStudent> students = new ArrayList<>(0);
     /**
      * An list of all the courses in this school.
      */
-    public List<Course> courses = new ArrayList<Course>(0);
+    public List<ICourse> courses = new ArrayList<>(0);
     /**
      * An list of all the course registration records in this school.
      */
-    public List<CourseRegistration> courseRegistrations = new ArrayList<CourseRegistration>(0);
+    public List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
     /**
      * An list of all the student mark records in this school.
      */
-    public List<Mark> marks = new ArrayList<Mark>(0);
+    public List<IMark> marks = new ArrayList<>(0);
     /**
      * An list of all the professors in this school.
      */
-    public List<Professor> professors = new ArrayList<Professor>(0);
+    public List<IProfessor> professors = new ArrayList<>(0);
 
     /**
      * default constructor for database
@@ -50,7 +50,7 @@ public class Database implements IDatabase {
      * returns a list of Students in the system
      * @return list of students
      */
-    public List<Student> getStudents() {
+    public List<IStudent> getStudents() {
         return students;
     }
 
@@ -58,7 +58,7 @@ public class Database implements IDatabase {
      * sets student collection
      * @param students
      */
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<IStudent> students) {
         this.students = students;
     }
 
@@ -66,7 +66,7 @@ public class Database implements IDatabase {
      * returns a list of courses in the system
      * @return list of courses
      */
-    public List<Course> getCourses() {
+    public List<ICourse> getCourses() {
         return courses;
     }
 
@@ -74,7 +74,7 @@ public class Database implements IDatabase {
      * sets course collection
      * @param courses
      */
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<ICourse> courses) {
         this.courses = courses;
     }
 
@@ -82,7 +82,7 @@ public class Database implements IDatabase {
      * returns a list of course registrations in the system
      * @return list of course registrations
      */
-    public List<CourseRegistration> getCourseRegistrations() {
+    public List<ICourseRegistration> getCourseRegistrations() {
         return courseRegistrations;
     }
 
@@ -90,7 +90,7 @@ public class Database implements IDatabase {
      * sets courseRegistrations collection
      * @param courseRegistrations
      */
-    public void setCourseRegistrations(List<CourseRegistration> courseRegistrations) {
+    public void setCourseRegistrations(List<ICourseRegistration> courseRegistrations) {
         this.courseRegistrations = courseRegistrations;
     }
 
@@ -98,7 +98,7 @@ public class Database implements IDatabase {
      * returns a list of marks in the system
      * @return list of marks
      */
-    public List<Mark> getMarks() {
+    public List<IMark> getMarks() {
         return marks;
     }
 
@@ -106,7 +106,7 @@ public class Database implements IDatabase {
      * sets marks collection
      * @param marks
      */
-    public void setMarks(List<Mark> marks) {
+    public void setMarks(List<IMark> marks) {
         this.marks = marks;
     }
 
@@ -114,7 +114,7 @@ public class Database implements IDatabase {
      * returns a list of professors in the system
      * @return list of marks
      */
-    public List<Professor> getProfessors() {
+    public List<IProfessor> getProfessors() {
         return professors;
     }
 
@@ -122,7 +122,7 @@ public class Database implements IDatabase {
      * sets professor collection
      * @param professors
      */
-    public void setProfessors(List<Professor> professors) {
+    public void setProfessors(List<IProfessor> professors) {
         this.professors = professors;
     }
 

@@ -1,9 +1,9 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Professor;
-import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 public interface IValidationMgr {
 
@@ -69,19 +69,19 @@ public interface IValidationMgr {
      * @param studentID This student's ID.
      * @return the existing student or else null.
      */
-    Student checkStudentExists(String studentID);
+    IStudent checkStudentExists(String studentID);
 
     /**
      * Prompts the user to input an existing student.
      * @return the inputted student.
      */
-    Student checkStudentExists();
+    IStudent checkStudentExists();
 
     /**
      * Prompts the user to input an existing course.
      * @return the inputted course.
      */
-    Course checkCourseExists();
+    ICourse checkCourseExists();
 
     /**
      * Prompts the user to input an existing department.
@@ -94,14 +94,14 @@ public interface IValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course or else null.
      */
-    Course checkCourseExists(String courseID);
+    ICourse checkCourseExists(String courseID);
 
     /**
      * Checks whether this professor ID is used by other professors.
      * @param profID The inputted professor ID.
      * @return the existing professor or else null.
      */
-    Professor checkProfExists(String profID);
+    IProfessor checkProfExists(String profID);
 
     /**
      * Checks whether this course registration record exists.
@@ -109,5 +109,5 @@ public interface IValidationMgr {
      * @param courseID The inputted course ID.
      * @return the existing course registration record or else null.
      */
-    CourseRegistration checkCourseRegistrationExists(String studentID, String courseID);
+    ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID);
 }

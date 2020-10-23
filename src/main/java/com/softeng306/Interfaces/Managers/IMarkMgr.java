@@ -1,8 +1,8 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.Mark;
-import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public interface IMarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    Mark initializeMark(Student student, Course course);
+    IMark initializeMark(IStudent student, ICourse course);
 
     /**
      * Sets the coursework mark for the mark record.
@@ -28,7 +28,7 @@ public interface IMarkMgr {
      * @param thisComponentName the component name interested.
      * @return the sum of component marks
      */
-    double computeMark(ArrayList<Mark> thisCourseMark, String thisComponentName);
+    double computeMark(ArrayList<IMark> thisCourseMark, String thisComponentName);
 
     /**
      * Computes the gpa gained for this course from the result of this course.
