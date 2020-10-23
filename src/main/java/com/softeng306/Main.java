@@ -8,6 +8,11 @@ import com.softeng306.Interfaces.Managers.*;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.*;
 import com.softeng306.Utils.Printer;
+import com.softeng306.Interfaces.Entity.*;
+import com.softeng306.Managers.CourseMgr;
+import com.softeng306.Managers.CourseRegistrationMgr;
+import com.softeng306.Managers.MarkMgr;
+import com.softeng306.Managers.StudentMgr;
 
 import java.util.ArrayList;
 import java.util.Scanner;

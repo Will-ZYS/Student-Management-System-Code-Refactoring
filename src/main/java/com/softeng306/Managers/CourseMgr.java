@@ -1,6 +1,5 @@
 package com.softeng306.Managers;
 
-
 import com.softeng306.*;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
@@ -11,11 +10,14 @@ import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
-
 
 public class CourseMgr implements ICourseMgr {
 
@@ -154,7 +156,7 @@ public class CourseMgr implements ICourseMgr {
         }
 
 
-        ArrayList<LectureGroup> lectureGroups = new ArrayList<LectureGroup>();
+        ArrayList<IGroup> lectureGroups = new ArrayList<>();
         String lectureGroupName;
         int lectureGroupCapacity;
         seatsLeft = totalSeats;
@@ -171,7 +173,7 @@ public class CourseMgr implements ICourseMgr {
                 if (lectureGroups.size() == 0) {
                     break;
                 }
-                for (LectureGroup lectureGroup : lectureGroups) {
+                for (IGroup lectureGroup : lectureGroups) {
                     if (lectureGroup.getGroupName().equals(lectureGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lecture group already exist for this course.");
@@ -197,7 +199,7 @@ public class CourseMgr implements ICourseMgr {
                 } while (true);
                 seatsLeft -= lectureGroupCapacity;
                 if ((seatsLeft > 0 && i != (noOfLectureGroups - 1)) || (seatsLeft == 0 && i == noOfLectureGroups - 1)) {
-                    LectureGroup lectureGroup = new LectureGroup(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
+                    IGroup lectureGroup = new Group(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
 
                     lectureGroups.add(lectureGroup);
                     break;
@@ -246,7 +248,7 @@ public class CourseMgr implements ICourseMgr {
             }
         }
 
-        ArrayList<TutorialGroup> tutorialGroups = new ArrayList<TutorialGroup>();
+        ArrayList<IGroup> tutorialGroups = new ArrayList<>();
         String tutorialGroupName;
         int tutorialGroupCapacity;
         for (int i = 0; i < noOfTutorialGroups; i++) {
@@ -262,7 +264,7 @@ public class CourseMgr implements ICourseMgr {
                 if (tutorialGroups.size() == 0) {
                     break;
                 }
-                for (TutorialGroup tutorialGroup : tutorialGroups) {
+                for (IGroup tutorialGroup : tutorialGroups) {
                     if (tutorialGroup.getGroupName().equals(tutorialGroupName)) {
                         groupNameExists = true;
                         System.out.println("This tutorial group already exist for this course.");
@@ -278,7 +280,7 @@ public class CourseMgr implements ICourseMgr {
                     scanner.nextLine();
                     totalTutorialSeats += tutorialGroupCapacity;
                     if ((i != noOfTutorialGroups - 1) || (totalTutorialSeats >= totalSeats)) {
-                        TutorialGroup tutorialGroup = new TutorialGroup(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
+                        IGroup tutorialGroup = new Group(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
                         tutorialGroups.add(tutorialGroup);
                         break;
                     } else {
@@ -329,7 +331,7 @@ public class CourseMgr implements ICourseMgr {
             }
         }
 
-        ArrayList<LabGroup> labGroups = new ArrayList<LabGroup>();
+        ArrayList<IGroup> labGroups = new ArrayList<>();
         String labGroupName;
         int labGroupCapacity;
         for (int i = 0; i < noOfLabGroups; i++) {
@@ -345,7 +347,7 @@ public class CourseMgr implements ICourseMgr {
                 if (labGroups.size() == 0) {
                     break;
                 }
-                for (LabGroup labGroup : labGroups) {
+                for (IGroup labGroup : labGroups) {
                     if (labGroup.getGroupName().equals(labGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lab group already exist for this course.");
@@ -360,7 +362,7 @@ public class CourseMgr implements ICourseMgr {
                 scanner.nextLine();
                 totalLabSeats += labGroupCapacity;
                 if ((i != noOfLabGroups - 1) || (totalLabSeats >= totalSeats)) {
-                    LabGroup labGroup = new LabGroup(labGroupName, labGroupCapacity, labGroupCapacity);
+                    IGroup labGroup = new Group(labGroupName, labGroupCapacity, labGroupCapacity);
                     labGroups.add(labGroup);
                     break;
                 } else {
@@ -371,7 +373,7 @@ public class CourseMgr implements ICourseMgr {
             } while (true);
         }
 
-        Professor profInCharge;
+        IProfessor profInCharge;
         List<String> professorsInDepartment = new ArrayList<String>(0);
         professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
         while (true) {
@@ -399,7 +401,7 @@ public class CourseMgr implements ICourseMgr {
         }
 
 
-        Course course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
+        ICourse course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
 
 
         System.out.println("Create course components and set component weightage now?");
@@ -441,25 +443,25 @@ public class CourseMgr implements ICourseMgr {
     public void checkAvailableSlots() {
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
-        Course currentCourse;
+        ICourse currentCourse;
 
         do {
             currentCourse = validationMgr.checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
-                for (LectureGroup lectureGroup : currentCourse.getLectureGroups()) {
+                for (IGroup lectureGroup : currentCourse.getLectureGroups()) {
                     System.out.println("Lecture group " + lectureGroup.getGroupName() + " (Available/Total): " + lectureGroup.getAvailableVacancies() + "/" + lectureGroup.getTotalSeats());
                 }
                 if (currentCourse.getTutorialGroups() != null) {
                     System.out.println();
-                    for (TutorialGroup tutorialGroup : currentCourse.getTutorialGroups()) {
+                    for (IGroup tutorialGroup : currentCourse.getTutorialGroups()) {
                         System.out.println("Tutorial group " + tutorialGroup.getGroupName() + " (Available/Total):  " + tutorialGroup.getAvailableVacancies() + "/" + tutorialGroup.getTotalSeats());
                     }
                 }
                 if (currentCourse.getLabGroups() != null) {
                     System.out.println();
-                    for (LabGroup labGroup : currentCourse.getLabGroups()) {
+                    for (IGroup labGroup : currentCourse.getLabGroups()) {
                         System.out.println("Lab group " + labGroup.getGroupName() + " (Available/Total): " + labGroup.getAvailableVacancies() + "/" + labGroup.getTotalSeats());
                     }
                 }
@@ -477,7 +479,8 @@ public class CourseMgr implements ICourseMgr {
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    public void enterCourseWorkComponentWeightage(Course currentCourse) {
+    public void enterCourseWorkComponentWeightage(ICourse currentCourse) {
+
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
         int numberOfMain;
@@ -491,7 +494,7 @@ public class CourseMgr implements ICourseMgr {
         }
 
 
-        ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+        ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
         // Check if mainComponent is empty
         if (currentCourse.getMainComponents().size() == 0) {
             // empty course
@@ -517,7 +520,7 @@ public class CourseMgr implements ICourseMgr {
                         examWeight = scanner.nextInt();
                         scanner.nextLine();
                     }
-                    MainComponent exam = new MainComponent("Exam", examWeight, new ArrayList<SubComponent>(0));
+                    ICourseworkComponent exam = new MainComponent("Exam", examWeight, new ArrayList<>(0));
                     mainComponents.add(exam);
                     break;
                 } else if (hasFinalExamChoice == 2) {
@@ -548,7 +551,7 @@ public class CourseMgr implements ICourseMgr {
             do {
                 int totalWeightage = 100 - examWeight;
                 for (int i = 0; i < numberOfMain; i++) {
-                    ArrayList<SubComponent> subComponents = new ArrayList<SubComponent>(0);
+                    ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
                     do {
                         componentExist = false;
                         System.out.println("Total weightage left to assign: " + totalWeightage);
@@ -563,7 +566,7 @@ public class CourseMgr implements ICourseMgr {
                             componentExist = true;
                             continue;
                         }
-                        for (MainComponent mainComponent : mainComponents) {
+                        for (ICourseworkComponent mainComponent : mainComponents) {
                             if (mainComponent.getComponentName().equals(mainComponentName)) {
                                 componentExist = true;
                                 System.out.println("This sub component already exist. Please enter.");
@@ -624,7 +627,7 @@ public class CourseMgr implements ICourseMgr {
                                     componentExist = true;
                                     continue;
                                 }
-                                for (SubComponent subComponent : subComponents) {
+                                for (ICourseworkComponent subComponent : subComponents) {
                                     if (subComponent.getComponentName().equals(subComponentName)) {
                                         componentExist = true;
                                         System.out.println("This sub component already exist. Please enter.");
@@ -652,7 +655,7 @@ public class CourseMgr implements ICourseMgr {
 
                             //Create Subcomponent
 
-                            SubComponent sub = new SubComponent(subComponentName, sub_weight);
+                            ICourseworkComponent sub = new SubComponent(subComponentName, sub_weight);
                             subComponents.add(sub);
                             sub_totWeight -= sub_weight;
                         }
@@ -667,7 +670,7 @@ public class CourseMgr implements ICourseMgr {
                         //exit if weight is fully allocated
                     }
                     //Create main component
-                    MainComponent main = new MainComponent(mainComponentName, weight, subComponents);
+                    ICourseworkComponent main = new MainComponent(mainComponentName, weight, subComponents);
                     mainComponents.add(main);
                 }
 
@@ -689,9 +692,9 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Course Assessment has been settled already!");
         }
         System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " components: ");
-        for (MainComponent each_comp : currentCourse.getMainComponents()) {
+        for (ICourseworkComponent each_comp : currentCourse.getMainComponents()) {
             System.out.println("    " + each_comp.getComponentName() + " : " + each_comp.getComponentWeight() + "%");
-            for (SubComponent each_sub : each_comp.getSubComponents()) {
+            for (ICourseworkComponent each_sub : each_comp.getSubComponents()) {
                 System.out.println("        " + each_sub.getComponentName() + " : " + each_sub.getComponentWeight() + "%");
             }
         }
@@ -702,6 +705,7 @@ public class CourseMgr implements ICourseMgr {
      * Get the instance of the CourseMgr class.
      * @return the singleton instance.
      */
+
     public static CourseMgr getInstance() {
         if (instance == null) {
             instance = new CourseMgr();

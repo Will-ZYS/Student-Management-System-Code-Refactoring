@@ -1,14 +1,18 @@
 package com.softeng306.Managers;
 
-
 import com.softeng306.*;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
@@ -32,21 +36,22 @@ public class MarkMgr implements IMarkMgr {
      * @param course the course this mark record about.
      * @return the new added mark.
      */
-    public Mark initializeMark(Student student, Course course) {
-        HashMap<CourseworkComponent, Double> courseWorkMarks = new HashMap<CourseworkComponent, Double>();
+    public Mark initializeMark(IStudent student, ICourse course) {
+        HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
         double totalMark = 0d;
-        ArrayList<MainComponent> mainComponents = course.getMainComponents();
+        ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
 
-        for (MainComponent mainComponent : mainComponents) {
+        for (ICourseworkComponent mainComponent : mainComponents) {
             courseWorkMarks.put(mainComponent, 0d);
             if (mainComponent.getSubComponents().size() > 0) {
-                for (SubComponent subComponent : mainComponent.getSubComponents()) {
+                for (ICourseworkComponent subComponent : mainComponent.getSubComponents()) {
                     courseWorkMarks.put(subComponent, 0d);
                 }
             }
         }
-        Mark mark = new Mark(student, course, courseWorkMarks, totalMark);
+        IMark mark = new Mark(student, course, courseWorkMarks, totalMark);
         //TODO FILEMGR AGAIN
+
         FILEMgr.updateStudentMarks(mark);
         return mark;
     }
@@ -61,7 +66,8 @@ public class MarkMgr implements IMarkMgr {
         String studentID = validationMgr.checkStudentExists().getStudentID();
         String courseID = validationMgr.checkCourseExists().getCourseID();
 
-        for(Mark mark: database.getMarks()) {
+
+        for(IMark mark: database.getMarks()) {
             if (mark.getCourse().getCourseID().equals(courseID) && mark.getStudent().getStudentID().equals(studentID)) {
                 //put the set mark function here
                 if (!isExam) {
@@ -69,15 +75,15 @@ public class MarkMgr implements IMarkMgr {
                     ArrayList<String> availableChoices = new ArrayList<String>(0);
                     ArrayList<Double> weights = new ArrayList<Double>(0);
                     ArrayList<Boolean> isMainAss = new ArrayList<Boolean>(0);
-                    for (HashMap.Entry<CourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
-                        CourseworkComponent key = assessmentResult.getKey();
+                    for (Map.Entry<ICourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
+                        ICourseworkComponent key = assessmentResult.getKey();
                         if (key instanceof MainComponent) {
-                            if ((!key.getComponentName().equals("Exam")) && ((MainComponent) key).getSubComponents().size() == 0) {
+                            if ((!key.getComponentName().equals("Exam")) && key.getSubComponents().size() == 0) {
                                 availableChoices.add(key.getComponentName());
                                 weights.add((double)key.getComponentWeight());
                                 isMainAss.add(true);
                             } else {
-                                for (SubComponent subComponent : ((MainComponent) key).getSubComponents()) {
+                                for (ICourseworkComponent subComponent : key.getSubComponents()) {
                                     availableChoices.add(key.getComponentName() + "-" + subComponent.getComponentName());
                                     weights.add((double)key.getComponentWeight() * (double)subComponent.getComponentWeight() / 100d);
                                     isMainAss.add(false);
@@ -155,12 +161,13 @@ public class MarkMgr implements IMarkMgr {
      * @param thisComponentName the component name interested.
      * @return the sum of component marks
      */
-    public double computeMark(ArrayList<Mark> thisCourseMark, String thisComponentName){
+    public double computeMark(ArrayList<IMark> thisCourseMark, String thisComponentName){
+
         double averageMark = 0;
-        for (Mark mark : thisCourseMark) {
-            HashMap<CourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
-            for (HashMap.Entry<CourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
-                CourseworkComponent key = entry.getKey();
+        for (IMark mark : thisCourseMark) {
+            HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+            for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
+                ICourseworkComponent key = entry.getKey();
                 double value = entry.getValue();
                 if (key.getComponentName().equals(thisComponentName)) {
                     averageMark += value;
@@ -170,9 +177,6 @@ public class MarkMgr implements IMarkMgr {
         }
         return averageMark;
     }
-
-
-
 
     /**
      * Computes the gpa gained for this course from the result of this course.

@@ -11,13 +11,16 @@ import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
+import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
 import static com.softeng306.Entity.CourseRegistration.LabComparator;
 import static com.softeng306.Entity.CourseRegistration.LecComparator;
 import static com.softeng306.Entity.CourseRegistration.TutComparator;
-
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
@@ -41,12 +44,14 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = validationMgr.checkStudentExists();
+        IStudent currentStudent = ValidationMgr.checkStudentExists();
+
         String studentID = currentStudent.getStudentID();
 
         validationMgr.checkCourseDepartmentExists();
 
-        Course currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = ValidationMgr.checkCourseExists();
+
         String courseID = currentCourse.getCourseID();
 
 
@@ -67,24 +72,26 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         System.out.println("Student " + currentStudent.getStudentName() + " with ID: " + currentStudent.getStudentID() +
                 " wants to register " + currentCourse.getCourseID() + " " + currentCourse.getCourseName());
 
-        ArrayList<Group> lecGroups = new ArrayList<>(0);
+        ArrayList<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
         selectedLectureGroupName = printer.printGroupWithVacancyInfo("lecture", lecGroups);
 
-        ArrayList<Group> tutGroups = new ArrayList<>(0);
+        ArrayList<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
         selectedTutorialGroupName = printer.printGroupWithVacancyInfo("tutorial", tutGroups);
 
-        ArrayList<Group> labGroups = new ArrayList<>(0);
+        ArrayList<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
         selectedLabGroupName = printer.printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
-        CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
-        // TOOD FILEMGR AGAIN
+
+        ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
+        // TODO FILEMGR AGAIN
+
         FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
         database.getCourseRegistrations().add(courseRegistration);
@@ -107,6 +114,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      * get the instance of the CourseRegistrationMgr class
      * @return the singleton instance
      */
+
     public static CourseRegistrationMgr getInstance() {
         if (instance == null) {
             instance = new CourseRegistrationMgr();

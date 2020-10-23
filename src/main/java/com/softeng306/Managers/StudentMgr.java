@@ -1,6 +1,5 @@
 package com.softeng306.Managers;
 
-
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
@@ -8,6 +7,8 @@ import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Interfaces.Entity.IStudent;
+
 import com.softeng306.Main;
 import com.softeng306.Entity.Student;
 import com.softeng306.Utils.Printer;
@@ -22,12 +23,19 @@ import java.util.Scanner;
 
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
+
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
+  
+    /**
+     * Uses idNumber to generate student ID.
+     */
+    private static int idNumber = 1800000;
+
 
 
     /**
@@ -39,7 +47,7 @@ public class StudentMgr implements IStudentMgr {
         int choice, studentYear;
         boolean studentExists;
         String GPA = "not available";
-        Student currentStudent = null;
+        IStudent currentStudent = null;
         System.out.println("addStudent is called");
         System.out.println("Choose the way you want to add a student:");
         System.out.println("1. Manually input the student ID.");
@@ -152,7 +160,9 @@ public class StudentMgr implements IStudentMgr {
 
         System.out.println("Student List: ");
         System.out.println("| Student ID | Student Name | Student School | Gender | Year | GPA |");
-        for (Student student : database.getStudents()) {
+
+        for (IStudent student : database.getStudents()) {
+
             if (Double.compare(student.getGPA(), 0.0) != 0) {
                 GPA = String.valueOf(student.getGPA());
             }
@@ -170,5 +180,39 @@ public class StudentMgr implements IStudentMgr {
             instance = new StudentMgr();
         }
         return instance;
+    }
+  
+     /**
+     * Generates the ID of a new student.
+     * @return the generated student ID.
+     */
+    public static String generateStudentID() {
+        String generateStudentID;
+        boolean studentIDUsed;
+        do{
+            int rand = (int)(Math.random() * ((76 - 65) + 1)) + 65;
+            String lastPlace = Character.toString ((char) rand);
+            idNumber += 1;
+            generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
+            studentIDUsed = false;
+            for(IStudent student: Main.students){
+                if(generateStudentID.equals(student.getStudentID())){
+                    studentIDUsed = true;
+                    break;
+                }
+            }
+            if(!studentIDUsed){
+                break;
+            }
+        }while(true);
+        return generateStudentID;
+    }
+
+    /**
+     * Sets the idNumber variable of this student class.
+     * @param idNumber static variable idNumber of this class.
+     */
+    public static void setIdNumber(int idNumber) {
+        idNumber = idNumber;
     }
 }

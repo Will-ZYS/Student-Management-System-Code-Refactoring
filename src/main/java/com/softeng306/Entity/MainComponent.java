@@ -1,5 +1,7 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ public class MainComponent extends CourseworkComponent {
     /**
      * This main component's sub components.
      */
-    private ArrayList<SubComponent> subComponents;
+    private ArrayList<ICourseworkComponent> subComponents;
 
     /**
      * Creates a main component with component name, component weightage and sub components.
@@ -21,7 +23,7 @@ public class MainComponent extends CourseworkComponent {
      * @param componentWeight the componentWeight of the assessment component
      * @param subComponents the sub components of the assessment component
      */
-    public MainComponent(String componentName, int componentWeight, ArrayList<SubComponent> subComponents) {
+    public MainComponent(String componentName, int componentWeight, ArrayList<ICourseworkComponent> subComponents) {
         super(componentName, componentWeight);
         this.subComponents = subComponents;
     }
@@ -30,17 +32,8 @@ public class MainComponent extends CourseworkComponent {
      * Gets the sub components of this main component.
      * @return the sub components of this main component.
      */
-    public ArrayList<SubComponent> getSubComponents() {
+    @Override
+    public ArrayList<ICourseworkComponent> getSubComponents() {
         return this.subComponents;
     }
-
-    /**
-     * Prints the course component type (main component or sub component).
-     * Implements the abstract method {@code printComponentType} in {@code CourseworkComponent}.
-     */
-    public void printComponentType() {
-        System.out.println("This is a main-component.");
-        System.out.println("There are " + this.subComponents.size() + " sub-components inside");
-    }
-
 }

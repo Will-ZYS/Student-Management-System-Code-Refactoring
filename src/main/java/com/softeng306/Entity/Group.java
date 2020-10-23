@@ -1,5 +1,7 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.IGroup;
+
 /**
  * Represents study groups (LectureGroup, TutorialGroup and LabGroup) for a course.
  * A course must have at least one lecture group.
@@ -8,7 +10,7 @@ package com.softeng306.Entity;
 
  */
 
-public class Group {
+public class Group implements IGroup {
     /**
      * The name of this group.
      */
