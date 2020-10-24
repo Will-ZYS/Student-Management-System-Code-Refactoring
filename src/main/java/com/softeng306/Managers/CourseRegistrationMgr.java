@@ -1,41 +1,56 @@
 package com.softeng306.Managers;
 
-import com.softeng306.*;
-import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.Course;
-import com.softeng306.Entity.CourseRegistration;
-import com.softeng306.Entity.Group;
-import com.softeng306.Entity.Student;
+import com.softeng306.Database.CourseRegistrationFileMgr;
+import com.softeng306.Database.Database;
+import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
+import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IMarkMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Utils.Printer;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseRegistration;
+import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
 
-import static com.softeng306.Entity.CourseRegistration.LabComparator;
-import static com.softeng306.Entity.CourseRegistration.LecComparator;
-import static com.softeng306.Entity.CourseRegistration.TutComparator;
+public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
+    private static CourseRegistrationMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IMarkMgr markMgr = MarkMgr.getInstance();
 
-public class CourseRegistrationMgr {
+    private IDatabase database = Database.getInstance();
+    private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
+
     private static Scanner scanner = new Scanner(System.in);
 
     /**
      * Registers a course for a student
      */
-    public static void registerCourse() {
+    public void registerCourse() {
         System.out.println("registerCourse is called");
         String selectedLectureGroupName = null;
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        Student currentStudent = ValidationMgr.checkStudentExists();
+        IStudent currentStudent = validationMgr.checkStudentExists();
+
         String studentID = currentStudent.getStudentID();
 
-        ValidationMgr.checkCourseDepartmentExists();
+        validationMgr.checkCourseDepartmentExists();
 
-        Course currentCourse = ValidationMgr.checkCourseExists();
+        ICourse currentCourse = validationMgr.checkCourseExists();
+
         String courseID = currentCourse.getCourseID();
 
-
-        if (ValidationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
+        if (validationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
         }
 
@@ -52,28 +67,31 @@ public class CourseRegistrationMgr {
         System.out.println("Student " + currentStudent.getStudentName() + " with ID: " + currentStudent.getStudentID() +
                 " wants to register " + currentCourse.getCourseID() + " " + currentCourse.getCourseName());
 
-        ArrayList<Group> lecGroups = new ArrayList<>(0);
+        ArrayList<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
-        selectedLectureGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lecture", lecGroups);
+        selectedLectureGroupName = printer.printGroupWithVacancyInfo("lecture", lecGroups);
 
-        ArrayList<Group> tutGroups = new ArrayList<>(0);
+        ArrayList<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
-        selectedTutorialGroupName = HelpInfoMgr.printGroupWithVacancyInfo("tutorial", tutGroups);
+        selectedTutorialGroupName = printer.printGroupWithVacancyInfo("tutorial", tutGroups);
 
-        ArrayList<Group> labGroups = new ArrayList<>(0);
+        ArrayList<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
-        selectedLabGroupName = HelpInfoMgr.printGroupWithVacancyInfo("lab", labGroups);
+        selectedLabGroupName = printer.printGroupWithVacancyInfo("lab", labGroups);
 
         currentCourse.enrolledIn();
-        CourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
-        FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
-        Main.courseRegistrations.add(courseRegistration);
+        ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
+        // TODO FILEMGR AGAIN
 
-        Main.marks.add(MarkMgr.initializeMark(currentStudent, currentCourse));
+        courseRegistrationFileMgr.writeCourseRegistrationIntoFile(courseRegistration);
+
+        database.getCourseRegistrations().add(courseRegistration);
+
+        database.getMarks().add(markMgr.initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());
@@ -88,98 +106,14 @@ public class CourseRegistrationMgr {
     }
 
     /**
-     * Prints the students in a course according to their lecture group, tutorial group or lab group.
+     * get the instance of the CourseRegistrationMgr class
+     * @return the singleton instance
      */
-    public static void printStudents() {
-        System.out.println("printStudent is called");
-        Course currentCourse = ValidationMgr.checkCourseExists();
 
-        System.out.println("Print student by: ");
-        System.out.println("(1) Lecture group");
-        System.out.println("(2) Tutorial group");
-        System.out.println("(3) Lab group");
-        // READ courseRegistrationFILE
-        // return ArrayList of Object(student,course,lecture,tut,lab)
-        ArrayList<CourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
-
-
-        ArrayList<CourseRegistration> stuArray = new ArrayList<CourseRegistration>(0);
-        for (CourseRegistration courseRegistration : allStuArray) {
-            if (courseRegistration.getCourse().getCourseID().equals(currentCourse.getCourseID())) {
-                stuArray.add(courseRegistration);
-            }
+    public static CourseRegistrationMgr getInstance() {
+        if (instance == null) {
+            instance = new CourseRegistrationMgr();
         }
-
-
-        int opt;
-        do {
-            opt = scanner.nextInt();
-            scanner.nextLine();
-
-            System.out.println("------------------------------------------------------");
-
-            if (stuArray.size() == 0) {
-                System.out.println("No one has registered this course yet.");
-            }
-
-            if (opt == 1) { // print by LECTURE
-                String newLec = "";
-                Collections.sort(stuArray, LecComparator);   // Sort by Lecture group
-                if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {  // loop through all of CourseRegistration Obj
-                        if (!newLec.equals(stuArray.get(i).getLectureGroup())) {  // if new lecture group print out group name
-                            newLec = stuArray.get(i).getLectureGroup();
-                            System.out.println("Lecture group : " + newLec);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
-
-            } else if (opt == 2) { // print by TUTORIAL
-                String newTut = "";
-                Collections.sort(stuArray, TutComparator);
-                if (stuArray.size() > 0 && stuArray.get(0).getCourse().getTutorialGroups().size() == 0) {
-                    System.out.println("This course does not contain any tutorial group.");
-                } else if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {
-                        if (!newTut.equals(stuArray.get(i).getTutorialGroup())) {
-                            newTut = stuArray.get(i).getTutorialGroup();
-                            System.out.println("Tutorial group : " + newTut);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
-            } else if (opt == 3) { // print by LAB
-                String newLab = "";
-                Collections.sort(stuArray, LabComparator);
-                if (stuArray.size() > 0 && stuArray.get(0).getCourse().getLabGroups().size() == 0) {
-                    System.out.println("This course does not contain any lab group.");
-                } else if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {
-                        if (!newLab.equals(stuArray.get(i).getLabGroup())) {
-                            newLab = stuArray.get(i).getLabGroup();
-                            System.out.println("Lab group : " + newLab);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
-            } else {
-                System.out.println("Invalid input. Please re-enter.");
-            }
-            System.out.println("------------------------------------------------------");
-        } while (opt < 1 || opt > 3);
-
-
+        return instance;
     }
-
-
 }

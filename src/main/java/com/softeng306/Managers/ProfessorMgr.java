@@ -2,6 +2,11 @@ package com.softeng306.Managers;
 
 import com.softeng306.Entity.Professor;
 
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Entity.IProfessor;
+
 import java.util.Scanner;
 
 /**
@@ -9,21 +14,25 @@ import java.util.Scanner;
  *
 
  */
-public class ProfessorMgr {
+public class ProfessorMgr implements IProfessorMgr {
+    private static ProfessorMgr instance = null;
     private Scanner scanner = new Scanner(System.in);
+
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
     /**
      * Adds a professor.
      *
      * @return a newly added professor
      */
-    public Professor addProfessor() {
+    public IProfessor addProfessor() {
         String department, profID;
         while (true) {
             System.out.println("Give this professor an ID: ");
             profID = scanner.nextLine();
-            if (ValidationMgr.checkValidProfIDInput(profID)) {
-                if (ValidationMgr.checkProfExists(profID) == null) {
+            if (validationMgr.checkValidProfIDInput(profID)) {
+                if (validationMgr.checkProfExists(profID) == null) {
                     break;
                 }
             }
@@ -33,22 +42,22 @@ public class ProfessorMgr {
         while (true) {
             System.out.println("Enter the professor's name: ");
             profName = scanner.nextLine();
-            if (ValidationMgr.checkValidPersonNameInput(profName)) {
+            if (validationMgr.checkValidPersonNameInput(profName)) {
                 break;
             }
         }
 
-        Professor professor = new Professor(profID, profName);
+        IProfessor professor = new Professor(profID, profName);
         while (true) {
             System.out.println("Enter professor's Department: ");
             System.out.println("Enter -h to print all the departments.");
             department = scanner.nextLine();
             while (department.equals("-h")) {
-                HelpInfoMgr.getAllDepartment();
+                helpInfoMgr.getAllDepartment();
                 department = scanner.nextLine();
             }
 
-            if (ValidationMgr.checkDepartmentValidation(department)) {
+            if (validationMgr.checkDepartmentValidation(department)) {
                 professor.setProfDepartment(department);
                 break;
             }
@@ -58,4 +67,14 @@ public class ProfessorMgr {
         return professor;
     }
 
+    /**
+     * get the instance of the ProfessorMgr class
+     * @return the singleton instance
+     */
+    public static ProfessorMgr getInstance() {
+        if (instance == null) {
+            instance = new ProfessorMgr();
+        }
+        return instance;
+    }
 }

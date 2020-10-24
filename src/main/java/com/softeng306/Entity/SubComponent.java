@@ -1,5 +1,9 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+
+import java.util.ArrayList;
+
 /**
  * Represents a sub-component of a main component.
  * A main component can have many or no sub-components.
@@ -18,10 +22,8 @@ public class SubComponent extends CourseworkComponent {
         super(componentName, componentWeight);
     }
 
-    /**
-     * Displays the type of this component, which is a sub-component.
-     */
-    public void printComponentType() {
-        System.out.println("This is a sub-component.");
+    @Override
+    public ArrayList<ICourseworkComponent> getSubComponents() {
+        return new ArrayList<>();
     }
 }

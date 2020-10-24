@@ -1,6 +1,10 @@
 package com.softeng306.Entity;
 
+import com.softeng306.Database.Database;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Main;
+import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Managers.StudentMgr;
 
 /**
  * Represents a student enrolled in a school.
@@ -9,12 +13,9 @@ import com.softeng306.Main;
 
  */
 
-public class Student {
+public class Student implements IStudent {
 
-    /**
-     * Uses idNumber to generate student ID.
-     */
-    private static int idNumber = 1800000;
+    private static IDatabase database = Database.getInstance();
 
     /**
      * The ID of this student.
@@ -54,7 +55,8 @@ public class Student {
      */
     public Student(String studentName) {
         this.studentName = studentName;
-        this.studentID = generateStudentID();
+        StudentMgr studentMgr = StudentMgr.getInstance();
+        this.studentID = studentMgr.generateStudentID();
     }
 
     /**
@@ -116,20 +118,10 @@ public class Student {
     }
 
     /**
-     * Sets the idNumber variable of this student class.
-     * @param idNumber static variable idNumber of this class.
-     */
-    public static void setIdNumber(int idNumber) {
-        Student.idNumber = idNumber;
-    }
-
-    /**
      * Sets the ID of this student.
      * @param studentID this student's ID.
      */
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
+    public void setStudentID(String studentID) { this.studentID = studentID; }
 
     /**
      * Sets the school of this student.
@@ -161,31 +153,5 @@ public class Student {
      */
     public void  setStudentYear(int studentYear){
         this.studentYear = studentYear;
-    }
-
-    /**
-     * Generates the ID of a new student.
-     * @return the generated student ID.
-     */
-    private String generateStudentID() {
-        String generateStudentID;
-        boolean studentIDUsed;
-        do{
-            int rand = (int)(Math.random() * ((76 - 65) + 1)) + 65;
-            String lastPlace = Character.toString ((char) rand);
-            idNumber += 1;
-            generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
-            studentIDUsed = false;
-            for(Student student: Main.students){
-                if(generateStudentID.equals(student.getStudentID())){
-                    studentIDUsed = true;
-                    break;
-                }
-            }
-            if(!studentIDUsed){
-                break;
-            }
-        }while(true);
-        return generateStudentID;
     }
 }

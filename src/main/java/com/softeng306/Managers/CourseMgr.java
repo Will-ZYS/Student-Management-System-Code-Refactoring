@@ -1,16 +1,34 @@
 package com.softeng306.Managers;
 
-
-import com.softeng306.*;
-import com.softeng306.Database.FILEMgr;
+import com.softeng306.Database.CourseFileMgr;
+import com.softeng306.Database.Database;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.ICourseFileMgr;
+import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
+import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
+import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Utils.Printer;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.ICourseworkComponent;
+import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
 
+public class CourseMgr implements ICourseMgr {
 
-public class CourseMgr {
+    private static CourseMgr instance = null;
+    private static IPrinter printer = Printer.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IDatabase database = Database.getInstance();
+    private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+
+
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
     private static PrintStream dummyStream = new PrintStream(new OutputStream() {
@@ -23,7 +41,7 @@ public class CourseMgr {
     /**
      * Creates a new course and stores it in the file.
      */
-    public static void addCourse() {
+    public void addCourse() {
         String courseID;
         String courseName;
         String profID;
@@ -33,8 +51,8 @@ public class CourseMgr {
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (ValidationMgr.checkValidCourseIDInput(courseID)) {
-                if (ValidationMgr.checkCourseExists(courseID) == null) {
+            if (validationMgr.checkValidCourseIDInput(courseID)) {
+                if (validationMgr.checkCourseExists(courseID) == null) {
                     break;
                 }
             }
@@ -81,10 +99,10 @@ public class CourseMgr {
             System.out.println("Enter -h to print all the departments.");
             courseDepartment = scanner.nextLine();
             while ("-h".equals(courseDepartment)) {
-                HelpInfoMgr.printAllDepartment();
+                printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if (ValidationMgr.checkDepartmentValidation(courseDepartment)) {
+            if (validationMgr.checkDepartmentValidation(courseDepartment)) {
                 break;
             }
         }
@@ -95,10 +113,10 @@ public class CourseMgr {
             System.out.println("Enter -h to print all the course types.");
             courseType = scanner.nextLine();
             while (courseType.equals("-h")) {
-                HelpInfoMgr.printAllCourseType();
+                printer.printAllCourseType();
                 courseType = scanner.nextLine();
             }
-            if (ValidationMgr.checkCourseTypeValidation(courseType)) {
+            if (validationMgr.checkCourseTypeValidation(courseType)) {
                 break;
             }
         }
@@ -139,7 +157,7 @@ public class CourseMgr {
         }
 
 
-        ArrayList<LectureGroup> lectureGroups = new ArrayList<LectureGroup>();
+        ArrayList<IGroup> lectureGroups = new ArrayList<>();
         String lectureGroupName;
         int lectureGroupCapacity;
         seatsLeft = totalSeats;
@@ -149,14 +167,14 @@ public class CourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 lectureGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(lectureGroupName)) {
+                if (!validationMgr.checkValidGroupNameInput(lectureGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
                 if (lectureGroups.size() == 0) {
                     break;
                 }
-                for (LectureGroup lectureGroup : lectureGroups) {
+                for (IGroup lectureGroup : lectureGroups) {
                     if (lectureGroup.getGroupName().equals(lectureGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lecture group already exist for this course.");
@@ -182,7 +200,7 @@ public class CourseMgr {
                 } while (true);
                 seatsLeft -= lectureGroupCapacity;
                 if ((seatsLeft > 0 && i != (noOfLectureGroups - 1)) || (seatsLeft == 0 && i == noOfLectureGroups - 1)) {
-                    LectureGroup lectureGroup = new LectureGroup(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
+                    IGroup lectureGroup = new Group(lectureGroupName, lectureGroupCapacity, lectureGroupCapacity);
 
                     lectureGroups.add(lectureGroup);
                     break;
@@ -231,7 +249,7 @@ public class CourseMgr {
             }
         }
 
-        ArrayList<TutorialGroup> tutorialGroups = new ArrayList<TutorialGroup>();
+        ArrayList<IGroup> tutorialGroups = new ArrayList<>();
         String tutorialGroupName;
         int tutorialGroupCapacity;
         for (int i = 0; i < noOfTutorialGroups; i++) {
@@ -240,14 +258,14 @@ public class CourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 tutorialGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(tutorialGroupName)) {
+                if (!validationMgr.checkValidGroupNameInput(tutorialGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
                 if (tutorialGroups.size() == 0) {
                     break;
                 }
-                for (TutorialGroup tutorialGroup : tutorialGroups) {
+                for (IGroup tutorialGroup : tutorialGroups) {
                     if (tutorialGroup.getGroupName().equals(tutorialGroupName)) {
                         groupNameExists = true;
                         System.out.println("This tutorial group already exist for this course.");
@@ -263,7 +281,7 @@ public class CourseMgr {
                     scanner.nextLine();
                     totalTutorialSeats += tutorialGroupCapacity;
                     if ((i != noOfTutorialGroups - 1) || (totalTutorialSeats >= totalSeats)) {
-                        TutorialGroup tutorialGroup = new TutorialGroup(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
+                        IGroup tutorialGroup = new Group(tutorialGroupName, tutorialGroupCapacity, tutorialGroupCapacity);
                         tutorialGroups.add(tutorialGroup);
                         break;
                     } else {
@@ -314,7 +332,7 @@ public class CourseMgr {
             }
         }
 
-        ArrayList<LabGroup> labGroups = new ArrayList<LabGroup>();
+        ArrayList<IGroup> labGroups = new ArrayList<>();
         String labGroupName;
         int labGroupCapacity;
         for (int i = 0; i < noOfLabGroups; i++) {
@@ -323,14 +341,14 @@ public class CourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 labGroupName = scanner.nextLine();
-                if (!ValidationMgr.checkValidGroupNameInput(labGroupName)) {
+                if (!validationMgr.checkValidGroupNameInput(labGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
                 if (labGroups.size() == 0) {
                     break;
                 }
-                for (LabGroup labGroup : labGroups) {
+                for (IGroup labGroup : labGroups) {
                     if (labGroup.getGroupName().equals(labGroupName)) {
                         groupNameExists = true;
                         System.out.println("This lab group already exist for this course.");
@@ -345,7 +363,7 @@ public class CourseMgr {
                 scanner.nextLine();
                 totalLabSeats += labGroupCapacity;
                 if ((i != noOfLabGroups - 1) || (totalLabSeats >= totalSeats)) {
-                    LabGroup labGroup = new LabGroup(labGroupName, labGroupCapacity, labGroupCapacity);
+                    IGroup labGroup = new Group(labGroupName, labGroupCapacity, labGroupCapacity);
                     labGroups.add(labGroup);
                     break;
                 } else {
@@ -356,20 +374,20 @@ public class CourseMgr {
             } while (true);
         }
 
-        Professor profInCharge;
+        IProfessor profInCharge;
         List<String> professorsInDepartment = new ArrayList<String>(0);
-        professorsInDepartment = HelpInfoMgr.printProfInDepartment(courseDepartment, false);
+        professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
         while (true) {
             System.out.println("Enter the ID for the professor in charge please:");
             System.out.println("Enter -h to print all the professors in " + courseDepartment + ".");
             profID = scanner.nextLine();
             while ("-h".equals(profID)) {
-                professorsInDepartment = HelpInfoMgr.printProfInDepartment(courseDepartment, true);
+                professorsInDepartment = printer.printProfInDepartment(courseDepartment, true);
                 profID = scanner.nextLine();
             }
 
             System.setOut(dummyStream);
-            profInCharge = ValidationMgr.checkProfExists(profID);
+            profInCharge = validationMgr.checkProfExists(profID);
             System.setOut(originalStream);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
@@ -384,7 +402,7 @@ public class CourseMgr {
         }
 
 
-        Course course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
+        ICourse course = new Course(courseID, courseName, profInCharge, totalSeats, totalSeats, lectureGroups, tutorialGroups, labGroups, AU, courseDepartment, courseType, lecWeeklyHour, tutWeeklyHour, labWeeklyHour);
 
 
         System.out.println("Create course components and set component weightage now?");
@@ -403,46 +421,48 @@ public class CourseMgr {
         }
         if (addCourseComponentChoice == 2) {
             //add course into file
-            FILEMgr.writeCourseIntoFile(course);
-            Main.courses.add(course);
+            // TODO FILEMGR SHOULD BE SINGLETON SOONTM?
+            courseFileMgr.writeCourseIntoFile(course);
+            database.getCourses().add(course);
             System.out.println("Course " + courseID + " is added, but assessment components are not initialized.");
-            printCourses();
+            printer.printCourses();
             return;
         }
 
         enterCourseWorkComponentWeightage(course);
 
-        FILEMgr.writeCourseIntoFile(course);
-        Main.courses.add(course);
+        // TODO SAME AS ABOVE
+        courseFileMgr.writeCourseIntoFile(course);
+        database.getCourses().add(course);
         System.out.println("Course " + courseID + " is added");
-        printCourses();
+        printer.printCourses();
     }
 
     /**
      * Checks whether a course (with all of its groups) have available slots and displays the result.
      */
-    public static void checkAvailableSlots() {
+    public void checkAvailableSlots() {
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
-        Course currentCourse;
+        ICourse currentCourse;
 
         do {
-            currentCourse = ValidationMgr.checkCourseExists();
+            currentCourse = validationMgr.checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
-                for (LectureGroup lectureGroup : currentCourse.getLectureGroups()) {
+                for (IGroup lectureGroup : currentCourse.getLectureGroups()) {
                     System.out.println("Lecture group " + lectureGroup.getGroupName() + " (Available/Total): " + lectureGroup.getAvailableVacancies() + "/" + lectureGroup.getTotalSeats());
                 }
                 if (currentCourse.getTutorialGroups() != null) {
                     System.out.println();
-                    for (TutorialGroup tutorialGroup : currentCourse.getTutorialGroups()) {
+                    for (IGroup tutorialGroup : currentCourse.getTutorialGroups()) {
                         System.out.println("Tutorial group " + tutorialGroup.getGroupName() + " (Available/Total):  " + tutorialGroup.getAvailableVacancies() + "/" + tutorialGroup.getTotalSeats());
                     }
                 }
                 if (currentCourse.getLabGroups() != null) {
                     System.out.println();
-                    for (LabGroup labGroup : currentCourse.getLabGroups()) {
+                    for (IGroup labGroup : currentCourse.getLabGroups()) {
                         System.out.println("Lab group " + labGroup.getGroupName() + " (Available/Total): " + labGroup.getAvailableVacancies() + "/" + labGroup.getTotalSeats());
                     }
                 }
@@ -460,7 +480,8 @@ public class CourseMgr {
      *
      * @param currentCourse The course which course work component is to be set.
      */
-    public static void enterCourseWorkComponentWeightage(Course currentCourse) {
+    public void enterCourseWorkComponentWeightage(ICourse currentCourse) {
+
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
         int numberOfMain;
@@ -470,11 +491,11 @@ public class CourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = ValidationMgr.checkCourseExists();
+            currentCourse = validationMgr.checkCourseExists();
         }
 
 
-        ArrayList<MainComponent> mainComponents = new ArrayList<MainComponent>(0);
+        ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
         // Check if mainComponent is empty
         if (currentCourse.getMainComponents().size() == 0) {
             // empty course
@@ -500,7 +521,7 @@ public class CourseMgr {
                         examWeight = scanner.nextInt();
                         scanner.nextLine();
                     }
-                    MainComponent exam = new MainComponent("Exam", examWeight, new ArrayList<SubComponent>(0));
+                    ICourseworkComponent exam = new MainComponent("Exam", examWeight, new ArrayList<>(0));
                     mainComponents.add(exam);
                     break;
                 } else if (hasFinalExamChoice == 2) {
@@ -531,7 +552,7 @@ public class CourseMgr {
             do {
                 int totalWeightage = 100 - examWeight;
                 for (int i = 0; i < numberOfMain; i++) {
-                    ArrayList<SubComponent> subComponents = new ArrayList<SubComponent>(0);
+                    ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
                     do {
                         componentExist = false;
                         System.out.println("Total weightage left to assign: " + totalWeightage);
@@ -546,7 +567,7 @@ public class CourseMgr {
                             componentExist = true;
                             continue;
                         }
-                        for (MainComponent mainComponent : mainComponents) {
+                        for (ICourseworkComponent mainComponent : mainComponents) {
                             if (mainComponent.getComponentName().equals(mainComponentName)) {
                                 componentExist = true;
                                 System.out.println("This sub component already exist. Please enter.");
@@ -607,7 +628,7 @@ public class CourseMgr {
                                     componentExist = true;
                                     continue;
                                 }
-                                for (SubComponent subComponent : subComponents) {
+                                for (ICourseworkComponent subComponent : subComponents) {
                                     if (subComponent.getComponentName().equals(subComponentName)) {
                                         componentExist = true;
                                         System.out.println("This sub component already exist. Please enter.");
@@ -635,7 +656,7 @@ public class CourseMgr {
 
                             //Create Subcomponent
 
-                            SubComponent sub = new SubComponent(subComponentName, sub_weight);
+                            ICourseworkComponent sub = new SubComponent(subComponentName, sub_weight);
                             subComponents.add(sub);
                             sub_totWeight -= sub_weight;
                         }
@@ -650,7 +671,7 @@ public class CourseMgr {
                         //exit if weight is fully allocated
                     }
                     //Create main component
-                    MainComponent main = new MainComponent(mainComponentName, weight, subComponents);
+                    ICourseworkComponent main = new MainComponent(mainComponentName, weight, subComponents);
                     mainComponents.add(main);
                 }
 
@@ -672,9 +693,9 @@ public class CourseMgr {
             System.out.println("Course Assessment has been settled already!");
         }
         System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " components: ");
-        for (MainComponent each_comp : currentCourse.getMainComponents()) {
+        for (ICourseworkComponent each_comp : currentCourse.getMainComponents()) {
             System.out.println("    " + each_comp.getComponentName() + " : " + each_comp.getComponentWeight() + "%");
-            for (SubComponent each_sub : each_comp.getSubComponents()) {
+            for (ICourseworkComponent each_sub : each_comp.getSubComponents()) {
                 System.out.println("        " + each_sub.getComponentName() + " : " + each_sub.getComponentWeight() + "%");
             }
         }
@@ -682,14 +703,14 @@ public class CourseMgr {
     }
 
     /**
-     * Prints the list of courses
+     * Get the instance of the CourseMgr class.
+     * @return the singleton instance.
      */
-    public static void printCourses() {
-        System.out.println("Course List: ");
-        System.out.println("| Course ID | Course Name | Professor in Charge |");
-        for (Course course : Main.courses) {
-            System.out.println("| " + course.getCourseID() + " | " + course.getCourseName() + " | " + course.getProfInCharge().getProfName() + " |");
+
+    public static CourseMgr getInstance() {
+        if (instance == null) {
+            instance = new CourseMgr();
         }
-        System.out.println();
+        return instance;
     }
 }
