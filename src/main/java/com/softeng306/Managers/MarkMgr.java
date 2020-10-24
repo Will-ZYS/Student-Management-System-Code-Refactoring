@@ -5,6 +5,7 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -23,6 +24,8 @@ public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
+
 
     private IDatabase database = Database.getInstance();
 
@@ -62,7 +65,7 @@ public class MarkMgr implements IMarkMgr {
         System.out.println("enterCourseWorkMark is called");
 
         String studentID = validationMgr.checkStudentExists().getStudentID();
-        String courseID = validationMgr.checkCourseExists().getCourseID();
+        String courseID = courseMgr.checkCourseExists().getCourseID();
 
 
         for(IMark mark: database.getMarks()) {

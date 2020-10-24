@@ -4,6 +4,7 @@ import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
@@ -22,6 +23,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
 
@@ -42,7 +44,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         validationMgr.checkCourseDepartmentExists();
 
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
 
         String courseID = currentCourse.getCourseID();
 

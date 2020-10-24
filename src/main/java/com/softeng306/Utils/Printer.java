@@ -8,9 +8,11 @@ import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.ValidationMgr;
 
@@ -21,10 +23,13 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
+    //TODO STATIC?
     public static Scanner scanner = new Scanner(System.in);
     private static Printer instance = null;
-    private static IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private static IMarkMgr markMgr = MarkMgr.getInstance();
+    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IMarkMgr markMgr = MarkMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
+
 
     private static IDatabase database = Database.getInstance();
 
@@ -237,7 +242,7 @@ public class Printer implements IPrinter {
      */
     public void printStudents() {
         System.out.println("printStudent is called");
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -410,7 +415,7 @@ public class Printer implements IPrinter {
         System.out.println("printCourseStatistics is called");
 
         //TODO VALIDATIONMGR NEEDS TO BE INSTANTIATED WHEN REFACTORED INTO PRINTING CLASS
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
         ArrayList<IMark> thisCourseMark = new ArrayList<>(0);

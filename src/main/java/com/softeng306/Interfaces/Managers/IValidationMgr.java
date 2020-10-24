@@ -43,13 +43,6 @@ public interface IValidationMgr {
     boolean checkValidCourseIDInput(String courseID);
 
     /**
-     * Checks whether the inputted professor ID is in the correct format.
-     * @param profID The inputted professor ID.
-     * @return boolean indicates whether the inputted professor ID is valid.
-     */
-    boolean checkValidProfIDInput(String profID);
-
-    /**
      * Checks whether the inputted person name is in the correct format.
      * This person can be professor or student.
      * @param personName The inputted person name.
@@ -77,11 +70,6 @@ public interface IValidationMgr {
      */
     IStudent checkStudentExists();
 
-    /**
-     * Prompts the user to input an existing course.
-     * @return the inputted course.
-     */
-    ICourse checkCourseExists();
 
     /**
      * Prompts the user to input an existing department.
@@ -89,12 +77,7 @@ public interface IValidationMgr {
      */
     String checkCourseDepartmentExists();
 
-    /**
-     * Checks whether this course ID is used by other courses.
-     * @param courseID The inputted course ID.
-     * @return the existing course or else null.
-     */
-    ICourse checkCourseExists(String courseID);
+
 
     /**
      * Checks whether this professor ID is used by other professors.

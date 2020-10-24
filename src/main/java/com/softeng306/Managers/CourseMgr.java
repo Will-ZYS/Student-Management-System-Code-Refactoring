@@ -16,6 +16,7 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
+import java.util.stream.Collectors;
 
 public class CourseMgr implements ICourseMgr {
 
@@ -48,7 +49,7 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
             if (validationMgr.checkValidCourseIDInput(courseID)) {
-                if (validationMgr.checkCourseExists(courseID) == null) {
+                if (checkCourseExists(courseID) == null) {
                     break;
                 }
             }
@@ -443,7 +444,7 @@ public class CourseMgr implements ICourseMgr {
         ICourse currentCourse;
 
         do {
-            currentCourse = validationMgr.checkCourseExists();
+            currentCourse = checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
@@ -487,7 +488,7 @@ public class CourseMgr implements ICourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = validationMgr.checkCourseExists();
+            currentCourse = checkCourseExists();
         }
 
 
@@ -696,6 +697,50 @@ public class CourseMgr implements ICourseMgr {
             }
         }
         // Update course into course.csv
+    }
+
+    /**
+     * Prompts the user to input an existing course.
+     * @return the inputted course.
+     */
+    public ICourse checkCourseExists() {
+        String courseID;
+        ICourse currentCourse;
+        while(true){
+            System.out.println("Enter course ID (-h to print all the course ID):");
+            courseID = scanner.nextLine();
+            while("-h".equals(courseID)){
+                printer.printAllCourses();
+                courseID = scanner.nextLine();
+            }
+
+            System.setOut(dummyStream);
+            currentCourse = checkCourseExists(courseID);
+            if (currentCourse == null) {
+                System.setOut(originalStream);
+                System.out.println("Invalid Course ID. Please re-enter.");
+            }else{
+                break;
+            }
+        }
+        System.setOut(originalStream);
+        return currentCourse;
+    }
+
+    /**
+     * Checks whether this course ID is used by other courses.
+     * @param courseID The inputted course ID.
+     * @return the existing course or else null.
+     */
+    public ICourse checkCourseExists(String courseID) {
+        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+
+        if(anyCourse.size() == 0){
+            return null;
+        }
+        System.out.println("Sorry. The course ID is used. This course already exists.");
+        return anyCourse.get(0);
+
     }
 
     /**
