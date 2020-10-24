@@ -19,4 +19,10 @@ public interface ICourseRegistrationFileMgr {
      * @return an array list of all the course registration records.
      */
      ArrayList<ICourseRegistration> loadCourseRegistration();
+
+    /**
+     * get the instance of the CourseRegistrationFileMgr class
+     * @return the singleton instance
+     */
+    CourseRegistrationFileMgr getInstance();
 }

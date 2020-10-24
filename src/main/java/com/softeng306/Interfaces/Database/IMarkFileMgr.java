@@ -1,6 +1,7 @@
 package com.softeng306.Interfaces.Database;
 
 import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Managers.CourseRegistrationMgr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,4 +28,10 @@ public interface IMarkFileMgr {
      * @param marks marks to be backed up into file
      */
      void backUpMarks(List<IMark> marks);
+
+    /**
+     * get the instance of the MarkFileMgr class
+     * @return the singleton instance
+     */
+    MarkFileMgr getInstance();
 }

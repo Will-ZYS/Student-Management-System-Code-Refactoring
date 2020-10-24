@@ -19,4 +19,10 @@ public interface IProfessorFileMgr {
      * @return an array list of all the professors.
      */
     ArrayList<IProfessor> loadProfessors();
+
+    /**
+     * get the instance of the ProfessorFileMgr class
+     * @return the singleton instance
+     */
+    ProfessorFileMgr getInstance();
 }

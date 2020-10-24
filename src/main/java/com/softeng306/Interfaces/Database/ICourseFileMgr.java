@@ -27,4 +27,10 @@ public interface ICourseFileMgr {
      * @param courses courses to be backed up
      */
      void backUpCourse(List<ICourse> courses);
+
+    /**
+     * get the instance of the CourseFileMgr class
+     * @return the singleton instance
+     */
+    CourseFileMgr getInstance();
 }
