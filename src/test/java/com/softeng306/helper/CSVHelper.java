@@ -1,5 +1,7 @@
 package com.softeng306.helper;
 
+import com.softeng306.Database.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +44,23 @@ public class CSVHelper {
 		revertCourseRegistrationState();
 		revertMarkState();
 		revertProfessorState();
+	}
+
+
+	/**
+	 * Helper method that sets the path of all csv files for FILEMgrs to be test versions
+	 */
+	public void initialiseFileMgrs() {
+		String courseFilePath = testPath+File.separator+courseFileName;
+		String courseRegistrationFilePath = testPath+File.separator+courseRegistrationFileName;
+		String markFilePath = testPath+File.separator+markFileName;
+		String professorFilePath = testPath+File.separator+professorFileName;
+		String studentFilePath = testPath+File.separator+studentFileName;
+		CourseFileMgr.getInstance().setCourseFileName(courseFilePath);
+		MarkFileMgr.getInstance().setMarkFileName(markFilePath);
+		ProfessorFileMgr.getInstance().setProfessorFileName(professorFilePath);
+		StudentFileMgr.getInstance().setStudentFileName(studentFilePath);
+		CourseRegistrationFileMgr.getInstance().setCourseRegistrationFileName(courseRegistrationFilePath);
 	}
 
 	/**

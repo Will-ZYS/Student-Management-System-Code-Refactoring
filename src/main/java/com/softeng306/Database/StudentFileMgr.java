@@ -13,7 +13,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	/**
 	 * The file name of studentFile.csv.
 	 */
-	private final String studentFileName = "data/studentFile.csv";
+	private String studentFileName = "data/studentFile.csv";
 
 	/**
 	 * The header of studentFile.csv.
@@ -146,4 +146,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 		}
 		return instance;
 	}
+
+	public void setStudentFileName(String studentFileName) {
+		this.studentFileName = studentFileName;
+	}
+
+
 }

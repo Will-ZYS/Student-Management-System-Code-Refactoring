@@ -40,6 +40,9 @@ public class Option1IT {
         // Switch the output stream for testing purposes
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
+
+        // Set the fileMGRs csv file path to the test ones
+        csvHelper.initialiseFileMgrs();
     }
 
     @After
