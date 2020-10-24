@@ -1,8 +1,10 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Database.Database;
+import com.softeng306.Enum.CourseType;
+import com.softeng306.Enum.Department;
+import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
@@ -13,8 +15,7 @@ import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.regex.*;
 
@@ -33,7 +34,6 @@ public class ValidationMgr implements IValidationMgr {
     });
     private static ValidationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
 
@@ -44,7 +44,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted department is valid.
      */
     public boolean checkDepartmentValidation(String department) {
-        if(helpInfoMgr.getAllDepartment().contains(department)){
+        if(getAllDepartment().contains(department)){
             return true;
         }
         System.out.println("The department is invalid. Please re-enter.");
@@ -57,7 +57,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted gender is valid.
      */
     public boolean checkGenderValidation(String gender) {
-        if(helpInfoMgr.getAllGender().contains(gender)){
+        if(getAllGender().contains(gender)){
             return true;
         }
         System.out.println("The gender is invalid. Please re-enter.");
@@ -70,7 +70,7 @@ public class ValidationMgr implements IValidationMgr {
      * @return boolean indicates whether the inputted course type is valid.
      */
     public boolean checkCourseTypeValidation(String courseType) {
-        if(helpInfoMgr.getAllCourseType().contains(courseType)){
+        if(getAllCourseType().contains(courseType)){
             return true;
         }
         System.out.println("The course type is invalid. Please re-enter.");
@@ -299,6 +299,53 @@ public class ValidationMgr implements IValidationMgr {
         return courseRegistrations.get(0);
 
     }
+
+    /**
+     * Gets all the departments as an array list.
+     *
+     * @return an array list of all the departments.
+     */
+    public ArrayList<String> getAllDepartment() {
+        Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
+        ArrayList<String> departmentStringList = new ArrayList<String>(0);
+        Iterator iter = departmentEnumSet.iterator();
+        while (iter.hasNext()) {
+            departmentStringList.add(iter.next().toString());
+        }
+        return departmentStringList;
+
+    }
+
+    /**
+     * Gets all the genders as an array list.
+     *
+     * @return an array list of all the genders.
+     */
+    public ArrayList<String> getAllGender() {
+        Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
+        ArrayList<String> genderStringList = new ArrayList<String>(0);
+        Iterator iter = genderEnumSet.iterator();
+        while (iter.hasNext()) {
+            genderStringList.add(iter.next().toString());
+        }
+        return genderStringList;
+    }
+
+    /**
+     * Gets all the course types as an array list.
+     *
+     * @return an array list of all the course types.
+     */
+    public ArrayList<String> getAllCourseType() {
+        Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
+        ArrayList<String> courseTypeStringSet = new ArrayList<String>(0);
+        Iterator iter = courseTypeEnumSet.iterator();
+        while (iter.hasNext()) {
+            courseTypeStringSet.add(iter.next().toString());
+        }
+        return courseTypeStringSet;
+    }
+
 
     /**
      * Get the instance of the ValidationMgr class.

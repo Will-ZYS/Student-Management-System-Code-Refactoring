@@ -5,7 +5,6 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
@@ -22,7 +21,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private static CourseRegistrationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private IDatabase database = Database.getInstance();

@@ -3,7 +3,6 @@ package com.softeng306.Managers;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
@@ -26,7 +25,6 @@ public class StudentMgr implements IStudentMgr {
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
   
