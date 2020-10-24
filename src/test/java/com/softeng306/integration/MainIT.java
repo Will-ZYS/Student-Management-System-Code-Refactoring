@@ -1,6 +1,7 @@
 package com.softeng306.integration;
 
 import com.softeng306.Main;
+import com.softeng306.helper.CSVHelper;
 import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;
 import org.junit.Before;
@@ -25,6 +26,8 @@ public class MainIT {
     private StringBuilder inputsBuilder;
     private StringBuilderPlus expectedOutput;
 
+    private CSVHelper csvHelper = new CSVHelper();
+
     @Before
     public void setup() {
         // Set up a new string for series of inputs
@@ -45,6 +48,9 @@ public class MainIT {
         System.setOut(originalOut);
         System.setErr(originalErr);
         Main.scanner = new Scanner(originalIn);
+
+        // Reverting all files after test
+        csvHelper.revertAll();
     }
 
     private void preparingInputStream(){
