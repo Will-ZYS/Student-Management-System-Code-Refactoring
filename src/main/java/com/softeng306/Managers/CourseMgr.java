@@ -51,6 +51,8 @@ public class CourseMgr implements ICourseMgr {
             if (validationMgr.checkValidCourseIDInput(courseID)) {
                 if (checkCourseExists(courseID) == null) {
                     break;
+                } else {
+                    System.out.println("Sorry. The course ID is used. This course already exists.");
                 }
             }
         }
@@ -714,16 +716,13 @@ public class CourseMgr implements ICourseMgr {
                 courseID = scanner.nextLine();
             }
 
-            System.setOut(dummyStream);
             currentCourse = checkCourseExists(courseID);
             if (currentCourse == null) {
-                System.setOut(originalStream);
                 System.out.println("Invalid Course ID. Please re-enter.");
             }else{
                 break;
             }
         }
-        System.setOut(originalStream);
         return currentCourse;
     }
 
@@ -738,7 +737,6 @@ public class CourseMgr implements ICourseMgr {
         if(anyCourse.size() == 0){
             return null;
         }
-        System.out.println("Sorry. The course ID is used. This course already exists.");
         return anyCourse.get(0);
 
     }
