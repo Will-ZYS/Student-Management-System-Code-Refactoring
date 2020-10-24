@@ -79,7 +79,6 @@ public class ValidationMgr implements IValidationMgr {
         return courseDepartment;
     }
 
-
     /**
      * Checks whether the inputted course type is valid.
      * @param courseType The inputted course type.
@@ -107,7 +106,6 @@ public class ValidationMgr implements IValidationMgr {
         }
         return valid;
     }
-
 
     /**
      * Checks whether the inputted gender is valid.
@@ -137,21 +135,7 @@ public class ValidationMgr implements IValidationMgr {
         return valid;
     }
 
-    /**
-     * Checks whether this professor ID is used by other professors.
-     * @param profID The inputted professor ID.
-     * @return the existing professor or else null.
-     */
-    public IProfessor checkProfExists(String profID) {
-        List<IProfessor> anyProf = database.getProfessors().stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
-      
-        if(anyProf.size() == 0){
-            return null;
-        }
-        System.out.println("Sorry. The professor ID is used. This professor already exists.");
-        return anyProf.get(0);
 
-    }
 
 
 

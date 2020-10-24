@@ -5,6 +5,7 @@ import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
+import com.softeng306.Interfaces.Managers.IProfessorMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
@@ -25,6 +26,7 @@ public class CourseMgr implements ICourseMgr {
     private static IPrinter printer = Printer.getInstance();
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IDatabase database = Database.getInstance();
+    private IProfessorMgr professorMgr = ProfessorMgr.getInstance();
 
 
     private static Scanner scanner = new Scanner(System.in);
@@ -387,7 +389,7 @@ public class CourseMgr implements ICourseMgr {
             }
 
             System.setOut(dummyStream);
-            profInCharge = validationMgr.checkProfExists(profID);
+            profInCharge = professorMgr.checkProfExists(profID);
             System.setOut(originalStream);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
