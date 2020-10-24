@@ -34,4 +34,11 @@ public interface ICourseMgr {
      * @return the existing course or else null.
      */
     ICourse checkCourseExists(String courseID);
+
+    /**
+     * Checks whether the inputted course ID is in the correct format.
+     * @param courseID The inputted course ID.
+     * @return boolean indicates whether the inputted course ID is valid.
+     */
+    boolean checkValidCourseIDInput(String courseID);
 }

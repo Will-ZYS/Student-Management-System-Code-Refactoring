@@ -16,6 +16,7 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CourseMgr implements ICourseMgr {
@@ -48,7 +49,7 @@ public class CourseMgr implements ICourseMgr {
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (validationMgr.checkValidCourseIDInput(courseID)) {
+            if (checkValidCourseIDInput(courseID)) {
                 if (checkCourseExists(courseID) == null) {
                     break;
                 } else {
@@ -742,10 +743,24 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
+     * Checks whether the inputted course ID is in the correct format.
+     * @param courseID The inputted course ID.
+     * @return boolean indicates whether the inputted course ID is valid.
+     */
+    public boolean checkValidCourseIDInput(String courseID) {
+        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
+        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
+        if(!valid){
+            System.out.println("Wrong format of course ID.");
+        }
+        return valid;
+
+    }
+
+    /**
      * Get the instance of the CourseMgr class.
      * @return the singleton instance.
      */
-
     public static CourseMgr getInstance() {
         if (instance == null) {
             instance = new CourseMgr();

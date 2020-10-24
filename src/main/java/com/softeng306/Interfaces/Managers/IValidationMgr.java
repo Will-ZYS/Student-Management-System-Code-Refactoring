@@ -28,19 +28,9 @@ public interface IValidationMgr {
      */
     boolean checkCourseTypeValidation(String courseType);
 
-    /**
-     * Checks whether the inputted student ID is in the correct format.
-     * @param studentID The inputted student ID.
-     * @return boolean indicates whether the inputted student ID is valid.
-     */
-    boolean checkValidStudentIDInput(String studentID);
 
-    /**
-     * Checks whether the inputted course ID is in the correct format.
-     * @param courseID The inputted course ID.
-     * @return boolean indicates whether the inputted course ID is valid.
-     */
-    boolean checkValidCourseIDInput(String courseID);
+
+
 
     /**
      * Checks whether the inputted person name is in the correct format.
@@ -56,19 +46,6 @@ public interface IValidationMgr {
      * @return boolean indicates whether the inputted group name is valid.
      */
     boolean checkValidGroupNameInput(String groupName);
-
-    /**
-     * Checks whether this student ID is used by other students.
-     * @param studentID This student's ID.
-     * @return the existing student or else null.
-     */
-    IStudent checkStudentExists(String studentID);
-
-    /**
-     * Prompts the user to input an existing student.
-     * @return the inputted student.
-     */
-    IStudent checkStudentExists();
 
 
     /**
@@ -86,11 +63,5 @@ public interface IValidationMgr {
      */
     IProfessor checkProfExists(String profID);
 
-    /**
-     * Checks whether this course registration record exists.
-     * @param studentID The inputted student ID.
-     * @param courseID The inputted course ID.
-     * @return the existing course registration record or else null.
-     */
-    ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID);
+
 }

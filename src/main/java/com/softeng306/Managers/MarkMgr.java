@@ -7,6 +7,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
@@ -25,6 +26,8 @@ public class MarkMgr implements IMarkMgr {
     private static MarkMgr instance = null;
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
+    private IStudentMgr studentMgr = StudentMgr.getInstance();
+
 
 
     private IDatabase database = Database.getInstance();
@@ -64,7 +67,7 @@ public class MarkMgr implements IMarkMgr {
     public void setCourseWorkMark(boolean isExam) {
         System.out.println("enterCourseWorkMark is called");
 
-        String studentID = validationMgr.checkStudentExists().getStudentID();
+        String studentID = studentMgr.checkStudentExists().getStudentID();
         String courseID = courseMgr.checkCourseExists().getCourseID();
 
 

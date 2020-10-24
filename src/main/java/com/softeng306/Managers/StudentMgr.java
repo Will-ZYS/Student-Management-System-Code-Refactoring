@@ -11,7 +11,12 @@ import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Entity.Student;
 import com.softeng306.Utils.Printer;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Manages the student related operations.
@@ -21,6 +26,14 @@ import java.util.Scanner;
 
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
+
+    //TODO DUMMY STREAM NEEDS TO BE FIXED
+    private static PrintStream originalStream = System.out;
+    private static PrintStream dummyStream = new PrintStream(new OutputStream(){
+        public void write(int b) {
+            // NO-OP
+        }
+    });
 
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
@@ -73,8 +86,8 @@ public class StudentMgr implements IStudentMgr {
                 System.out.println();
                 System.out.println("Give this student an ID: ");
                 studentID = scanner.nextLine();
-                if (validationMgr.checkValidStudentIDInput(studentID)) {
-                    if (validationMgr.checkStudentExists(studentID) == null) {
+                if (checkValidStudentIDInput(studentID)) {
+                    if (checkStudentExists(studentID) == null) {
                         break;
                     }
                 }
@@ -205,6 +218,66 @@ public class StudentMgr implements IStudentMgr {
         return generateStudentID;
     }
 
+    /**
+     * Checks whether this student ID is used by other students.
+     * @param studentID This student's ID.
+     * @return the existing student or else null.
+     */
+    public IStudent checkStudentExists(String studentID) {
+        List<IStudent> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
+        if(anyStudent.size() == 0){
+            return null;
+        }
+        System.out.println("Sorry. The student ID is used. This student already exists.");
+        return anyStudent.get(0);
+
+    }
+
+    /**
+     * Prompts the user to input an existing student.
+     * @return the inputted student.
+     */
+    public IStudent checkStudentExists() {
+        String studentID;
+        IStudent currentStudent = null;
+        while (true) {
+            System.out.println("Enter Student ID (-h to print all the student ID):");
+            studentID = scanner.nextLine();
+            while("-h".equals(studentID)){
+                printer.printAllStudents();
+                studentID = scanner.nextLine();
+            }
+
+            System.setOut(dummyStream);
+            currentStudent = checkStudentExists(studentID);
+            System.setOut(originalStream);
+            if (currentStudent == null) {
+                System.out.println("Invalid Student ID. Please re-enter.");
+            }else {
+                break;
+            }
+
+        }
+        return currentStudent;
+    }
+
+    /**
+     * Checks whether the inputted student ID is in the correct format.
+     * @param studentID The inputted student ID.
+     * @return boolean indicates whether the inputted student ID is valid.
+     */
+    public boolean checkValidStudentIDInput(String studentID) {
+        String REGEX = "^U[0-9]{7}[A-Z]$";
+        boolean valid = Pattern.compile(REGEX).matcher(studentID).matches();
+        if(!valid){
+            System.out.println("Wrong format of student ID.");
+        }
+        return valid;
+
+    }
+
+
+    //TODO USED IN FILEMGR
     /**
      * Sets the idNumber variable of this student class.
      * @param idNumber static variable idNumber of this class.

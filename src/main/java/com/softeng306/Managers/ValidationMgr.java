@@ -51,34 +51,6 @@ public class ValidationMgr implements IValidationMgr {
         return false;
     }
 
-//    /**
-//     * Prompts the user to input an existing course.
-//     * @return the inputted course.
-//     */
-//    public ICourse checkCourseExists() {
-//        String courseID;
-//        ICourse currentCourse;
-//        while(true){
-//            System.out.println("Enter course ID (-h to print all the course ID):");
-//            courseID = scanner.nextLine();
-//            while("-h".equals(courseID)){
-//                printer.printAllCourses();
-//                courseID = scanner.nextLine();
-//            }
-//
-//            System.setOut(dummyStream);
-//            currentCourse = checkCourseExists(courseID);
-//            if (currentCourse == null) {
-//                System.setOut(originalStream);
-//                System.out.println("Invalid Course ID. Please re-enter.");
-//            }else{
-//                break;
-//            }
-//        }
-//        System.setOut(originalStream);
-//        return currentCourse;
-//    }
-
     /**
      * Prompts the user to input an existing department.
      * @return the inputted department.
@@ -108,9 +80,6 @@ public class ValidationMgr implements IValidationMgr {
     }
 
 
-
-
-
     /**
      * Checks whether the inputted course type is valid.
      * @param courseType The inputted course type.
@@ -124,21 +93,7 @@ public class ValidationMgr implements IValidationMgr {
         return false;
     }
 
-    /**
-     * Checks whether the inputted course ID is in the correct format.
-     * @param courseID The inputted course ID.
-     * @return boolean indicates whether the inputted course ID is valid.
-     */
-    public boolean checkValidCourseIDInput(String courseID) {
-        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
-        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
-        if(!valid){
-            System.out.println("Wrong format of course ID.");
-        }
-        return valid;
-
-    }
-
+    //TODO PUT WITH COURSEMGR?
     /**
      * Checks whether the inputted group name is in the correct format.
      * @param groupName The inputted group name.
@@ -155,26 +110,6 @@ public class ValidationMgr implements IValidationMgr {
 
 
     /**
-     * Checks whether this course registration record exists.
-     * @param studentID The inputted student ID.
-     * @param courseID The inputted course ID.
-     * @return the existing course registration record or else null.
-     */
-    public ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
-        List<ICourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
-
-        if(courseRegistrations.size() == 0){
-            return null;
-        }
-        System.out.println("Sorry. This student already registers this course.");
-        return courseRegistrations.get(0);
-
-    }
-
-
-
-
-    /**
      * Checks whether the inputted gender is valid.
      * @param gender The inputted gender.
      * @return boolean indicates whether the inputted gender is valid.
@@ -185,21 +120,6 @@ public class ValidationMgr implements IValidationMgr {
         }
         System.out.println("The gender is invalid. Please re-enter.");
         return false;
-    }
-
-    /**
-     * Checks whether the inputted student ID is in the correct format.
-     * @param studentID The inputted student ID.
-     * @return boolean indicates whether the inputted student ID is valid.
-     */
-    public boolean checkValidStudentIDInput(String studentID) {
-        String REGEX = "^U[0-9]{7}[A-Z]$";
-        boolean valid = Pattern.compile(REGEX).matcher(studentID).matches();
-        if(!valid){
-            System.out.println("Wrong format of student ID.");
-        }
-        return valid;
-
     }
 
     /**
@@ -218,49 +138,6 @@ public class ValidationMgr implements IValidationMgr {
     }
 
     /**
-     * Checks whether this student ID is used by other students.
-     * @param studentID This student's ID.
-     * @return the existing student or else null.
-     */
-    public IStudent checkStudentExists(String studentID) {
-        List<IStudent> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
-        if(anyStudent.size() == 0){
-            return null;
-        }
-        System.out.println("Sorry. The student ID is used. This student already exists.");
-        return anyStudent.get(0);
-
-    }
-
-    /**
-     * Prompts the user to input an existing student.
-     * @return the inputted student.
-     */
-    public IStudent checkStudentExists() {
-        String studentID;
-        IStudent currentStudent = null;
-        while (true) {
-            System.out.println("Enter Student ID (-h to print all the student ID):");
-            studentID = scanner.nextLine();
-            while("-h".equals(studentID)){
-                printer.printAllStudents();
-                studentID = scanner.nextLine();
-            }
-
-            System.setOut(dummyStream);
-            currentStudent = checkStudentExists(studentID);
-            System.setOut(originalStream);
-            if (currentStudent == null) {
-                System.out.println("Invalid Student ID. Please re-enter.");
-            }else {
-                break;
-            }
-
-        }
-        return currentStudent;
-    }
-
-    /**
      * Checks whether this professor ID is used by other professors.
      * @param profID The inputted professor ID.
      * @return the existing professor or else null.
@@ -275,8 +152,6 @@ public class ValidationMgr implements IValidationMgr {
         return anyProf.get(0);
 
     }
-
-
 
 
 

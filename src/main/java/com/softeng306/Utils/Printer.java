@@ -10,10 +10,12 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.MarkMgr;
+import com.softeng306.Managers.StudentMgr;
 import com.softeng306.Managers.ValidationMgr;
 
 import java.util.*;
@@ -29,6 +31,7 @@ public class Printer implements IPrinter {
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
+    private IStudentMgr studentMgr = StudentMgr.getInstance();
 
 
     private static IDatabase database = Database.getInstance();
@@ -331,11 +334,12 @@ public class Printer implements IPrinter {
 
     }
 
+
     /**
      * Prints transcript (Results of course taken) for a particular student
      */
     public void  printStudentTranscript() {
-        String studentID = validationMgr.checkStudentExists().getStudentID();
+        String studentID = studentMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
