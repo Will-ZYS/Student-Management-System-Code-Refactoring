@@ -1,8 +1,9 @@
 package com.softeng306.Managers;
 
+import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
@@ -25,6 +26,7 @@ public class CourseMgr implements ICourseMgr {
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
     private IDatabase database = Database.getInstance();
+    private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
 
 
     private static Scanner scanner = new Scanner(System.in);
@@ -420,7 +422,7 @@ public class CourseMgr implements ICourseMgr {
         if (addCourseComponentChoice == 2) {
             //add course into file
             // TODO FILEMGR SHOULD BE SINGLETON SOONTM?
-            FILEMgr.writeCourseIntoFile(course);
+            courseFileMgr.writeCourseIntoFile(course);
             database.getCourses().add(course);
             System.out.println("Course " + courseID + " is added, but assessment components are not initialized.");
             printer.printCourses();
@@ -430,7 +432,7 @@ public class CourseMgr implements ICourseMgr {
         enterCourseWorkComponentWeightage(course);
 
         // TODO SAME AS ABOVE
-        FILEMgr.writeCourseIntoFile(course);
+        courseFileMgr.writeCourseIntoFile(course);
         database.getCourses().add(course);
         System.out.println("Course " + courseID + " is added");
         printer.printCourses();
