@@ -1,5 +1,6 @@
 package com.softeng306.Interfaces.Database;
 
+import com.softeng306.Database.StudentFileMgr;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.ArrayList;
@@ -19,10 +20,4 @@ public interface IStudentFileMgr {
      * @return an array list of all the students.
      */
      ArrayList<IStudent> loadStudents();
-
-    /**
-     * get the instance of the StudentFileMgr class
-     * @return the singleton instance
-     */
-    StudentFileMgr getInstance();
 }

@@ -1,5 +1,6 @@
 package com.softeng306.Interfaces.Database;
 
+import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
 
 import java.util.ArrayList;
@@ -27,10 +28,4 @@ public interface ICourseFileMgr {
      * @param courses courses to be backed up
      */
      void backUpCourse(List<ICourse> courses);
-
-    /**
-     * get the instance of the CourseFileMgr class
-     * @return the singleton instance
-     */
-    CourseFileMgr getInstance();
 }

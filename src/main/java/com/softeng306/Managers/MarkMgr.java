@@ -1,10 +1,11 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Database.Database;
-import com.softeng306.Database.FILEMgr;
+import com.softeng306.Database.MarkFileMgr;
 import com.softeng306.Entity.*;
 
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -25,6 +26,7 @@ public class MarkMgr implements IMarkMgr {
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
+    private IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -48,9 +50,8 @@ public class MarkMgr implements IMarkMgr {
             }
         }
         IMark mark = new Mark(student, course, courseWorkMarks, totalMark);
-        //TODO FILEMGR AGAIN
 
-        FILEMgr.updateStudentMarks(mark);
+        markFileMgr.updateStudentMarks(mark);
         return mark;
     }
 

@@ -1,11 +1,12 @@
 package com.softeng306.Utils;
 
+import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
+import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
@@ -27,6 +28,7 @@ public class Printer implements IPrinter {
     private static IMarkMgr markMgr = MarkMgr.getInstance();
 
     private static IDatabase database = Database.getInstance();
+    private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
 
 
     public void print(String content) {
@@ -246,7 +248,7 @@ public class Printer implements IPrinter {
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
         //TODO FILEMGR AGAIN
-        ArrayList<ICourseRegistration> allStuArray = FILEMgr.loadCourseRegistration();
+        ArrayList<ICourseRegistration> allStuArray = courseRegistrationFileMgr.loadCourseRegistration();
 
 
         ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);

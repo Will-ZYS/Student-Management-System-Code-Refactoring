@@ -1,8 +1,9 @@
 package com.softeng306.Managers;
 
+import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Database.FILEMgr;
 import com.softeng306.Entity.*;
+import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
@@ -26,6 +27,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private IMarkMgr markMgr = MarkMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
+    private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -85,7 +87,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
         // TODO FILEMGR AGAIN
 
-        FILEMgr.writeCourseRegistrationIntoFile(courseRegistration);
+        courseRegistrationFileMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
         database.getCourseRegistrations().add(courseRegistration);
 

@@ -1,20 +1,19 @@
 package com.softeng306;
 
+import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Database.FILEMgr;
-import com.softeng306.Entity.*;
+import com.softeng306.Database.MarkFileMgr;
+import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.*;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Managers.*;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.StudentMgr;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -23,6 +22,10 @@ public class Main {
     private static IDatabase database = Database.getInstance();
 
     private static IPrinter printer = Printer.getInstance();
+
+    private static ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+
+    private static IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
 
 
     /**
@@ -118,10 +121,8 @@ public class Main {
      */
     public static void exitApplication() {
         printer.print("Backing up data before exiting...");
-        FILEMgr.backUpCourse(database.getCourses());
-        FILEMgr.backUpMarks(database.getMarks());
+        courseFileMgr.backUpCourse(database.getCourses());
+        markFileMgr.backUpMarks(database.getMarks());
         printer.printExitMessage();
-
     }
-
 }
