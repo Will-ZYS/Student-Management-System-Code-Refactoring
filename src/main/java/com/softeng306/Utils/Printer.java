@@ -9,11 +9,15 @@ import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.MarkMgr;
-import com.softeng306.Managers.ValidationMgr;
+import com.softeng306.Managers.StudentMgr;
+import com.softeng306.Managers.HelperMgr;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,10 +27,12 @@ import static com.softeng306.Entity.CourseRegistration.*;
 public class Printer implements IPrinter {
 
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
     private static Printer instance = null;
-    private static IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private static IMarkMgr markMgr = MarkMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
+    private IMarkMgr markMgr = MarkMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
+    private IStudentMgr studentMgr = StudentMgr.getInstance();
+
 
     private static IDatabase database = Database.getInstance();
     private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
@@ -92,7 +98,7 @@ public class Printer implements IPrinter {
      * @return A list of all the names of professors in the inputted department or else null.
      */
     public List<String> printProfInDepartment(String department, boolean printOut) {
-        if (validationMgr.checkDepartmentValidation(department)) {
+        if (helperMgr.checkDepartmentValidation(department)) {
             List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);
@@ -162,10 +168,12 @@ public class Printer implements IPrinter {
     public List<String> printCourseInDepartment(String department) {
         List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
+        /**
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
             System.out.println("None.");
         }
+         **/
         return validCourseString;
     }
 
@@ -240,7 +248,7 @@ public class Printer implements IPrinter {
      */
     public void printStudents() {
         System.out.println("printStudent is called");
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -329,11 +337,12 @@ public class Printer implements IPrinter {
 
     }
 
+
     /**
      * Prints transcript (Results of course taken) for a particular student
      */
     public void  printStudentTranscript() {
-        String studentID = validationMgr.checkStudentExists().getStudentID();
+        String studentID = studentMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
@@ -412,8 +421,7 @@ public class Printer implements IPrinter {
     public void printCourseStatistics() {
         System.out.println("printCourseStatistics is called");
 
-        //TODO VALIDATIONMGR NEEDS TO BE INSTANTIATED WHEN REFACTORED INTO PRINTING CLASS
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
         ArrayList<IMark> thisCourseMark = new ArrayList<>(0);
@@ -516,7 +524,7 @@ public class Printer implements IPrinter {
     }
 
     /**
-     * Get the instance of the ValidationMgr class.
+     * Get the instance of the Printer class.
      * @return the singleton instance
      */
     public static Printer getInstance() {

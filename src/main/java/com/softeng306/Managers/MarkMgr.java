@@ -5,9 +5,11 @@ import com.softeng306.Database.MarkFileMgr;
 import com.softeng306.Entity.*;
 
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
@@ -25,7 +27,10 @@ public class MarkMgr implements IMarkMgr {
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static MarkMgr instance = null;
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
+    private IStudentMgr studentMgr = StudentMgr.getInstance();
+
+
 
     private IDatabase database = Database.getInstance();
     private IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
@@ -62,8 +67,8 @@ public class MarkMgr implements IMarkMgr {
     public void setCourseWorkMark(boolean isExam) {
         System.out.println("enterCourseWorkMark is called");
 
-        String studentID = validationMgr.checkStudentExists().getStudentID();
-        String courseID = validationMgr.checkCourseExists().getCourseID();
+        String studentID = studentMgr.checkStudentExists().getStudentID();
+        String courseID = courseMgr.checkCourseExists().getCourseID();
 
 
         for(IMark mark: database.getMarks()) {

@@ -1,71 +1,39 @@
 package com.softeng306.Managers;
 
-import com.softeng306.Entity.Professor;
-
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
-import com.softeng306.Interfaces.Managers.IProfessorMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Database.Database;
+import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Interfaces.Managers.IProfessorMgr;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Manages all the professor related operations
  *
-
  */
 public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IDatabase database = Database.getInstance();
 
     /**
-     * Adds a professor.
-     *
-     * @return a newly added professor
+     * Checks whether this professor ID is used by other professors.
+     * @param profID The inputted professor ID.
+     * @return the existing professor or else null.
      */
-    public IProfessor addProfessor() {
-        String department, profID;
-        while (true) {
-            System.out.println("Give this professor an ID: ");
-            profID = scanner.nextLine();
-            if (validationMgr.checkValidProfIDInput(profID)) {
-                if (validationMgr.checkProfExists(profID) == null) {
-                    break;
-                }
-            }
+    public IProfessor checkProfExists(String profID) {
+        List<IProfessor> anyProf = database.getProfessors().stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
+
+        if(anyProf.size() == 0){
+            return null;
         }
+        // System.out.println("Sorry. The professor ID is used. This professor already exists.");
+        return anyProf.get(0);
 
-        String profName;
-        while (true) {
-            System.out.println("Enter the professor's name: ");
-            profName = scanner.nextLine();
-            if (validationMgr.checkValidPersonNameInput(profName)) {
-                break;
-            }
-        }
-
-        IProfessor professor = new Professor(profID, profName);
-        while (true) {
-            System.out.println("Enter professor's Department: ");
-            System.out.println("Enter -h to print all the departments.");
-            department = scanner.nextLine();
-            while (department.equals("-h")) {
-                helpInfoMgr.getAllDepartment();
-                department = scanner.nextLine();
-            }
-
-            if (validationMgr.checkDepartmentValidation(department)) {
-                professor.setProfDepartment(department);
-                break;
-            }
-        }
-
-
-        return professor;
     }
 
     /**
