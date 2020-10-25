@@ -4,7 +4,6 @@ import com.softeng306.Database.Database;
 import com.softeng306.Database.StudentFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Database.IStudentFileMgr;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
@@ -13,7 +12,6 @@ import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Entity.Student;
 import com.softeng306.Utils.Printer;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
@@ -31,11 +29,6 @@ public class StudentMgr implements IStudentMgr {
 
     //TODO DUMMY STREAM NEEDS TO BE FIXED
     private static PrintStream originalStream = System.out;
-    private static PrintStream dummyStream = new PrintStream(new OutputStream(){
-        public void write(int b) {
-            // NO-OP
-        }
-    });
 
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
@@ -92,6 +85,8 @@ public class StudentMgr implements IStudentMgr {
                 if (checkValidStudentIDInput(studentID)) {
                     if (checkStudentExists(studentID) == null) {
                         break;
+                    } else {
+                        System.out.println("Sorry. The student ID is used. This student already exists.");
                     }
                 }
             }
@@ -231,7 +226,6 @@ public class StudentMgr implements IStudentMgr {
         if(anyStudent.size() == 0){
             return null;
         }
-        System.out.println("Sorry. The student ID is used. This student already exists.");
         return anyStudent.get(0);
 
     }
@@ -251,9 +245,7 @@ public class StudentMgr implements IStudentMgr {
                 studentID = scanner.nextLine();
             }
 
-            System.setOut(dummyStream);
             currentStudent = checkStudentExists(studentID);
-            System.setOut(originalStream);
             if (currentStudent == null) {
                 System.out.println("Invalid Student ID. Please re-enter.");
             }else {

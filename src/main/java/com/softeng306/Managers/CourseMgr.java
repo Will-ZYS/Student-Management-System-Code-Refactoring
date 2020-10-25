@@ -36,13 +36,6 @@ public class CourseMgr implements ICourseMgr {
 
 
     private static Scanner scanner = new Scanner(System.in);
-    private static PrintStream originalStream = System.out;
-    private static PrintStream dummyStream = new PrintStream(new OutputStream() {
-        public void write(int b) {
-            // NO-OP
-        }
-    });
-
 
     /**
      * Creates a new course and stores it in the file.
@@ -394,9 +387,7 @@ public class CourseMgr implements ICourseMgr {
                 profID = scanner.nextLine();
             }
 
-            System.setOut(dummyStream);
             profInCharge = professorMgr.checkProfExists(profID);
-            System.setOut(originalStream);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
                     break;
