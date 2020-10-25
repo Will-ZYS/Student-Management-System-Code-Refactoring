@@ -1,6 +1,7 @@
 package com.softeng306.integration;
 
-import com.softeng306.Database.Database;
+import com.softeng306.Database.*;
+import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.helper.CSVHelper;
@@ -23,11 +24,11 @@ public class IntegrationTestBase {
     protected final PrintStream originalOut = System.out;
     protected final PrintStream originalErr = System.err;
 
-    protected List<IStudent> students = new ArrayList<>(Database.getInstance().getStudents());
-    protected List<ICourse> courses = new ArrayList<>(Database.getInstance().getCourses());
-    protected List<ICourseRegistration> courseRegistrations = new ArrayList<>(Database.getInstance().getCourseRegistrations());
-    protected List<IMark> marks = new ArrayList<>(Database.getInstance().getMarks());
-    protected List<IProfessor> professors = new ArrayList<>(Database.getInstance().getProfessors());
+    protected List<IStudent> students;
+    protected List<ICourse> courses;
+    protected List<ICourseRegistration> courseRegistrations;
+    protected List<IMark> marks;
+    protected List<IProfessor> professors;
 
     protected StringBuilder inputsBuilder;
     protected StringBuilderPlus expectedOutput;
@@ -46,8 +47,26 @@ public class IntegrationTestBase {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
 
+        // Reverting all files before test
+        csvHelper.revertAll();
+
         // Set the fileMGRs csv file path to the test ones
         csvHelper.initialiseFileMgrs();
+
+        // Initialise the original for database arraylists
+        students = StudentFileMgr.getInstance().loadStudents();
+        courses = CourseFileMgr.getInstance().loadCourses();
+        courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
+        marks = MarkFileMgr.getInstance().loadStudentMarks();
+        professors = ProfessorFileMgr.getInstance().loadProfessors();
+
+        // Set the new ones into the Database arraylists
+        Database.getInstance().setStudents(new ArrayList<>(students));
+        Database.getInstance().setCourses(new ArrayList<>(courses));
+        Database.getInstance().setCourseRegistrations(new ArrayList<>(courseRegistrations));
+        Database.getInstance().setMarks(new ArrayList<>(marks));
+        Database.getInstance().setProfessors(new ArrayList<>(professors));
+
     }
 
     @After
@@ -58,7 +77,7 @@ public class IntegrationTestBase {
         System.setErr(originalErr);
         ScannerSingleton.refreshSystemIn();
 
-        // Reverting all files after test
+        // Reverting all files before test
         csvHelper.revertAll();
 
         Database.getInstance().setStudents(new ArrayList<>(students));

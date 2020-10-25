@@ -15,36 +15,32 @@ public class Database implements IDatabase {
     /**
      * An list of all the students in this school.
      */
-    public List<IStudent> students = new ArrayList<>(0);
+    private static List<IStudent> students = new ArrayList<>(0);
     /**
      * An list of all the courses in this school.
      */
-    public List<ICourse> courses = new ArrayList<>(0);
+    private static List<ICourse> courses = new ArrayList<>(0);
     /**
      * An list of all the course registration records in this school.
      */
-    public List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
+    private static List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
     /**
      * An list of all the student mark records in this school.
      */
-    public List<IMark> marks = new ArrayList<>(0);
+    private static List<IMark> marks = new ArrayList<>(0);
     /**
      * An list of all the professors in this school.
      */
-    public List<IProfessor> professors = new ArrayList<>(0);
+    private static List<IProfessor> professors = new ArrayList<>(0);
 
-    /**
-     * default constructor for database
-     * instantiates the collections required for this system
-     */
-    public Database() {
-        //TODO change FILEMgr to something else
-        students = StudentFileMgr.getInstance().loadStudents();
-        courses = CourseFileMgr.getInstance().loadCourses();
-        courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
-        marks = MarkFileMgr.getInstance().loadStudentMarks();
-        professors = ProfessorFileMgr.getInstance().loadProfessors();
-    }
+//    /**
+//     * default constructor for database
+//     * instantiates the collections required for this system
+//     */
+//    private Database() {
+//        //TODO change FILEMgr to something else
+//
+//    }
 
     /**
      * returns a list of Students in the system
@@ -133,6 +129,11 @@ public class Database implements IDatabase {
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
+            students = StudentFileMgr.getInstance().loadStudents();
+            courses = CourseFileMgr.getInstance().loadCourses();
+            courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
+            marks = MarkFileMgr.getInstance().loadStudentMarks();
+            professors = ProfessorFileMgr.getInstance().loadProfessors();
         }
         return instance;
     }

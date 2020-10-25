@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 public class Option1IT extends IntegrationTestBase{
 
     @Test
-    public void testAddStudentAuto(){
+    public void testAddStudent(){
         // Store current student list as string
 
         inputsBuilder.append("1").append(System.lineSeparator());
@@ -102,7 +102,7 @@ public class Option1IT extends IntegrationTestBase{
     }
 
     @Test
-    public void testAddStudentAuto1(){
+    public void testAddAnotherStudent(){
         // Store current student list as string
 
         inputsBuilder.append("1").append(System.lineSeparator());
