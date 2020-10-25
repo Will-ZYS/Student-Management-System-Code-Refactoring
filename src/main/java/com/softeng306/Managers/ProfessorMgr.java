@@ -6,6 +6,7 @@ import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ import java.util.Scanner;
  */
 public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
-    private Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private IValidationMgr validationMgr = ValidationMgr.getInstance();
     private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();

@@ -5,11 +5,13 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Main;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -24,7 +26,7 @@ import java.util.regex.*;
 
 public class ValidationMgr implements IValidationMgr {
 
-    private static Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static PrintStream originalStream = System.out;
     private static PrintStream dummyStream = new PrintStream(new OutputStream(){
         public void write(int b) {

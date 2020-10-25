@@ -14,12 +14,14 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
 
 public class CourseMgr implements ICourseMgr {
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
@@ -28,8 +30,6 @@ public class CourseMgr implements ICourseMgr {
     private IDatabase database = Database.getInstance();
     private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
 
-
-    private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
     private static PrintStream dummyStream = new PrintStream(new OutputStream() {
         public void write(int b) {

@@ -15,10 +15,12 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static CourseRegistrationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
@@ -28,8 +30,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private IDatabase database = Database.getInstance();
     private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
-
-    private static Scanner scanner = new Scanner(System.in);
 
     /**
      * Registers a course for a student
