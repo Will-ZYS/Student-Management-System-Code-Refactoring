@@ -1,6 +1,7 @@
 package com.softeng306.integration;
 
 import com.softeng306.Main;
+import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.helper.CSVHelper;
 import com.softeng306.helper.CommonPrintingHelper;
 import com.softeng306.helper.StringBuilderPlus;
@@ -16,55 +17,10 @@ import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
-public class Option3IT {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final InputStream originalIn = System.in;
-    private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
-
-    private StringBuilder inputsBuilder;
-    private StringBuilderPlus expectedOutput;
-
-    private CSVHelper csvHelper = new CSVHelper();
-
-    @Before
-    public void setup() {
-        // Set up a new string for series of inputs
-        inputsBuilder = new StringBuilder();
-
-        // Set up an output builder
-        expectedOutput = new StringBuilderPlus();
-
-        // Switch the output stream for testing purposes
-//        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
-
-        // Set the fileMGRs csv file path to the test ones
-        csvHelper.initialiseFileMgrs();
-    }
-
-    @After
-    public void cleanup() {
-        // Set the input, output and error streams back to original
-        System.setIn(originalIn);
-        System.setOut(originalOut);
-        System.setErr(originalErr);
-        Main.scanner = new Scanner(originalIn);
-
-        // Reverting all files after test
-        csvHelper.revertAll();
-    }
-
-    private void preparingInputStream(){
-        ByteArrayInputStream in = new ByteArrayInputStream(inputsBuilder.toString().getBytes());
-        System.setIn(in);
-        Main.scanner = new Scanner(System.in);
-    }
+public class Option3IT extends IntegrationTestBase{
 
     @Test
     public void testRegisterStudentForCourse(){
-        // Store current student list as string
 
         inputsBuilder.append("3").append(System.lineSeparator());
         inputsBuilder.append("U1234567L").append(System.lineSeparator()); // Student ID

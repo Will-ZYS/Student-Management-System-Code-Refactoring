@@ -22,7 +22,8 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
-    public static Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+
     private static Printer instance = null;
     private static IValidationMgr validationMgr = ValidationMgr.getInstance();
     private static IMarkMgr markMgr = MarkMgr.getInstance();
