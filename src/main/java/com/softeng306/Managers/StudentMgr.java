@@ -27,9 +27,6 @@ import java.util.stream.Collectors;
 public class StudentMgr implements IStudentMgr {
     private static Scanner scanner = new Scanner(System.in);
 
-    //TODO DUMMY STREAM NEEDS TO BE FIXED
-    private static PrintStream originalStream = System.out;
-
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
     private IHelperMgr helperMgr = HelperMgr.getInstance();
