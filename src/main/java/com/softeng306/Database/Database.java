@@ -38,7 +38,6 @@ public class Database implements IDatabase {
      * instantiates the collections required for this system
      */
     public Database() {
-        //TODO change FILEMgr to something else
         students = StudentFileMgr.getInstance().loadStudents();
         courses = CourseFileMgr.getInstance().loadCourses();
         courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
