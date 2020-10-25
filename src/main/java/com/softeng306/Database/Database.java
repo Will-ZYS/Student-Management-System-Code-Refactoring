@@ -39,11 +39,11 @@ public class Database implements IDatabase {
      */
     public Database() {
         //TODO change FILEMgr to something else
-        students = FILEMgr.loadStudents();
-        courses = FILEMgr.loadCourses();
-        courseRegistrations = FILEMgr.loadCourseRegistration();
-        marks = FILEMgr.loadStudentMarks();
-        professors = FILEMgr.loadProfessors();
+        students = StudentFileMgr.getInstance().loadStudents();
+        courses = CourseFileMgr.getInstance().loadCourses();
+        courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
+        marks = MarkFileMgr.getInstance().loadStudentMarks();
+        professors = ProfessorFileMgr.getInstance().loadProfessors();
     }
 
     /**
