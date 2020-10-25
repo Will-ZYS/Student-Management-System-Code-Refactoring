@@ -6,8 +6,9 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IGroupMgr;
+import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -18,15 +19,20 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import java.util.*;
 import java.io.PrintStream;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CourseMgr implements ICourseMgr {
 
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
     private IDatabase database = Database.getInstance();
+
+    private IProfessorMgr professorMgr = ProfessorMgr.getInstance();
+    private IGroupMgr groupMgr = GroupMgr.getInstance();
     private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+
 
 
     private static Scanner scanner = new Scanner(System.in);
@@ -51,9 +57,11 @@ public class CourseMgr implements ICourseMgr {
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (validationMgr.checkValidCourseIDInput(courseID)) {
-                if (validationMgr.checkCourseExists(courseID) == null) {
+            if (checkValidCourseIDInput(courseID)) {
+                if (checkCourseExists(courseID) == null) {
                     break;
+                } else {
+                    System.out.println("Sorry. The course ID is used. This course already exists.");
                 }
             }
         }
@@ -102,7 +110,7 @@ public class CourseMgr implements ICourseMgr {
                 printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if (validationMgr.checkDepartmentValidation(courseDepartment)) {
+            if (helperMgr.checkDepartmentValidation(courseDepartment)) {
                 break;
             }
         }
@@ -116,7 +124,7 @@ public class CourseMgr implements ICourseMgr {
                 printer.printAllCourseType();
                 courseType = scanner.nextLine();
             }
-            if (validationMgr.checkCourseTypeValidation(courseType)) {
+            if (helperMgr.checkCourseTypeValidation(courseType)) {
                 break;
             }
         }
@@ -167,7 +175,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 lectureGroupName = scanner.nextLine();
-                if (!validationMgr.checkValidGroupNameInput(lectureGroupName)) {
+                if (!groupMgr.checkValidGroupNameInput(lectureGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -258,7 +266,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 tutorialGroupName = scanner.nextLine();
-                if (!validationMgr.checkValidGroupNameInput(tutorialGroupName)) {
+                if (!groupMgr.checkValidGroupNameInput(tutorialGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -341,7 +349,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 labGroupName = scanner.nextLine();
-                if (!validationMgr.checkValidGroupNameInput(labGroupName)) {
+                if (!groupMgr.checkValidGroupNameInput(labGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -387,7 +395,7 @@ public class CourseMgr implements ICourseMgr {
             }
 
             System.setOut(dummyStream);
-            profInCharge = validationMgr.checkProfExists(profID);
+            profInCharge = professorMgr.checkProfExists(profID);
             System.setOut(originalStream);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
@@ -447,7 +455,7 @@ public class CourseMgr implements ICourseMgr {
         ICourse currentCourse;
 
         do {
-            currentCourse = validationMgr.checkCourseExists();
+            currentCourse = checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
@@ -491,7 +499,7 @@ public class CourseMgr implements ICourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = validationMgr.checkCourseExists();
+            currentCourse = checkCourseExists();
         }
 
 
@@ -703,10 +711,64 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
+     * Prompts the user to input an existing course.
+     * @return the inputted course.
+     */
+    public ICourse checkCourseExists() {
+        String courseID;
+        ICourse currentCourse;
+        while(true){
+            System.out.println("Enter course ID (-h to print all the course ID):");
+            courseID = scanner.nextLine();
+            while("-h".equals(courseID)){
+                printer.printAllCourses();
+                courseID = scanner.nextLine();
+            }
+
+            currentCourse = checkCourseExists(courseID);
+            if (currentCourse == null) {
+                System.out.println("Invalid Course ID. Please re-enter.");
+            }else{
+                break;
+            }
+        }
+        return currentCourse;
+    }
+
+    /**
+     * Checks whether this course ID is used by other courses.
+     * @param courseID The inputted course ID.
+     * @return the existing course or else null.
+     */
+    public ICourse checkCourseExists(String courseID) {
+        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+
+        if(anyCourse.size() == 0){
+            return null;
+        }
+        return anyCourse.get(0);
+
+    }
+
+    /**
+     * Checks whether the inputted course ID is in the correct format.
+     * @param courseID The inputted course ID.
+     * @return boolean indicates whether the inputted course ID is valid.
+     */
+    public boolean checkValidCourseIDInput(String courseID) {
+        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
+        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
+        if(!valid){
+            System.out.println("Wrong format of course ID.");
+        }
+        return valid;
+
+    }
+
+    /**
      * Get the instance of the CourseMgr class.
      * @return the singleton instance.
      */
-
     public static CourseMgr getInstance() {
         if (instance == null) {
             instance = new CourseMgr();

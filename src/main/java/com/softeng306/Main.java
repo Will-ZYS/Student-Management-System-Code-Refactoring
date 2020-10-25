@@ -35,24 +35,11 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        //refactored to database. Now refer to database object
-//        students = FILEMgr.loadStudents();
-//        courses = FILEMgr.loadCourses();
-//        courseRegistrations = FILEMgr.loadCourseRegistration();
-//        marks = FILEMgr.loadStudentMarks();
-//        professors = FILEMgr.loadProfessors();
-
-        // I personally dont like having all managers just in fields
-        // it feels cleaning to have them in some collection
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
 
-        // TODO maybe remove these fields as they are not used
-//        IValidationMgr validationMgr = ValidationMgr.getInstance();
-//        IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
-//        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
 
         printer.printWelcome();
 

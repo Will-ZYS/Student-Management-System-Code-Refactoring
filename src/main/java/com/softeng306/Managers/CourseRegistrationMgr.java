@@ -5,10 +5,7 @@ import com.softeng306.Database.Database;
 import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
-import com.softeng306.Interfaces.Managers.IHelpInfoMgr;
-import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.*;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -17,14 +14,17 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
-    private IHelpInfoMgr helpInfoMgr = HelpInfoMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
+    private ICourseMgr courseMgr = CourseMgr.getInstance();
+    private IStudentMgr studentMgr = StudentMgr.getInstance();
+
 
     private IDatabase database = Database.getInstance();
     private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
@@ -40,17 +40,17 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
 
-        IStudent currentStudent = validationMgr.checkStudentExists();
+        IStudent currentStudent = studentMgr.checkStudentExists();
 
         String studentID = currentStudent.getStudentID();
 
-        validationMgr.checkCourseDepartmentExists();
+        helperMgr.checkCourseDepartmentExists();
 
-        ICourse currentCourse = validationMgr.checkCourseExists();
+        ICourse currentCourse = courseMgr.checkCourseExists();
 
         String courseID = currentCourse.getCourseID();
 
-        if (validationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
+        if (checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
         }
 
@@ -106,10 +106,27 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     }
 
     /**
+     * Checks whether this course registration record exists.
+     * @param studentID The inputted student ID.
+     * @param courseID The inputted course ID.
+     * @return the existing course registration record or else null.
+     */
+    public ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
+        List<ICourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
+
+        if(courseRegistrations.size() == 0){
+            return null;
+        }
+        System.out.println("Sorry. This student already registers this course.");
+        return courseRegistrations.get(0);
+
+    }
+
+
+    /**
      * get the instance of the CourseRegistrationMgr class
      * @return the singleton instance
      */
-
     public static CourseRegistrationMgr getInstance() {
         if (instance == null) {
             instance = new CourseRegistrationMgr();

@@ -1,7 +1,7 @@
 package com.softeng306.unit;
 
 
-import com.softeng306.Managers.ValidationMgr;
+import com.softeng306.Managers.HelperMgr;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,11 +11,11 @@ import org.junit.Test;
  * This Test class is just a place holder for unit test,
  * so we can copy paste the format and structure.
  */
-public class ValidationMgrTest {
+public class HelperMgrTest {
 
     @Test
     public void testCheckDepartmentValidation(){
-        ValidationMgr vmgr = new ValidationMgr();
+        HelperMgr vmgr = new HelperMgr();
         Assert.assertTrue(vmgr.checkDepartmentValidation("ECSE"));
     }
 
