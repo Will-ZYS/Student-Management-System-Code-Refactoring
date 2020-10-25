@@ -169,10 +169,12 @@ public class Printer implements IPrinter {
     public List<String> printCourseInDepartment(String department) {
         List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
+        /**
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
             System.out.println("None.");
         }
+         **/
         return validCourseString;
     }
 

@@ -29,7 +29,7 @@ public class ProfessorMgr implements IProfessorMgr {
         if(anyProf.size() == 0){
             return null;
         }
-        System.out.println("Sorry. The professor ID is used. This professor already exists.");
+        // System.out.println("Sorry. The professor ID is used. This professor already exists.");
         return anyProf.get(0);
 
     }

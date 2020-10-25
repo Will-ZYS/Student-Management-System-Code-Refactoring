@@ -9,8 +9,6 @@ import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.*;
 import java.util.regex.*;
 
@@ -21,12 +19,6 @@ import java.util.regex.*;
 public class HelperMgr implements IHelperMgr {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static PrintStream originalStream = System.out;
-    private static PrintStream dummyStream = new PrintStream(new OutputStream(){
-        public void write(int b) {
-            // NO-OP
-        }
-    });
     private static HelperMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
 
@@ -61,9 +53,7 @@ public class HelperMgr implements IHelperMgr {
             }
             if(checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
-                System.setOut(dummyStream);
                 validCourseString = printer.printCourseInDepartment(courseDepartment);
-                System.setOut(originalStream);
                 if(validCourseString.size() == 0){
                     System.out.println("Invalid choice of department.");
                 }else{
