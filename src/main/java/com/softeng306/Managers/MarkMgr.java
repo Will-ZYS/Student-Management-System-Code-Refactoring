@@ -24,7 +24,7 @@ import java.util.*;
 public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = HelperMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
     private IStudentMgr studentMgr = StudentMgr.getInstance();
 

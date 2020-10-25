@@ -37,7 +37,7 @@ public class StudentMgr implements IStudentMgr {
 
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = HelperMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
   

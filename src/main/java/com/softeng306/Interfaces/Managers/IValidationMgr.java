@@ -28,10 +28,6 @@ public interface IValidationMgr {
      */
     boolean checkCourseTypeValidation(String courseType);
 
-
-
-
-
     /**
      * Checks whether the inputted person name is in the correct format.
      * This person can be professor or student.
@@ -39,14 +35,6 @@ public interface IValidationMgr {
      * @return boolean indicates whether the inputted person name is valid.
      */
     boolean checkValidPersonNameInput(String personName);
-
-    /**
-     * Checks whether the inputted group name is in the correct format.
-     * @param groupName The inputted group name.
-     * @return boolean indicates whether the inputted group name is valid.
-     */
-    boolean checkValidGroupNameInput(String groupName);
-
 
     /**
      * Prompts the user to input an existing department.

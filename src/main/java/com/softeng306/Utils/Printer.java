@@ -16,7 +16,7 @@ import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.StudentMgr;
-import com.softeng306.Managers.ValidationMgr;
+import com.softeng306.Managers.HelperMgr;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class Printer implements IPrinter {
     //TODO STATIC?
     public static Scanner scanner = new Scanner(System.in);
     private static Printer instance = null;
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = HelperMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
     private IStudentMgr studentMgr = StudentMgr.getInstance();

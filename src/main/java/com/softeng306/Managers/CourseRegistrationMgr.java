@@ -19,7 +19,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = ValidationMgr.getInstance();
+    private IValidationMgr validationMgr = HelperMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
     private IStudentMgr studentMgr = StudentMgr.getInstance();

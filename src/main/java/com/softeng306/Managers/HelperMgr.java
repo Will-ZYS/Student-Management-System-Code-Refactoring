@@ -8,22 +8,17 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Interfaces.Entity.ICourse;
-import com.softeng306.Interfaces.Entity.ICourseRegistration;
-import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.regex.*;
 
 /**
  * Manages all the validation check in this system.
  */
 
-public class ValidationMgr implements IValidationMgr {
+public class HelperMgr implements IValidationMgr {
 
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
@@ -32,7 +27,7 @@ public class ValidationMgr implements IValidationMgr {
             // NO-OP
         }
     });
-    private static ValidationMgr instance = null;
+    private static HelperMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
 
     private IDatabase database = Database.getInstance();
@@ -92,21 +87,6 @@ public class ValidationMgr implements IValidationMgr {
         return false;
     }
 
-    //TODO PUT WITH COURSEMGR?
-    /**
-     * Checks whether the inputted group name is in the correct format.
-     * @param groupName The inputted group name.
-     * @return boolean indicates whether the inputted group name is valid.
-     */
-    public boolean checkValidGroupNameInput(String groupName) {
-        String REGEX = "^[a-zA-Z0-9]+$";
-        boolean valid =  Pattern.compile(REGEX).matcher(groupName).matches();
-        if(!valid){
-            System.out.println("Wrong format of group name.");
-        }
-        return valid;
-    }
-
     /**
      * Checks whether the inputted gender is valid.
      * @param gender The inputted gender.
@@ -135,12 +115,8 @@ public class ValidationMgr implements IValidationMgr {
         return valid;
     }
 
-
-
-
-
     /**
-     * HELPERS
+     * HELPER METHODS
      */
 
 
@@ -149,7 +125,7 @@ public class ValidationMgr implements IValidationMgr {
      *
      * @return an array list of all the departments.
      */
-    public ArrayList<String> getAllDepartment() {
+    private ArrayList<String> getAllDepartment() {
         Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
         ArrayList<String> departmentStringList = new ArrayList<String>(0);
         Iterator iter = departmentEnumSet.iterator();
@@ -165,7 +141,7 @@ public class ValidationMgr implements IValidationMgr {
      *
      * @return an array list of all the genders.
      */
-    public ArrayList<String> getAllGender() {
+    private ArrayList<String> getAllGender() {
         Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
         ArrayList<String> genderStringList = new ArrayList<String>(0);
         Iterator iter = genderEnumSet.iterator();
@@ -180,7 +156,7 @@ public class ValidationMgr implements IValidationMgr {
      *
      * @return an array list of all the course types.
      */
-    public ArrayList<String> getAllCourseType() {
+    private ArrayList<String> getAllCourseType() {
         Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
         ArrayList<String> courseTypeStringSet = new ArrayList<String>(0);
         Iterator iter = courseTypeEnumSet.iterator();
@@ -195,9 +171,9 @@ public class ValidationMgr implements IValidationMgr {
      * Get the instance of the ValidationMgr class.
      * @return the singleton instance
      */
-    public static ValidationMgr getInstance() {
+    public static HelperMgr getInstance() {
         if (instance == null) {
-            instance = new ValidationMgr();
+            instance = new HelperMgr();
         }
         return instance;
     }
