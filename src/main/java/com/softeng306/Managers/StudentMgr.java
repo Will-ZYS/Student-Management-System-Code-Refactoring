@@ -4,7 +4,7 @@ import com.softeng306.Database.Database;
 import com.softeng306.Database.FILEMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
@@ -37,7 +37,7 @@ public class StudentMgr implements IStudentMgr {
 
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = HelperMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
 
     private IDatabase database = Database.getInstance();
   
@@ -97,7 +97,7 @@ public class StudentMgr implements IStudentMgr {
         while (true) {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
-            if (validationMgr.checkValidPersonNameInput(studentName)) {
+            if (helperMgr.checkValidPersonNameInput(studentName)) {
                 break;
             }
         }
@@ -118,7 +118,7 @@ public class StudentMgr implements IStudentMgr {
                 studentSchool = scanner.nextLine();
             }
 
-            if (validationMgr.checkDepartmentValidation(studentSchool)) {
+            if (helperMgr.checkDepartmentValidation(studentSchool)) {
                 currentStudent.setStudentSchool(studentSchool);
                 break;
             }
@@ -136,7 +136,7 @@ public class StudentMgr implements IStudentMgr {
                 studentGender = scanner.nextLine();
             }
 
-            if (validationMgr.checkGenderValidation(studentGender)) {
+            if (helperMgr.checkGenderValidation(studentGender)) {
                 currentStudent.setGender(studentGender);
                 break;
             }

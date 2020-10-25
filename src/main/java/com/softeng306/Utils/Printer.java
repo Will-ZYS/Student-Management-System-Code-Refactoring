@@ -11,7 +11,7 @@ import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.MarkMgr;
@@ -28,7 +28,7 @@ public class Printer implements IPrinter {
     //TODO STATIC?
     public static Scanner scanner = new Scanner(System.in);
     private static Printer instance = null;
-    private IValidationMgr validationMgr = HelperMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
     private IStudentMgr studentMgr = StudentMgr.getInstance();
@@ -97,7 +97,7 @@ public class Printer implements IPrinter {
      * @return A list of all the names of professors in the inputted department or else null.
      */
     public List<String> printProfInDepartment(String department, boolean printOut) {
-        if (validationMgr.checkDepartmentValidation(department)) {
+        if (helperMgr.checkDepartmentValidation(department)) {
             List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);
@@ -418,7 +418,6 @@ public class Printer implements IPrinter {
     public void printCourseStatistics() {
         System.out.println("printCourseStatistics is called");
 
-        //TODO VALIDATIONMGR NEEDS TO BE INSTANTIATED WHEN REFACTORED INTO PRINTING CLASS
         ICourse currentCourse = courseMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
@@ -522,7 +521,7 @@ public class Printer implements IPrinter {
     }
 
     /**
-     * Get the instance of the ValidationMgr class.
+     * Get the instance of the Printer class.
      * @return the singleton instance
      */
     public static Printer getInstance() {

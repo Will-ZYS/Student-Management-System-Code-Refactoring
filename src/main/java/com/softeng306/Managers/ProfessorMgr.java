@@ -4,7 +4,6 @@ import com.softeng306.Database.Database;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
 
 import java.util.List;
 import java.util.Scanner;

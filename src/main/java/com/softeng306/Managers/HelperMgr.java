@@ -5,7 +5,7 @@ import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 
@@ -18,7 +18,7 @@ import java.util.regex.*;
  * Manages all the validation check in this system.
  */
 
-public class HelperMgr implements IValidationMgr {
+public class HelperMgr implements IHelperMgr {
 
     private static Scanner scanner = new Scanner(System.in);
     private static PrintStream originalStream = System.out;
@@ -168,7 +168,7 @@ public class HelperMgr implements IValidationMgr {
 
 
     /**
-     * Get the instance of the ValidationMgr class.
+     * Get the instance of the HelperMgr class.
      * @return the singleton instance
      */
     public static HelperMgr getInstance() {

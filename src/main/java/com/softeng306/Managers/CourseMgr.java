@@ -7,7 +7,7 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IGroupMgr;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -25,7 +25,7 @@ public class CourseMgr implements ICourseMgr {
 
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IValidationMgr validationMgr = HelperMgr.getInstance();
+    private IHelperMgr helperMgr = HelperMgr.getInstance();
     private IDatabase database = Database.getInstance();
     private IProfessorMgr professorMgr = ProfessorMgr.getInstance();
     private IGroupMgr groupMgr = GroupMgr.getInstance();
@@ -107,7 +107,7 @@ public class CourseMgr implements ICourseMgr {
                 printer.printAllDepartment();
                 courseDepartment = scanner.nextLine();
             }
-            if (validationMgr.checkDepartmentValidation(courseDepartment)) {
+            if (helperMgr.checkDepartmentValidation(courseDepartment)) {
                 break;
             }
         }
@@ -121,7 +121,7 @@ public class CourseMgr implements ICourseMgr {
                 printer.printAllCourseType();
                 courseType = scanner.nextLine();
             }
-            if (validationMgr.checkCourseTypeValidation(courseType)) {
+            if (helperMgr.checkCourseTypeValidation(courseType)) {
                 break;
             }
         }

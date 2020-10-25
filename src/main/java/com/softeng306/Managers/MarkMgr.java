@@ -8,7 +8,7 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
-import com.softeng306.Interfaces.Managers.IValidationMgr;
+import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
@@ -24,7 +24,6 @@ import java.util.*;
 public class MarkMgr implements IMarkMgr {
 
     private static MarkMgr instance = null;
-    private IValidationMgr validationMgr = HelperMgr.getInstance();
     private ICourseMgr courseMgr = CourseMgr.getInstance();
     private IStudentMgr studentMgr = StudentMgr.getInstance();
 

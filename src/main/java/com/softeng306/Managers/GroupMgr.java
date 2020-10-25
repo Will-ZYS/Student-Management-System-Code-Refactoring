@@ -24,7 +24,7 @@ public class GroupMgr implements IGroupMgr {
     }
 
     /**
-     * Get the instance of the ValidationMgr class.
+     * Get the instance of the GroupMgr class.
      * @return the singleton instance
      */
     public static GroupMgr getInstance() {

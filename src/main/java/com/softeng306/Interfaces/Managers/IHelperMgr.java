@@ -5,7 +5,7 @@ import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-public interface IValidationMgr {
+public interface IHelperMgr {
 
     /**
      * Checks whether the inputted department is valid.

@@ -11,7 +11,7 @@ import org.junit.Test;
  * This Test class is just a place holder for unit test,
  * so we can copy paste the format and structure.
  */
-public class ValidationMgrTest {
+public class HelperMgrTest {
 
     @Test
     public void testCheckDepartmentValidation(){
