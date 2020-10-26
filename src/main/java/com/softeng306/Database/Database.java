@@ -27,20 +27,24 @@ public class Database implements IDatabase {
     /**
      * An list of all the student mark records in this school.
      */
-    private static List<IMark> marks = new ArrayList<>(0);
+    private static List<IMark> marks;
     /**
      * An list of all the professors in this school.
      */
     private static List<IProfessor> professors = new ArrayList<>(0);
 
-//    /**
-//     * default constructor for database
-//     * instantiates the collections required for this system
-//     */
-//    private Database() {
-//        //TODO change FILEMgr to something else
-//
-//    }
+    /**
+     * default constructor for database
+     * instantiates the collections required for this system
+     */
+    private Database() {
+        //TODO change FILEMgr to something else
+        students = StudentFileMgr.getInstance().loadStudents();
+        courses = CourseFileMgr.getInstance().loadCourses();
+        courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
+        marks = MarkFileMgr.getInstance().loadStudentMarks();
+        professors = ProfessorFileMgr.getInstance().loadProfessors();
+    }
 
     /**
      * returns a list of Students in the system
@@ -129,11 +133,6 @@ public class Database implements IDatabase {
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
-            students = StudentFileMgr.getInstance().loadStudents();
-            courses = CourseFileMgr.getInstance().loadCourses();
-            courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
-            marks = MarkFileMgr.getInstance().loadStudentMarks();
-            professors = ProfessorFileMgr.getInstance().loadProfessors();
         }
         return instance;
     }
