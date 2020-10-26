@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class Option6IT extends IntegrationTestBase{
+public class Option7IT extends IntegrationTestBase{
 
     @Test
-    public void testEnterCourseComponentWeightage(){
+    public void testEnterCourseworkMark(){
         // ============= PREPARING THE INPUTS ===========================
         inputsBuilder.append("6").append(System.lineSeparator());
         inputsBuilder.append("SE2006").append(System.lineSeparator()); // Course ID
@@ -84,38 +84,6 @@ public class Option6IT extends IntegrationTestBase{
         expectedOutput.appendLine("    component1 : 25%");
         expectedOutput.appendLine("    component2 : 25%");
         expectedOutput.appendLine("        subcomponent1 : 100%");
-
-        CommonPrintingHelper.appendMenu(expectedOutput);
-        CommonPrintingHelper.appendByeMessage(expectedOutput);
-        //======================================================================
-
-        assertEquals(expectedOutput.toString(), outContent.toString());
-    }
-
-    @Test
-    public void testEnterCourseComponentWeightageAlreadySettled(){
-        // ============= PREPARING THE INPUTS ===========================
-        inputsBuilder.append("6").append(System.lineSeparator());
-        inputsBuilder.append("SE2007").append(System.lineSeparator()); // Course ID
-        inputsBuilder.append("11").append(System.lineSeparator()); // Exit
-
-        // ============= SENDING THE INPUTS & RUNNING THE SYSTEM=================
-        preparingInputStream();
-        Main.main(new String[]{});
-
-        // ======================== PREPARING OUTPUT ======================
-        CommonPrintingHelper.appendWelcomeMessage(expectedOutput);
-        CommonPrintingHelper.appendMenu(expectedOutput);
-
-        expectedOutput.appendLine("enterCourseWorkComponentWeightage is called");
-        expectedOutput.appendLine("Enter course ID (-h to print all the course ID):");
-
-        expectedOutput.appendLine("Course Assessment has been settled already!");
-        expectedOutput.appendLine("SE2007 Database components: ");
-        expectedOutput.appendLine("    Exam : 60%");
-        expectedOutput.appendLine("    Coursework : 40%");
-        expectedOutput.appendLine("        Labwork : 70%");
-        expectedOutput.appendLine("        Presentation : 30%");
 
         CommonPrintingHelper.appendMenu(expectedOutput);
         CommonPrintingHelper.appendByeMessage(expectedOutput);
