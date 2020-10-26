@@ -13,11 +13,12 @@ import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.StudentMgr;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.Scanner;
 
 public class Main {
-    public static Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static IDatabase database = Database.getInstance();
 

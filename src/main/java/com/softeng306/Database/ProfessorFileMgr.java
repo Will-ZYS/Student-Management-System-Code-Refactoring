@@ -12,7 +12,7 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	/**
 	 * The file name of professorFile.csv.
 	 */
-	private final String professorFileName = "data/professorFile.csv";
+	private String professorFileName = "data/professorFile.csv";
 
 	/**
 	 * The header of professorFile.csv.
@@ -116,4 +116,9 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 		}
 		return instance;
 	}
+
+	public void setProfessorFileName(String professorFileName) {
+		this.professorFileName = professorFileName;
+	}
+
 }

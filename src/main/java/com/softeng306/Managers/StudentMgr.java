@@ -10,7 +10,9 @@ import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import com.softeng306.Entity.Student;
+import com.softeng306.Main;
 import com.softeng306.Utils.Printer;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,9 +24,8 @@ import java.util.stream.Collectors;
  * Contains addStudent.
 
  */
-
 public class StudentMgr implements IStudentMgr {
-    private static Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static StudentMgr instance = null;
     private static IPrinter printer = Printer.getInstance();

@@ -14,6 +14,7 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
 
@@ -23,6 +24,7 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static MarkMgr instance = null;
     private ICourseMgr courseMgr = CourseMgr.getInstance();
@@ -32,8 +34,6 @@ public class MarkMgr implements IMarkMgr {
 
     private IDatabase database = Database.getInstance();
     private IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-
-    private static Scanner scanner = new Scanner(System.in);
 
     /**
      * Initializes marks for a student when he/she just registered a course.

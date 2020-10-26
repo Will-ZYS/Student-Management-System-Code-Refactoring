@@ -19,7 +19,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	/**
 	 * The file name of courseRegistrationFile.csv.
 	 */
-	private final String courseRegistrationFileName = "data/courseRegistrationFile.csv";
+	private String courseRegistrationFileName = "data/courseRegistrationFile.csv";
 
 	/**
 	 * The header of courseRegistrationFile.csv.
@@ -155,4 +155,10 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 		}
 		return instance;
 	}
+
+	public void setCourseRegistrationFileName(String courseRegistrationFileName) {
+		this.courseRegistrationFileName = courseRegistrationFileName;
+	}
+
+
 }

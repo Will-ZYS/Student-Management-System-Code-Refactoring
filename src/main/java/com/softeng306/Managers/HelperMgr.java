@@ -8,6 +8,7 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
+import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
 import java.util.regex.*;
@@ -18,7 +19,8 @@ import java.util.regex.*;
 
 public class HelperMgr implements IHelperMgr {
 
-    private static Scanner scanner = new Scanner(System.in);
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+
     private static HelperMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
 
