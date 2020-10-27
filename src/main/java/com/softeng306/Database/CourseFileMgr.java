@@ -374,7 +374,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 				fileWriter.append(EQUAL_SIGN);
 				fileWriter.append(String.valueOf(mainComponent.getComponentWeight()));
 				fileWriter.append(EQUAL_SIGN);
-				ArrayList<ICourseworkComponent> subComponents = mainComponent.getSubComponents();
+				List<ICourseworkComponent> subComponents = mainComponent.getSubComponents();
 				int inner_index = 0;
 				for (ICourseworkComponent subComponent : subComponents) {
 					fileWriter.append(subComponent.getComponentName());
