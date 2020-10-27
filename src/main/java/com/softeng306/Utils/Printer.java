@@ -26,7 +26,8 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
-    public static Scanner scanner = new Scanner(System.in);
+
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
     private IHelperMgr helperMgr = HelperMgr.getInstance();
     private IMarkMgr markMgr = MarkMgr.getInstance();
@@ -168,10 +169,12 @@ public class Printer implements IPrinter {
     public List<String> printCourseInDepartment(String department) {
         List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
+        /**
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
             System.out.println("None.");
         }
+         **/
         return validCourseString;
     }
 

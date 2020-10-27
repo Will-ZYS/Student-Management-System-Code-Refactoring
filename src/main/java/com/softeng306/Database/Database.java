@@ -15,23 +15,25 @@ public class Database implements IDatabase {
     /**
      * An list of all the students in this school.
      */
-    private List<IStudent> students = new ArrayList<>(0);
+
+    private static List<IStudent> students = new ArrayList<>(0);
     /**
      * An list of all the courses in this school.
      */
-    private List<ICourse> courses = new ArrayList<>(0);
+    private static List<ICourse> courses = new ArrayList<>(0);
     /**
      * An list of all the course registration records in this school.
      */
-    private List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
+    private static List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
     /**
      * An list of all the student mark records in this school.
      */
-    private List<IMark> marks = new ArrayList<>(0);
+    private static List<IMark> marks;
     /**
      * An list of all the professors in this school.
      */
-    private List<IProfessor> professors = new ArrayList<>(0);
+    private static List<IProfessor> professors = new ArrayList<>(0);
+
 
     /**
      * default constructor for database

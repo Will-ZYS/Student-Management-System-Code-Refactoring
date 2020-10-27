@@ -23,7 +23,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	/**
 	 * The file name of courseFile.csv.
 	 */
-	private final String courseFileName = "data/courseFile.csv";
+	private String courseFileName = "data/courseFile.csv";
 
 	/**
 	 * The header of courseFile.csv.
@@ -515,5 +515,9 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 			instance = new CourseFileMgr();
 		}
 		return instance;
+	}
+
+	public void setCourseFileName(String path){
+		courseFileName = path;
 	}
 }

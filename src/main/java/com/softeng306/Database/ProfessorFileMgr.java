@@ -12,7 +12,7 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	/**
 	 * The file name of professorFile.csv.
 	 */
-	private final String professorFileName = "data/professorFile.csv";
+	private String professorFileName = "data/professorFile.csv";
 
 	/**
 	 * The header of professorFile.csv.
@@ -33,42 +33,6 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	 * The index of professor department in professorFile.csv.
 	 */
 	private final int professorDepartmentIndex = 2;
-
-	/**
-	 * Writes a new professor information into the file.
-	 *
-	 * @param professor professor to be added into file
-	 */
-	public void writeProfIntoFile(IProfessor professor) {
-		File file;
-		FileWriter fileWriter = null;
-		try {
-			file = new File(professorFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(professorFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(professor_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
-			fileWriter.append(professor.getProfID());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(professor.getProfName());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(professor.getProfDepartment());
-			fileWriter.append(NEW_LINE_SEPARATOR);
-		} catch (Exception e) {
-			System.out.println("Error in adding a professor to the file.");
-			e.printStackTrace();
-		} finally {
-			try {
-				fileWriter.flush();
-				fileWriter.close();
-			} catch (IOException e) {
-				System.out.println("Error occurs when flushing or closing the file.");
-				e.printStackTrace();
-			}
-		}
-	}
 
 	/**
 	 * Load all the professors' information from file into the system.
@@ -116,4 +80,9 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 		}
 		return instance;
 	}
+
+	public void setProfessorFileName(String professorFileName) {
+		this.professorFileName = professorFileName;
+	}
+
 }

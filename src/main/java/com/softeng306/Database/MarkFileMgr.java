@@ -26,7 +26,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	/**
 	 * The file name of markFile.csv.
 	 */
-	private final String markFileName = "data/markFile.csv";
+	private String markFileName = "data/markFile.csv";
 
 	/**
 	 * The header of markFile.csv.
@@ -319,5 +319,9 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 			instance = new MarkFileMgr();
 		}
 		return instance;
+	}
+
+	public void setMarkFileName(String markFileName) {
+		this.markFileName = markFileName;
 	}
 }

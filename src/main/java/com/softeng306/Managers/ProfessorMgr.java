@@ -3,6 +3,7 @@ package com.softeng306.Managers;
 import com.softeng306.Database.Database;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IProfessor;
+import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
 
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
  */
 public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
-    private Scanner scanner = new Scanner(System.in);
+
+    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private IDatabase database = Database.getInstance();
 
     /**
@@ -29,7 +31,7 @@ public class ProfessorMgr implements IProfessorMgr {
         if(anyProf.size() == 0){
             return null;
         }
-        System.out.println("Sorry. The professor ID is used. This professor already exists.");
+        // System.out.println("Sorry. The professor ID is used. This professor already exists.");
         return anyProf.get(0);
 
     }
