@@ -10,12 +10,10 @@ import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import com.softeng306.Entity.Student;
-import com.softeng306.Main;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -30,12 +28,8 @@ public class StudentMgr implements IStudentMgr {
 
     private static StudentMgr instance = null;
 
-    //TODO STATIC TO STOP LOOPING CALLS
     private static IPrinter printer = Printer.getInstance();
-    private static IHelperMgr helperMgr = HelperMgr.getInstance();
-    private static IDatabase database = Database.getInstance();
-    private static IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
-  
+
     /**
      * Uses idNumber to generate student ID.
      */
@@ -53,6 +47,8 @@ public class StudentMgr implements IStudentMgr {
         boolean studentExists;
         String GPA = "not available";
         IStudent currentStudent = null;
+        IDatabase database = Database.getInstance();
+        IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
         System.out.println("addStudent is called");
         System.out.println("Choose the way you want to add a student:");
         System.out.println("1. Manually input the student ID.");
@@ -142,6 +138,7 @@ public class StudentMgr implements IStudentMgr {
     public String generateStudentID() {
         String generateStudentID;
         boolean studentIDUsed;
+        IDatabase database = Database.getInstance();
         do{
             int rand = (int)(Math.random() * ((76 - 65) + 1)) + 65;
             String lastPlace = Character.toString ((char) rand);
@@ -167,6 +164,7 @@ public class StudentMgr implements IStudentMgr {
      * @return the existing student or else null.
      */
     public IStudent checkStudentExists(String studentID) {
+        IDatabase database = Database.getInstance();
         List<IStudent> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
         if(anyStudent.size() == 0){
             return null;
@@ -222,6 +220,7 @@ public class StudentMgr implements IStudentMgr {
      */
     private String obtainValidStudentName() {
         String studentName;
+        IHelperMgr helperMgr = HelperMgr.getInstance();
         while (true) {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
@@ -239,6 +238,7 @@ public class StudentMgr implements IStudentMgr {
      */
     private void setSchool(IStudent currentStudent) {
         String studentSchool;
+        IHelperMgr helperMgr = HelperMgr.getInstance();
         while (true) {
             System.out.println("Enter student's school (uppercase): ");
             System.out.println("Enter -h to print all the schools.");
@@ -262,6 +262,7 @@ public class StudentMgr implements IStudentMgr {
      */
     private void setGender(IStudent currentStudent) {
         String studentGender;
+        IHelperMgr helperMgr = HelperMgr.getInstance();
         while (true) {
             System.out.println("Enter student gender (uppercase): ");
             System.out.println("Enter -h to print all the genders.");
