@@ -26,6 +26,7 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
+
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
     private IHelperMgr helperMgr = HelperMgr.getInstance();
@@ -256,7 +257,6 @@ public class Printer implements IPrinter {
         System.out.println("(3) Lab group");
         // READ courseRegistrationFILE
         // return ArrayList of Object(student,course,lecture,tut,lab)
-        //TODO FILEMGR AGAIN
         ArrayList<ICourseRegistration> allStuArray = courseRegistrationFileMgr.loadCourseRegistration();
 
 
@@ -394,7 +394,6 @@ public class Printer implements IPrinter {
             }
 
             System.out.println("Course Total: " + mark.getTotalMark());
-            // TODO SAME
             studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
             System.out.println();
         }
@@ -460,7 +459,6 @@ public class Printer implements IPrinter {
                 System.out.print("Main Component: " + courseworkComponent.getComponentName());
                 System.out.print("\tWeight: " + courseworkComponent.getComponentWeight() + "%");
 
-                // TODO SIMILAR TO ABOVE, NEED TO INSTANTIATE
                 averageMark += markMgr.computeMark(thisCourseMark, thisComponentName);
 
                 averageMark = averageMark / thisCourseMark.size();
@@ -474,8 +472,7 @@ public class Printer implements IPrinter {
                     System.out.print("\tWeight: " + subComponent.getComponentWeight() + "% (in main component)");
                     String thisSubComponentName = subComponent.getComponentName();
 
-                    //TODO SAME AS ABOVE
-                    averageMark += MarkMgr.getInstance().computeMark(thisCourseMark, thisSubComponentName);
+                    averageMark += markMgr.computeMark(thisCourseMark, thisSubComponentName);
 
                     averageMark = averageMark / thisCourseMark.size();
                     System.out.println("\t Average: " + averageMark);

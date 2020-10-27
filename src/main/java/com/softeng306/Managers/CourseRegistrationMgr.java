@@ -85,7 +85,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         currentCourse.enrolledIn();
 
         ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
-        // TODO FILEMGR AGAIN
 
         courseRegistrationFileMgr.writeCourseRegistrationIntoFile(courseRegistration);
 

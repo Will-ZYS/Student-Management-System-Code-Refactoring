@@ -418,7 +418,6 @@ public class CourseMgr implements ICourseMgr {
         }
         if (addCourseComponentChoice == 2) {
             //add course into file
-            // TODO FILEMGR SHOULD BE SINGLETON SOONTM?
             courseFileMgr.writeCourseIntoFile(course);
             database.getCourses().add(course);
             System.out.println("Course " + courseID + " is added, but assessment components are not initialized.");
@@ -428,7 +427,6 @@ public class CourseMgr implements ICourseMgr {
 
         enterCourseWorkComponentWeightage(course);
 
-        // TODO SAME AS ABOVE
         courseFileMgr.writeCourseIntoFile(course);
         database.getCourses().add(course);
         System.out.println("Course " + courseID + " is added");

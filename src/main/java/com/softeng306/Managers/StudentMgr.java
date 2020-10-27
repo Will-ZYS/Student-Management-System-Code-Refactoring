@@ -25,19 +25,21 @@ import java.util.stream.Collectors;
 
  */
 public class StudentMgr implements IStudentMgr {
+
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static StudentMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
-    private IHelperMgr helperMgr = HelperMgr.getInstance();
 
-    private IDatabase database = Database.getInstance();
-    private IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
+    //TODO STATIC TO STOP LOOPING CALLS
+    private static IPrinter printer = Printer.getInstance();
+    private static IHelperMgr helperMgr = HelperMgr.getInstance();
+    private static IDatabase database = Database.getInstance();
+    private static IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
   
     /**
      * Uses idNumber to generate student ID.
      */
-    private static int idNumber = 1800000;
+    private int idNumber = 1800000;
 
 
 
@@ -269,12 +271,11 @@ public class StudentMgr implements IStudentMgr {
     }
 
 
-    //TODO USED IN FILEMGR
     /**
      * Sets the idNumber variable of this student class.
      * @param idNumber static variable idNumber of this class.
      */
-    public static void setIdNumber(int idNumber) {
+    public void setIdNumber(int idNumber) {
         idNumber = idNumber;
     }
 }

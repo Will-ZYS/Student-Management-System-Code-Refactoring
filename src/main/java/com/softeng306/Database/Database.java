@@ -15,6 +15,7 @@ public class Database implements IDatabase {
     /**
      * An list of all the students in this school.
      */
+
     private static List<IStudent> students = new ArrayList<>(0);
     /**
      * An list of all the courses in this school.
@@ -33,12 +34,12 @@ public class Database implements IDatabase {
      */
     private static List<IProfessor> professors = new ArrayList<>(0);
 
+
     /**
      * default constructor for database
      * instantiates the collections required for this system
      */
     private Database() {
-        //TODO change FILEMgr to something else
         students = StudentFileMgr.getInstance().loadStudents();
         courses = CourseFileMgr.getInstance().loadCourses();
         courseRegistrations = CourseRegistrationFileMgr.getInstance().loadCourseRegistration();
