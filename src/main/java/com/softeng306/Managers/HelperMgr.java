@@ -1,10 +1,9 @@
 package com.softeng306.Managers;
 
-import com.softeng306.Database.Database;
+
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
-import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;

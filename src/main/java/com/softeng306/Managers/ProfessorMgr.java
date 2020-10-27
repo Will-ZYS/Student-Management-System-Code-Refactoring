@@ -7,7 +7,6 @@ import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
 
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
@@ -18,7 +17,6 @@ public class ProfessorMgr implements IProfessorMgr {
     private static ProfessorMgr instance = null;
 
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-    private IDatabase database = Database.getInstance();
 
     /**
      * Checks whether this professor ID is used by other professors.
@@ -26,6 +24,7 @@ public class ProfessorMgr implements IProfessorMgr {
      * @return the existing professor or else null.
      */
     public IProfessor checkProfExists(String profID) {
+        IDatabase database = Database.getInstance();
         List<IProfessor> anyProf = database.getProfessors().stream().filter(p->profID.equals(p.getProfID())).collect(Collectors.toList());
 
         if(anyProf.size() == 0){
