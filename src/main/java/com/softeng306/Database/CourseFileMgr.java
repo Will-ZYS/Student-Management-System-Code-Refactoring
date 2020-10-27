@@ -148,7 +148,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		BufferedReader fileReader = null;
 		try {
 			String line;
-			int thisProfessor = 0;
 			IProfessor currentProfessor = null;
 			ArrayList<IProfessor> professors = professorFileMgr.loadProfessors();
 			fileReader = new BufferedReader(new FileReader(courseFileName));
@@ -176,12 +175,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 
 					String lectureGroupsString = tokens[lectureGroupsIndex];
 					ArrayList<IGroup> lectureGroups = new ArrayList<>(0);
-					String[] eachLectureGroupsString = lectureGroupsString.split(Pattern.quote(LINE_DELIMITER));
-
-					for (int i = 0; i < eachLectureGroupsString.length; i++) {
-						String[] thisLectureGroup = eachLectureGroupsString[i].split(EQUAL_SIGN);
-						lectureGroups.add(new Group(thisLectureGroup[0], Integer.parseInt(thisLectureGroup[1]), Integer.parseInt(thisLectureGroup[2])));
-					}
+					loadGroup(lectureGroupsString, lectureGroups);
 
 					ICourse course = new Course(courseID, courseName, currentProfessor, vacancies, totalSeats, lectureGroups, AU, courseDepartment, courseType, lecWeeklyHr);
 
@@ -189,11 +183,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					ArrayList<IGroup> tutorialGroups = new ArrayList<>(0);
 
 					if (!tutorialGroupsString.equals("NULL")) {
-						String[] eachTutorialGroupsString = tutorialGroupsString.split(Pattern.quote(LINE_DELIMITER));
-						for (int i = 0; i < eachTutorialGroupsString.length; i++) {
-							String[] thisTutorialGroup = eachTutorialGroupsString[i].split(EQUAL_SIGN);
-							tutorialGroups.add(new Group(thisTutorialGroup[0], Integer.parseInt(thisTutorialGroup[1]), Integer.parseInt(thisTutorialGroup[2])));
-						}
+						loadGroup(tutorialGroupsString, tutorialGroups);
 					}
 					course.setTutorialGroups(tutorialGroups);
 					course.setTutWeeklyHour(tutWeeklyHr);
@@ -201,33 +191,14 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					String labGroupsString = tokens[labGroupIndex];
 					ArrayList<IGroup> labGroups = new ArrayList<>(0);
 					if (!labGroupsString.equals("NULL")) {
-						String[] eachLabGroupString = labGroupsString.split(Pattern.quote(LINE_DELIMITER));
-						for (int i = 0; i < eachLabGroupString.length; i++) {
-							String[] thisLabGroup = eachLabGroupString[i].split(EQUAL_SIGN);
-							labGroups.add(new Group(thisLabGroup[0], Integer.parseInt(thisLabGroup[1]), Integer.parseInt(thisLabGroup[2])));
-						}
+						loadGroup(labGroupsString, labGroups);
 					}
 					course.setLabGroups(labGroups);
 					course.setLabWeeklyHour(labWeeklyHr);
 
 					String mainComponentsString = tokens[mainComponentsIndex];
 					ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
-					if (!mainComponentsString.equals("NULL")) {
-						String[] eachMainComponentsString = mainComponentsString.split(Pattern.quote(LINE_DELIMITER));
-						for (int i = 0; i < eachMainComponentsString.length; i++) {
-							String[] thisMainComponent = eachMainComponentsString[i].split(EQUAL_SIGN);
-							ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
-							if (thisMainComponent.length > 2) {
-								String[] subComponentsString = thisMainComponent[2].split(SLASH);
-								for (int j = 0; j < subComponentsString.length; j++) {
-									String[] thisSubComponent = subComponentsString[j].split(HYPHEN);
-									subComponents.add(new SubComponent(thisSubComponent[0], Integer.parseInt(thisSubComponent[1])));
-								}
-							}
-
-							mainComponents.add(new MainComponent(thisMainComponent[0], Integer.parseInt(thisMainComponent[1]), subComponents));
-						}
-					}
+					loadComponents(mainComponentsString, mainComponents);
 					course.setMainComponents(mainComponents);
 					course.setVacancies(vacancies);
 					courses.add(course);
@@ -248,16 +219,50 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	}
 
 	/**
+	 * Loads MainComponents and SubComponents objects from the CSV file
+	 * @param mainComponentsString string containing Components
+	 * @param mainComponents List that we add to
+	 */
+	private void loadComponents(String mainComponentsString, List<ICourseworkComponent> mainComponents) {
+		if (!mainComponentsString.equals("NULL")) {
+			String[] eachMainComponentsString = mainComponentsString.split(Pattern.quote(LINE_DELIMITER));
+			for (String mainComponent : eachMainComponentsString) {
+				String[] thisMainComponent = mainComponent.split(EQUAL_SIGN);
+				List<ICourseworkComponent> subComponents = new ArrayList<>(0);
+				if (thisMainComponent.length > 2) {
+					String[] subComponentsString = thisMainComponent[2].split(SLASH);
+					for (String subComponent : subComponentsString) {
+						String[] thisSubComponent = subComponent.split(HYPHEN);
+						subComponents.add(new SubComponent(thisSubComponent[0], Integer.parseInt(thisSubComponent[1])));
+					}
+				}
+				mainComponents.add(new MainComponent(thisMainComponent[0], Integer.parseInt(thisMainComponent[1]), subComponents));
+			}
+		}
+	}
+
+	/**
+	 * Loads group objects from the CSV file
+	 * @param groupsString the string containing all groups
+	 * @param groups list of groups where we add groups to
+	 */
+	private void loadGroup(String groupsString, List<IGroup> groups) {
+		String[] eachGroupsString = groupsString.split(Pattern.quote(LINE_DELIMITER));
+		for (String group: eachGroupsString) {
+			String[] thisLectureGroup = group.split(EQUAL_SIGN);
+			groups.add(new Group(thisLectureGroup[0], Integer.parseInt(thisLectureGroup[1]), Integer.parseInt(thisLectureGroup[2])));
+		}
+	}
+
+	/**
 	 * Backs up all the changes of courses made into the file.
 	 *
 	 * @param courses courses to be backed up
 	 */
-
 	public void backUpCourse(List<ICourse> courses) {
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(courseFileName);
-
 
 			fileWriter.append(course_HEADER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
@@ -265,7 +270,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 			for (ICourse course : courses) {
 				writeCourseToCSV(fileWriter, course);
 			}
-
 		} catch (Exception e) {
 			System.out.println("Error in backing up courses.");
 			e.printStackTrace();
@@ -287,7 +291,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @throws IOException
 	 */
 	private void writeCourseToCSV(FileWriter fileWriter, ICourse course) throws IOException{
-
 		fileWriter.append(course.getCourseID());
 		fileWriter.append(COMMA_DELIMITER);
 
@@ -331,7 +334,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		fileWriter.append(COMMA_DELIMITER);
 		fileWriter.append(String.valueOf(course.getLabWeeklyHour()));
 		fileWriter.append(NEW_LINE_SEPARATOR);
-
 	}
 
 	/**
@@ -398,7 +400,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * Get the instance of the CourseFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static CourseFileMgr getInstance() {
 		if (instance == null) {
 			instance = new CourseFileMgr();
