@@ -46,23 +46,23 @@ public class CourseMgr implements ICourseMgr {
         int seatsLeft;
         // Can make the sameCourseID as boolean, set to false.
 
-        courseID = obtainValidCourseId(scanner);
+        courseID = obtainValidCourseId();
 
         System.out.println("Enter course Name: ");
         courseName = scanner.nextLine();
 
-        int totalSeats = obtainValidTotalSeats(scanner);
+        int totalSeats = obtainValidTotalSeats();
 
-        int AU = obtainValidAU(scanner);
+        int AU = obtainValidAU();
 
-        String courseDepartment = obtainValidCourseDepartment(scanner);
+        String courseDepartment = obtainValidCourseDepartment();
 
-        String courseType = obtainValidCourseType(scanner);
+        String courseType = obtainValidCourseType();
 
 
-        int noOfLectureGroups = obtainValidNumberOfLectureGroups(scanner, totalSeats);
+        int noOfLectureGroups = obtainValidNumberOfLectureGroups(totalSeats);
 
-        int lecWeeklyHour = obtainValidLectureWeeklyHour(scanner, AU);
+        int lecWeeklyHour = obtainValidLectureWeeklyHour(AU);
 
 
         ArrayList<IGroup> lectureGroups = new ArrayList<>();
@@ -120,7 +120,7 @@ public class CourseMgr implements ICourseMgr {
             } while (true);
         }
 
-        int noOfTutorialGroups = obtainValidNumberOfTutorialGroups(scanner, totalSeats, noOfLectureGroups);
+        int noOfTutorialGroups = obtainValidNumberOfTutorialGroups(totalSeats, noOfLectureGroups);
         int totalTutorialSeats = 0;
 
         int tutWeeklyHour = 0;
@@ -187,7 +187,7 @@ public class CourseMgr implements ICourseMgr {
             } while (true);
         }
 
-        int noOfLabGroups = obtainValidNumberOfLabGroups(scanner, totalSeats, noOfLectureGroups);
+        int noOfLabGroups = obtainValidNumberOfLabGroups(totalSeats, noOfLectureGroups);
         int totalLabSeats = 0;
 
         int labWeeklyHour = 0;
@@ -631,10 +631,9 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for a valid courseID
-     * @param scanner
      * @return Valid CourseID
      */
-    private String obtainValidCourseId(ScannerSingleton scanner) {
+    private String obtainValidCourseId() {
         String courseID;
         while (true) {
             System.out.println("Give this course an ID: ");
@@ -652,10 +651,9 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid total seat count
-     * @param scanner
      * @return Valid total seats
      */
-    private int obtainValidTotalSeats(ScannerSingleton scanner) {
+    private int obtainValidTotalSeats() {
         int totalSeats;
         while (true) {
             System.out.println("Enter the total vacancy of this course: ");
@@ -676,10 +674,9 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid AU number
-     * @param scanner
      * @return Valid AU number
      */
-    private int obtainValidAU(ScannerSingleton scanner) {
+    private int obtainValidAU() {
         int AU;
         while (true) {
             System.out.println("Enter number of academic unit(s): ");
@@ -700,10 +697,9 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid course department
-     * @param scanner
      * @return Valid course department
      */
-    private String obtainValidCourseDepartment(ScannerSingleton scanner) {
+    private String obtainValidCourseDepartment() {
         String courseDepartment;
         while (true) {
             System.out.println("Enter course's department (uppercase): ");
@@ -722,10 +718,9 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid course type
-     * @param scanner
      * @return Valid course type
      */
-    private String obtainValidCourseType(ScannerSingleton scanner) {
+    private String obtainValidCourseType() {
         String courseType;
         while (true) {
             System.out.println("Enter course type (uppercase): ");
@@ -744,10 +739,10 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of lecture groups
-     * @param scanner, totalSeats
+     * @param totalSeats
      * @return Valid number of lecture groups
      */
-    private int obtainValidNumberOfLectureGroups(ScannerSingleton scanner, int totalSeats) {
+    private int obtainValidNumberOfLectureGroups(int totalSeats) {
         int noOfLectureGroups;
         do {
             System.out.println("Enter the number of lecture groups: ");
@@ -770,10 +765,10 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid lecture hour
-     * @param scanner , AU
+     * @param AU
      * @return Valid lecture hour
      */
-    private int obtainValidLectureWeeklyHour(ScannerSingleton scanner, int AU) {
+    private int obtainValidLectureWeeklyHour(int AU) {
         int lecWeeklyHour = 0;
         while (true) {
             System.out.println("Enter the weekly lecture hour for this course: ");
@@ -794,10 +789,10 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of tutorial groups
-     * @param scanner, totalSeats, noOfLectureGroups
+     * @param totalSeats, noOfLectureGroups
      * @return Valid number of tutorial groups
      */
-    private int obtainValidNumberOfTutorialGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
+    private int obtainValidNumberOfTutorialGroups(int totalSeats, int noOfLectureGroups) {
         int noOfTutorialGroups;
         do {
             System.out.println("Enter the number of tutorial groups:");
@@ -819,10 +814,10 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of lab groups
-     * @param scanner, totalSeats, noOfLectureGroups
+     * @param totalSeats, noOfLectureGroups
      * @return Valid number of lab groups
      */
-    private int obtainValidNumberOfLabGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
+    private int obtainValidNumberOfLabGroups(int totalSeats, int noOfLectureGroups) {
         int noOfLabGroups;
         do {
             System.out.println("Enter the number of lab groups: ");

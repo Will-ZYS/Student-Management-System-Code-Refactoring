@@ -89,7 +89,7 @@ public class StudentMgr implements IStudentMgr {
             }
         }
 
-        studentName = obtainValidStudentName(scanner);
+        studentName = obtainValidStudentName();
 
         currentStudent = new Student(studentName);
         if (choice == 1) {
@@ -97,13 +97,13 @@ public class StudentMgr implements IStudentMgr {
         }
 
         //student department
-        setSchool(scanner, currentStudent);
+        setSchool(currentStudent);
 
         //gender
-        setGender(scanner, currentStudent);
+        setGender(currentStudent);
 
         //student year
-        setYear(scanner, currentStudent);
+        setYear(currentStudent);
 
         studentFileMgr.writeStudentsIntoFile(currentStudent);
 
@@ -216,10 +216,9 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which queries the user for a valid student name
-     * @param scanner
      * @return student name
      */
-    private String obtainValidStudentName(ScannerSingleton scanner) {
+    private String obtainValidStudentName() {
         String studentName;
         while (true) {
             System.out.println("Enter student Name: ");
@@ -233,10 +232,10 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which sets the school of the student
-     * @param scanner, student
+     * @param currentStudent
      * @return void
      */
-    private void setSchool(ScannerSingleton scanner, IStudent currentStudent) {
+    private void setSchool(IStudent currentStudent) {
         String studentSchool;
         while (true) {
             System.out.println("Enter student's school (uppercase): ");
@@ -256,10 +255,10 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which sets the gender of the student
-     * @param scanner, student
+     * @param currentStudent
      * @return void
      */
-    private void setGender(ScannerSingleton scanner, IStudent currentStudent) {
+    private void setGender(IStudent currentStudent) {
         String studentGender;
         while (true) {
             System.out.println("Enter student gender (uppercase): ");
@@ -279,10 +278,10 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which sets the year of the student
-     * @param scanner, student
+     * @param currentStudent
      * @return void
      */
-    private void setYear(ScannerSingleton scanner, IStudent currentStudent) {
+    private void setYear(IStudent currentStudent) {
         int studentYear;
         do {
             System.out.println("Enter student's school year (1-4) : ");
