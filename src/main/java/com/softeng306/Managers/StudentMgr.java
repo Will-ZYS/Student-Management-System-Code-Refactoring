@@ -91,74 +91,21 @@ public class StudentMgr implements IStudentMgr {
             }
         }
 
-        while (true) {
-            System.out.println("Enter student Name: ");
-            studentName = scanner.nextLine();
-            if (helperMgr.checkValidPersonNameInput(studentName)) {
-                break;
-            }
-        }
+        studentName = obtainValidStudentName();
 
         currentStudent = new Student(studentName);
         if (choice == 1) {
             currentStudent.setStudentID(studentID);
         }
 
-
         //student department
-        while (true) {
-            System.out.println("Enter student's school (uppercase): ");
-            System.out.println("Enter -h to print all the schools.");
-            studentSchool = scanner.nextLine();
-            while ("-h".equals(studentSchool)) {
-                printer.printAllDepartment();
-                studentSchool = scanner.nextLine();
-            }
-
-            if (helperMgr.checkDepartmentValidation(studentSchool)) {
-                currentStudent.setStudentSchool(studentSchool);
-                break;
-            }
-        }
-
+        setSchool(currentStudent);
 
         //gender
-        String studentGender;
-        while (true) {
-            System.out.println("Enter student gender (uppercase): ");
-            System.out.println("Enter -h to print all the genders.");
-            studentGender = scanner.nextLine();
-            while ("-h".equals(studentGender)) {
-                printer.printAllGender();
-                studentGender = scanner.nextLine();
-            }
-
-            if (helperMgr.checkGenderValidation(studentGender)) {
-                currentStudent.setGender(studentGender);
-                break;
-            }
-        }
-
+        setGender(currentStudent);
 
         //student year
-        do {
-            System.out.println("Enter student's school year (1-4) : ");
-            if (scanner.hasNextInt()) {
-                studentYear = scanner.nextInt();
-                scanner.nextLine();
-                if (studentYear < 1 || studentYear > 4) {
-                    System.out.println("Your input is out of bound.");
-                    System.out.println("Please re-enter an integer between 1 and 4");
-                } else {
-                    currentStudent.setStudentYear(studentYear);
-                    break;
-                }
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer");
-                System.out.println("Please re-enter.");
-            }
-        } while (true);
-
+        setYear(currentStudent);
 
         studentFileMgr.writeStudentsIntoFile(currentStudent);
 
@@ -175,7 +122,6 @@ public class StudentMgr implements IStudentMgr {
             }
             System.out.println(" " + student.getStudentID() + " | " + student.getStudentName() + " | " + student.getStudentSchool() + " | " + student.getGender() + " | " + student.getStudentYear() + " | " + GPA);
         }
-
     }
 
     /**
@@ -270,6 +216,93 @@ public class StudentMgr implements IStudentMgr {
 
     }
 
+    /**
+     * Helper method which queries the user for a valid student name
+     * @return student name
+     */
+    private String obtainValidStudentName() {
+        String studentName;
+        while (true) {
+            System.out.println("Enter student Name: ");
+            studentName = scanner.nextLine();
+            if (helperMgr.checkValidPersonNameInput(studentName)) {
+                break;
+            }
+        }
+        return studentName;
+    }
+
+    /**
+     * Helper method which sets the school of the student
+     * @param currentStudent
+     * @return void
+     */
+    private void setSchool(IStudent currentStudent) {
+        String studentSchool;
+        while (true) {
+            System.out.println("Enter student's school (uppercase): ");
+            System.out.println("Enter -h to print all the schools.");
+            studentSchool = scanner.nextLine();
+            while ("-h".equals(studentSchool)) {
+                printer.printAllDepartment();
+                studentSchool = scanner.nextLine();
+            }
+
+            if (helperMgr.checkDepartmentValidation(studentSchool)) {
+                currentStudent.setStudentSchool(studentSchool);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Helper method which sets the gender of the student
+     * @param currentStudent
+     * @return void
+     */
+    private void setGender(IStudent currentStudent) {
+        String studentGender;
+        while (true) {
+            System.out.println("Enter student gender (uppercase): ");
+            System.out.println("Enter -h to print all the genders.");
+            studentGender = scanner.nextLine();
+            while ("-h".equals(studentGender)) {
+                printer.printAllGender();
+                studentGender = scanner.nextLine();
+            }
+
+            if (helperMgr.checkGenderValidation(studentGender)) {
+                currentStudent.setGender(studentGender);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Helper method which sets the year of the student
+     * @param currentStudent
+     * @return void
+     */
+    private void setYear(IStudent currentStudent) {
+        int studentYear;
+        do {
+            System.out.println("Enter student's school year (1-4) : ");
+            if (scanner.hasNextInt()) {
+                studentYear = scanner.nextInt();
+                scanner.nextLine();
+                if (studentYear < 1 || studentYear > 4) {
+                    System.out.println("Your input is out of bound.");
+                    System.out.println("Please re-enter an integer between 1 and 4");
+                } else {
+                    currentStudent.setStudentYear(studentYear);
+                    break;
+                }
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer");
+                System.out.println("Please re-enter.");
+            }
+        } while (true);
+    }
 
     /**
      * Sets the idNumber variable of this student class.
