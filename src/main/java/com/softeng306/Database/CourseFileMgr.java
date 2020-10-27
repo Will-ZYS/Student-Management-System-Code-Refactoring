@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	private static CourseFileMgr instance;
-	private IProfessorFileMgr professorFileMgr = ProfessorFileMgr.getInstance();
 
 	/**
 	 * The file name of courseFile.csv.
@@ -254,11 +253,11 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @return an array list of all the courses.
 	 */
 	public ArrayList<ICourse> loadCourses() {
+		IProfessorFileMgr professorFileMgr = ProfessorFileMgr.getInstance();
 		ArrayList<ICourse> courses = new ArrayList<>(0);
 		BufferedReader fileReader = null;
 		try {
 			String line;
-			int thisProfessor = 0;
 			IProfessor currentProfessor = null;
 			ArrayList<IProfessor> professors = professorFileMgr.loadProfessors();
 			fileReader = new BufferedReader(new FileReader(courseFileName));
