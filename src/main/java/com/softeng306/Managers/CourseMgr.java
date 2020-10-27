@@ -45,115 +45,24 @@ public class CourseMgr implements ICourseMgr {
         boolean groupNameExists;
         int seatsLeft;
         // Can make the sameCourseID as boolean, set to false.
-        while (true) {
-            System.out.println("Give this course an ID: ");
-            courseID = scanner.nextLine();
-            if (checkValidCourseIDInput(courseID)) {
-                if (checkCourseExists(courseID) == null) {
-                    break;
-                } else {
-                    System.out.println("Sorry. The course ID is used. This course already exists.");
-                }
-            }
-        }
+
+        courseID = obtainValidCourseId(scanner);
 
         System.out.println("Enter course Name: ");
         courseName = scanner.nextLine();
 
-        int totalSeats;
-        while (true) {
-            System.out.println("Enter the total vacancy of this course: ");
-            if (scanner.hasNextInt()) {
-                totalSeats = scanner.nextInt();
-                if (totalSeats <= 0) {
-                    System.out.println("Please enter a valid vacancy (greater than 0)");
-                } else {
-                    break;
-                }
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-                System.out.println("Please re-enter");
-            }
-        }
+        int totalSeats = obtainValidTotalSeats(scanner);
 
-        int AU;
-        while (true) {
-            System.out.println("Enter number of academic unit(s): ");
-            if (scanner.hasNextInt()) {
-                AU = scanner.nextInt();
-                scanner.nextLine();
-                if (AU < 0 || AU > 10) {
-                    System.out.println("AU out of bound. Please re-enter.");
-                } else {
-                    break;
-                }
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-            }
-        }
+        int AU = obtainValidAU(scanner);
 
-        String courseDepartment;
-        while (true) {
-            System.out.println("Enter course's department (uppercase): ");
-            System.out.println("Enter -h to print all the departments.");
-            courseDepartment = scanner.nextLine();
-            while ("-h".equals(courseDepartment)) {
-                printer.printAllDepartment();
-                courseDepartment = scanner.nextLine();
-            }
-            if (helperMgr.checkDepartmentValidation(courseDepartment)) {
-                break;
-            }
-        }
+        String courseDepartment = obtainValidCourseDepartment(scanner);
 
-        String courseType;
-        while (true) {
-            System.out.println("Enter course type (uppercase): ");
-            System.out.println("Enter -h to print all the course types.");
-            courseType = scanner.nextLine();
-            while (courseType.equals("-h")) {
-                printer.printAllCourseType();
-                courseType = scanner.nextLine();
-            }
-            if (helperMgr.checkCourseTypeValidation(courseType)) {
-                break;
-            }
-        }
+        String courseType = obtainValidCourseType(scanner);
 
 
-        int noOfLectureGroups;
-        do {
-            System.out.println("Enter the number of lecture groups: ");
-            // lecture group number cannot be 0 and also cannot be larger than totalSeats
-            if (scanner.hasNextInt()) {
-                noOfLectureGroups = scanner.nextInt();
-                scanner.nextLine();
-                if (noOfLectureGroups > 0 && noOfLectureGroups <= totalSeats) {
-                    break;
-                }
-                System.out.println("Invalid input.");
-                System.out.println("Number of lecture group must be positive but less than total seats in this course.");
-                System.out.println("Please re-enter");
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-            }
-        } while (true);
+        int noOfLectureGroups = obtainValidNumberOfLectureGroups(scanner, totalSeats);
 
-        int lecWeeklyHour = 0;
-        while (true) {
-            System.out.println("Enter the weekly lecture hour for this course: ");
-            if (scanner.hasNextInt()) {
-                lecWeeklyHour = scanner.nextInt();
-                scanner.nextLine();
-                if (lecWeeklyHour < 0 || lecWeeklyHour > AU) {
-                    System.out.println("Weekly lecture hour out of bound. Please re-enter.");
-                } else {
-                    break;
-                }
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-            }
-        }
+        int lecWeeklyHour = obtainValidLectureWeeklyHour(scanner, AU);
 
 
         ArrayList<IGroup> lectureGroups = new ArrayList<>();
@@ -211,24 +120,8 @@ public class CourseMgr implements ICourseMgr {
             } while (true);
         }
 
-        int noOfTutorialGroups;
+        int noOfTutorialGroups = obtainValidNumberOfTutorialGroups(scanner, totalSeats, noOfLectureGroups);
         int totalTutorialSeats = 0;
-
-        do {
-            System.out.println("Enter the number of tutorial groups:");
-            if (scanner.hasNextInt()) {
-                noOfTutorialGroups = scanner.nextInt();
-                scanner.nextLine();
-                if (noOfTutorialGroups >= 0 && noOfLectureGroups <= totalSeats) {
-                    break;
-                }
-                System.out.println("Invalid input.");
-                System.out.println("Number of tutorial group must be non-negative.");
-                System.out.println("Please re-enter");
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-            }
-        } while (true);
 
         int tutWeeklyHour = 0;
         if (noOfTutorialGroups != 0) {
@@ -294,24 +187,8 @@ public class CourseMgr implements ICourseMgr {
             } while (true);
         }
 
-        int noOfLabGroups;
+        int noOfLabGroups = obtainValidNumberOfLabGroups(scanner, totalSeats, noOfLectureGroups);
         int totalLabSeats = 0;
-
-        do {
-            System.out.println("Enter the number of lab groups: ");
-            if (scanner.hasNextInt()) {
-                noOfLabGroups = scanner.nextInt();
-                scanner.nextLine();
-                if (noOfLabGroups >= 0 && noOfLectureGroups <= totalSeats) {
-                    break;
-                }
-                System.out.println("Invalid input.");
-                System.out.println("Number of lab group must be non-negative.");
-                System.out.println("Please re-enter");
-            } else {
-                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
-            }
-        } while (true);
 
         int labWeeklyHour = 0;
         if (noOfLabGroups != 0) {
@@ -736,7 +613,6 @@ public class CourseMgr implements ICourseMgr {
             return null;
         }
         return anyCourse.get(0);
-
     }
 
     /**
@@ -751,7 +627,219 @@ public class CourseMgr implements ICourseMgr {
             System.out.println("Wrong format of course ID.");
         }
         return valid;
+    }
 
+    /**
+     * Helper method which queries the user for a valid courseID
+     * @param scanner
+     * @return Valid CourseID
+     */
+    private String obtainValidCourseId(ScannerSingleton scanner) {
+        String courseID;
+        while (true) {
+            System.out.println("Give this course an ID: ");
+            courseID = scanner.nextLine();
+            if (checkValidCourseIDInput(courseID)) {
+                if (checkCourseExists(courseID) == null) {
+                    break;
+                } else {
+                    System.out.println("Sorry. The course ID is used. This course already exists.");
+                }
+            }
+        }
+        return courseID;
+    }
+
+    /**
+     * Helper method which queries the user for valid total seat count
+     * @param scanner
+     * @return Valid total seats
+     */
+    private int obtainValidTotalSeats(ScannerSingleton scanner) {
+        int totalSeats;
+        while (true) {
+            System.out.println("Enter the total vacancy of this course: ");
+            if (scanner.hasNextInt()) {
+                totalSeats = scanner.nextInt();
+                if (totalSeats <= 0) {
+                    System.out.println("Please enter a valid vacancy (greater than 0)");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+                System.out.println("Please re-enter");
+            }
+        }
+        return totalSeats;
+    }
+
+    /**
+     * Helper method which queries the user for valid AU number
+     * @param scanner
+     * @return Valid AU number
+     */
+    private int obtainValidAU(ScannerSingleton scanner) {
+        int AU;
+        while (true) {
+            System.out.println("Enter number of academic unit(s): ");
+            if (scanner.hasNextInt()) {
+                AU = scanner.nextInt();
+                scanner.nextLine();
+                if (AU < 0 || AU > 10) {
+                    System.out.println("AU out of bound. Please re-enter.");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+            }
+        }
+        return AU;
+    }
+
+    /**
+     * Helper method which queries the user for valid course department
+     * @param scanner
+     * @return Valid course department
+     */
+    private String obtainValidCourseDepartment(ScannerSingleton scanner) {
+        String courseDepartment;
+        while (true) {
+            System.out.println("Enter course's department (uppercase): ");
+            System.out.println("Enter -h to print all the departments.");
+            courseDepartment = scanner.nextLine();
+            while ("-h".equals(courseDepartment)) {
+                printer.printAllDepartment();
+                courseDepartment = scanner.nextLine();
+            }
+            if (helperMgr.checkDepartmentValidation(courseDepartment)) {
+                break;
+            }
+        }
+        return courseDepartment;
+    }
+
+    /**
+     * Helper method which queries the user for valid course type
+     * @param scanner
+     * @return Valid course type
+     */
+    private String obtainValidCourseType(ScannerSingleton scanner) {
+        String courseType;
+        while (true) {
+            System.out.println("Enter course type (uppercase): ");
+            System.out.println("Enter -h to print all the course types.");
+            courseType = scanner.nextLine();
+            while (courseType.equals("-h")) {
+                printer.printAllCourseType();
+                courseType = scanner.nextLine();
+            }
+            if (helperMgr.checkCourseTypeValidation(courseType)) {
+                break;
+            }
+        }
+        return courseType;
+    }
+
+    /**
+     * Helper method which queries the user for valid number of lecture groups
+     * @param scanner
+     * @return Valid number of lecture groups
+     */
+    private int obtainValidNumberOfLectureGroups(ScannerSingleton scanner, int totalSeats) {
+        int noOfLectureGroups;
+        do {
+            System.out.println("Enter the number of lecture groups: ");
+            // lecture group number cannot be 0 and also cannot be larger than totalSeats
+            if (scanner.hasNextInt()) {
+                noOfLectureGroups = scanner.nextInt();
+                scanner.nextLine();
+                if (noOfLectureGroups > 0 && noOfLectureGroups <= totalSeats) {
+                    break;
+                }
+                System.out.println("Invalid input.");
+                System.out.println("Number of lecture group must be positive but less than total seats in this course.");
+                System.out.println("Please re-enter");
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+            }
+        } while (true);
+        return noOfLectureGroups;
+    }
+
+    /**
+     * Helper method which queries the user for valid lecture hour
+     * @param scanner
+     * @return Valid lecture hour
+     */
+    private int obtainValidLectureWeeklyHour(ScannerSingleton scanner, int AU) {
+        int lecWeeklyHour = 0;
+        while (true) {
+            System.out.println("Enter the weekly lecture hour for this course: ");
+            if (scanner.hasNextInt()) {
+                lecWeeklyHour = scanner.nextInt();
+                scanner.nextLine();
+                if (lecWeeklyHour < 0 || lecWeeklyHour > AU) {
+                    System.out.println("Weekly lecture hour out of bound. Please re-enter.");
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+            }
+        }
+        return lecWeeklyHour;
+    }
+
+    /**
+     * Helper method which queries the user for valid number of tutorial groups
+     * @param scanner
+     * @return Valid number of tutorial groups
+     */
+    private int obtainValidNumberOfTutorialGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
+        int noOfTutorialGroups;
+        do {
+            System.out.println("Enter the number of tutorial groups:");
+            if (scanner.hasNextInt()) {
+                noOfTutorialGroups = scanner.nextInt();
+                scanner.nextLine();
+                if (noOfTutorialGroups >= 0 && noOfLectureGroups <= totalSeats) {
+                    break;
+                }
+                System.out.println("Invalid input.");
+                System.out.println("Number of tutorial group must be non-negative.");
+                System.out.println("Please re-enter");
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+            }
+        } while (true);
+        return noOfTutorialGroups;
+    }
+
+    /**
+     * Helper method which queries the user for valid number of lab groups
+     * @param scanner
+     * @return Valid number of lab groups
+     */
+    private int obtainValidNumberOfLabGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
+        int noOfLabGroups;
+        do {
+            System.out.println("Enter the number of lab groups: ");
+            if (scanner.hasNextInt()) {
+                noOfLabGroups = scanner.nextInt();
+                scanner.nextLine();
+                if (noOfLabGroups >= 0 && noOfLectureGroups <= totalSeats) {
+                    break;
+                }
+                System.out.println("Invalid input.");
+                System.out.println("Number of lab group must be non-negative.");
+                System.out.println("Please re-enter");
+            } else {
+                System.out.println("Your input " + scanner.nextLine() + " is not an integer.");
+            }
+        } while (true);
+        return noOfLabGroups;
     }
 
     /**
