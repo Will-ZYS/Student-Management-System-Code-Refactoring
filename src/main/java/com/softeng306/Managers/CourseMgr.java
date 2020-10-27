@@ -744,7 +744,7 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of lecture groups
-     * @param scanner
+     * @param scanner, totalSeats
      * @return Valid number of lecture groups
      */
     private int obtainValidNumberOfLectureGroups(ScannerSingleton scanner, int totalSeats) {
@@ -770,7 +770,7 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid lecture hour
-     * @param scanner
+     * @param scanner , AU
      * @return Valid lecture hour
      */
     private int obtainValidLectureWeeklyHour(ScannerSingleton scanner, int AU) {
@@ -794,7 +794,7 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of tutorial groups
-     * @param scanner
+     * @param scanner, totalSeats, noOfLectureGroups
      * @return Valid number of tutorial groups
      */
     private int obtainValidNumberOfTutorialGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
@@ -819,7 +819,7 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid number of lab groups
-     * @param scanner
+     * @param scanner, totalSeats, noOfLectureGroups
      * @return Valid number of lab groups
      */
     private int obtainValidNumberOfLabGroups(ScannerSingleton scanner, int totalSeats, int noOfLectureGroups) {
