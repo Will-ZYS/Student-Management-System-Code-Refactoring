@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
-	private IStudentMgr studentMgr = StudentMgr.getInstance();
 	/**
 	 * The file name of studentFile.csv.
 	 */
@@ -102,6 +101,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	public ArrayList<IStudent> loadStudents() {
 		BufferedReader fileReader = null;
 		ArrayList<IStudent> students = new ArrayList<>(0);
+		IStudentMgr studentMgr = StudentMgr.getInstance();
 		try {
 			String line;
 			fileReader = new BufferedReader(new FileReader(studentFileName));
