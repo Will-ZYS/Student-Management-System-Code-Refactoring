@@ -24,8 +24,6 @@ public class HelperMgr implements IHelperMgr {
     private static HelperMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
 
-    private IDatabase database = Database.getInstance();
-
 
     /**
      * Checks whether the inputted department is valid.

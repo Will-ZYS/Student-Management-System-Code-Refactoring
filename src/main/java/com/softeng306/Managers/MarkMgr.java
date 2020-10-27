@@ -9,7 +9,6 @@ import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
-import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
@@ -27,13 +26,6 @@ public class MarkMgr implements IMarkMgr {
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static MarkMgr instance = null;
-    private ICourseMgr courseMgr = CourseMgr.getInstance();
-    private IStudentMgr studentMgr = StudentMgr.getInstance();
-
-
-
-    private IDatabase database = Database.getInstance();
-    private IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
 
     /**
      * Initializes marks for a student when he/she just registered a course.
@@ -42,6 +34,7 @@ public class MarkMgr implements IMarkMgr {
      * @return the new added mark.
      */
     public IMark initializeMark(IStudent student, ICourse course) {
+        IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
         HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
         double totalMark = 0d;
         ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
@@ -65,6 +58,10 @@ public class MarkMgr implements IMarkMgr {
      * @param isExam whether this coursework component refers to "Exam"
      */
     public void setCourseWorkMark(boolean isExam) {
+        ICourseMgr courseMgr = CourseMgr.getInstance();
+        IStudentMgr studentMgr = StudentMgr.getInstance();
+        IDatabase database = Database.getInstance();
+
         System.out.println("enterCourseWorkMark is called");
 
         String studentID = studentMgr.checkStudentExists().getStudentID();
