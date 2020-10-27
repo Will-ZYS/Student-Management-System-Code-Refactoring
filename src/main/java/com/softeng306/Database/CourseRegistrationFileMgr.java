@@ -58,16 +58,10 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	 * @param courseRegistration courseRegistration to be added into file
 	 */
 	public void writeCourseRegistrationIntoFile(ICourseRegistration courseRegistration) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(courseRegistrationFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(courseRegistrationFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(courseRegistration_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistration_HEADER);
+
 			fileWriter.append(courseRegistration.getStudent().getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(courseRegistration.getCourse().getCourseID());

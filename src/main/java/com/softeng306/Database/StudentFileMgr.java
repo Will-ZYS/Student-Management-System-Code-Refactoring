@@ -56,16 +56,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 * @param student a student to be added into the file
 	 */
 	public void writeStudentsIntoFile(IStudent student) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(studentFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(studentFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(student_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(studentFileName, student_HEADER);
+
 			fileWriter.append(student.getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(student.getStudentName());

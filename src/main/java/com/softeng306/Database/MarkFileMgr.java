@@ -59,16 +59,10 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	 * @param mark mark to be updated into the file
 	 */
 	public void updateStudentMarks(IMark mark) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(markFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(markFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(mark_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(markFileName, mark_HEADER);
+
 			fileWriter.append(mark.getStudent().getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(mark.getCourse().getCourseID());

@@ -110,19 +110,11 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @param course a course to be added into file
 	 */
 	public void writeCourseIntoFile(ICourse course) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(courseFileName, true);
-			//initialize file header if have not done so
-			file = new File(courseFileName);
-			if (file.length() == 0) {
-				fileWriter.append(course_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(courseFileName, course_HEADER);
 
 			writeCourseToCSV(fileWriter, course);
-
 		} catch (Exception e) {
 			System.out.println("Error in adding a course to the file.");
 			e.printStackTrace();
@@ -135,7 +127,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/**
