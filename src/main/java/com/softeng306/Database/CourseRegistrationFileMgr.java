@@ -89,16 +89,16 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	/**
 	 * Load all the course registration records from file into the system.
 	 *
-	 * @return an array list of all the course registration records.
+	 * @return a list of all the course registration records.
 	 */
-	public ArrayList<ICourseRegistration> loadCourseRegistration() {
+	public List<ICourseRegistration> loadCourseRegistration() {
 		BufferedReader fileReader = null;
 		ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
 		try {
 			String line;
 			IStudent currentStudent = null;
 			ICourse currentCourse = null;
-			ArrayList<IStudent> students = studentFileMgr.loadStudents();
+			List<IStudent> students = studentFileMgr.loadStudents();
 
 			fileReader = new BufferedReader(new FileReader(courseRegistrationFileName));
 			fileReader.readLine();//read the header to skip it

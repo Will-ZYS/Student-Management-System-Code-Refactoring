@@ -6,6 +6,7 @@ import com.softeng306.Interfaces.Entity.IProfessor;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileMgr {
 	private static ProfessorFileMgr instance;
@@ -13,11 +14,6 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	 * The file name of professorFile.csv.
 	 */
 	private String professorFileName = "data/professorFile.csv";
-
-	/**
-	 * The header of professorFile.csv.
-	 */
-	private final String professor_HEADER = "professorID,professorName,profDepartment";
 
 	/**
 	 * The index of professor ID in professorFile.csv.
@@ -37,11 +33,11 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	/**
 	 * Load all the professors' information from file into the system.
 	 *
-	 * @return an array list of all the professors.
+	 * @return a list of all the professors.
 	 */
-	public ArrayList<IProfessor> loadProfessors() {
+	public List<IProfessor> loadProfessors() {
 		BufferedReader fileReader = null;
-		ArrayList<IProfessor> professors = new ArrayList<>(0);
+		List<IProfessor> professors = new ArrayList<>(0);
 		try {
 			String line;
 			fileReader = new BufferedReader(new FileReader(professorFileName));

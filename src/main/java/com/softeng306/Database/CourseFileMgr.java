@@ -132,7 +132,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	/**
 	 * Load all the courses' information from file into the system.
 	 *
-	 * @return an array list of all the courses.
+	 * @return a list of all the courses.
 	 */
 	public List<ICourse> loadCourses() {
 		List<ICourse> courses = new ArrayList<>(0);

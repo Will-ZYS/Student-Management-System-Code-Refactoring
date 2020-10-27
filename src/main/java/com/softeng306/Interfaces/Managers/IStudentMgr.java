@@ -31,5 +31,6 @@ public interface IStudentMgr {
 
     String generateStudentID();
 
+    // TODO sort this out
 //    void setIdNumber(int idNumber);
 }

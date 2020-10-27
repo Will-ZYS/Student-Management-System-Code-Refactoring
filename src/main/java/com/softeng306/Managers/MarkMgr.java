@@ -161,11 +161,11 @@ public class MarkMgr implements IMarkMgr {
 
     /**
      * Computes the sum of marks for a particular component of a particular course
-     * @param thisCourseMark the array list of mark records belong to a particular course
+     * @param thisCourseMark the list of mark records belong to a particular course
      * @param thisComponentName the component name interested.
      * @return the sum of component marks
      */
-    public double computeMark(ArrayList<IMark> thisCourseMark, String thisComponentName){
+    public double computeMark(List<IMark> thisCourseMark, String thisComponentName){
 
         double averageMark = 0;
         for (IMark mark : thisCourseMark) {

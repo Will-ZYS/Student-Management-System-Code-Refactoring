@@ -144,11 +144,11 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	/**
 	 * Load all the student mark records from file into the system.
 	 *
-	 * @return an array list of all the student mark records.
+	 * @return a list of all the student mark records.
 	 */
-	public ArrayList<IMark> loadStudentMarks() {
+	public List<IMark> loadStudentMarks() {
 		BufferedReader fileReader = null;
-		ArrayList<IMark> marks = new ArrayList<>(0);
+		List<IMark> marks = new ArrayList<>(0);
 		try {
 			String line;
 

@@ -7,6 +7,7 @@ import com.softeng306.Managers.StudentMgr;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
@@ -89,9 +90,9 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	/**
 	 * Load all the students' information from file into the system.
 	 *
-	 * @return an array list of all the students.
+	 * @return a list of all the students.
 	 */
-	public ArrayList<IStudent> loadStudents() {
+	public List<IStudent> loadStudents() {
 		BufferedReader fileReader = null;
 		ArrayList<IStudent> students = new ArrayList<>(0);
 		try {

@@ -1,9 +1,8 @@
 package com.softeng306.Interfaces.Database;
 
-import com.softeng306.Database.StudentFileMgr;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IStudentFileMgr {
 
@@ -17,7 +16,7 @@ public interface IStudentFileMgr {
     /**
      * Load all the students' information from file into the system.
      *
-     * @return an array list of all the students.
+     * @return a list of all the students.
      */
-     ArrayList<IStudent> loadStudents();
+     List<IStudent> loadStudents();
 }
