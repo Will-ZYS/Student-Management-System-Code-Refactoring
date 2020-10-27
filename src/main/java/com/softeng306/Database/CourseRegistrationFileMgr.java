@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
 	private static CourseRegistrationFileMgr instance;
-	private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
-	private IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 
 	/**
 	 * The file name of courseRegistrationFile.csv.
@@ -99,6 +97,8 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	public ArrayList<ICourseRegistration> loadCourseRegistration() {
 		BufferedReader fileReader = null;
 		ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
+		ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+		IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 		try {
 			String line;
 			IStudent currentStudent = null;
