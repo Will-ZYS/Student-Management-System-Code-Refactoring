@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
 
 public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	private static MarkFileMgr instance = null;
-	private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
-	private IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 
 	/**
 	 * The file name of markFile.csv.
@@ -133,6 +131,8 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	public ArrayList<IMark> loadStudentMarks() {
 		BufferedReader fileReader = null;
 		ArrayList<IMark> marks = new ArrayList<>(0);
+		ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+		IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 		try {
 			String line;
 
