@@ -10,6 +10,7 @@ import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
 	private static CourseRegistrationFileMgr instance;
@@ -120,7 +121,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 						}
 					}
 					String courseID = tokens[courseIdInRegistrationIndex];
-					ArrayList<ICourse> courses = courseFileMgr.loadCourses();
+					List<ICourse> courses = courseFileMgr.loadCourses();
 					for (ICourse course : courses) {
 						if (course.getCourseID().equals(courseID)) {
 							currentCourse = course;

@@ -2,7 +2,7 @@ package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CourseworkComponent implements ICourseworkComponent {
     /**
@@ -45,5 +45,5 @@ public abstract class CourseworkComponent implements ICourseworkComponent {
      * Gets the sub components of this main component.
      * @return the sub components of this main component.
      */
-    public abstract ArrayList<ICourseworkComponent> getSubComponents();
+    public abstract List<ICourseworkComponent> getSubComponents();
 }

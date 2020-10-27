@@ -143,13 +143,13 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 *
 	 * @return an array list of all the courses.
 	 */
-	public ArrayList<ICourse> loadCourses() {
-		ArrayList<ICourse> courses = new ArrayList<>(0);
+	public List<ICourse> loadCourses() {
+		List<ICourse> courses = new ArrayList<>(0);
 		BufferedReader fileReader = null;
 		try {
 			String line;
 			IProfessor currentProfessor = null;
-			ArrayList<IProfessor> professors = professorFileMgr.loadProfessors();
+			List<IProfessor> professors = professorFileMgr.loadProfessors();
 			fileReader = new BufferedReader(new FileReader(courseFileName));
 			fileReader.readLine();//read the header to skip it
 			while ((line = fileReader.readLine()) != null) {
@@ -174,14 +174,13 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					int labWeeklyHr = Integer.parseInt(tokens[labHrIndex]);
 
 					String lectureGroupsString = tokens[lectureGroupsIndex];
-					ArrayList<IGroup> lectureGroups = new ArrayList<>(0);
+					List<IGroup> lectureGroups = new ArrayList<>(0);
 					loadGroup(lectureGroupsString, lectureGroups);
 
 					ICourse course = new Course(courseID, courseName, currentProfessor, vacancies, totalSeats, lectureGroups, AU, courseDepartment, courseType, lecWeeklyHr);
 
 					String tutorialGroupsString = tokens[tutorialGroupIndex];
-					ArrayList<IGroup> tutorialGroups = new ArrayList<>(0);
-
+					List<IGroup> tutorialGroups = new ArrayList<>(0);
 					if (!tutorialGroupsString.equals("NULL")) {
 						loadGroup(tutorialGroupsString, tutorialGroups);
 					}
@@ -189,7 +188,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					course.setTutWeeklyHour(tutWeeklyHr);
 
 					String labGroupsString = tokens[labGroupIndex];
-					ArrayList<IGroup> labGroups = new ArrayList<>(0);
+					List<IGroup> labGroups = new ArrayList<>(0);
 					if (!labGroupsString.equals("NULL")) {
 						loadGroup(labGroupsString, labGroups);
 					}
@@ -197,7 +196,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					course.setLabWeeklyHour(labWeeklyHr);
 
 					String mainComponentsString = tokens[mainComponentsIndex];
-					ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
+					List<ICourseworkComponent> mainComponents = new ArrayList<>(0);
 					loadComponents(mainComponentsString, mainComponents);
 					course.setMainComponents(mainComponents);
 					course.setVacancies(vacancies);

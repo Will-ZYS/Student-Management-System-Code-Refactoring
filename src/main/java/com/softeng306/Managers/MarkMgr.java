@@ -44,7 +44,7 @@ public class MarkMgr implements IMarkMgr {
     public IMark initializeMark(IStudent student, ICourse course) {
         HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
         double totalMark = 0d;
-        ArrayList<ICourseworkComponent> mainComponents = course.getMainComponents();
+        List<ICourseworkComponent> mainComponents = course.getMainComponents();
 
         for (ICourseworkComponent mainComponent : mainComponents) {
             courseWorkMarks.put(mainComponent, 0d);

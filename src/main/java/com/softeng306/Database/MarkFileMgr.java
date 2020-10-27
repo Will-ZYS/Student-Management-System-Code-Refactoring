@@ -86,7 +86,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 						fileWriter.append(EQUAL_SIGN);
 						fileWriter.append(String.valueOf(value));
 						fileWriter.append(EQUAL_SIGN);
-						ArrayList<ICourseworkComponent> subComponents = key.getSubComponents();
+						List<ICourseworkComponent> subComponents = key.getSubComponents();
 						int subComponent_index = 0;
 						for (ICourseworkComponent subComponent : subComponents) {
 							fileWriter.append(subComponent.getComponentName());
@@ -136,8 +136,8 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		try {
 			String line;
 
-			ArrayList<IStudent> students = studentFileMgr.loadStudents();
-			ArrayList<ICourse> courses = courseFileMgr.loadCourses();
+			List<IStudent> students = studentFileMgr.loadStudents();
+			List<ICourse> courses = courseFileMgr.loadCourses();
 
 			fileReader = new BufferedReader(new FileReader(markFileName));
 			//read the header to skip it
@@ -259,7 +259,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 							fileWriter.append(EQUAL_SIGN);
 							fileWriter.append(String.valueOf(value));
 							fileWriter.append(EQUAL_SIGN);
-							ArrayList<ICourseworkComponent> subComponents = key.getSubComponents();
+							List<ICourseworkComponent> subComponents = key.getSubComponents();
 							int subComponent_index = 0;
 							for (ICourseworkComponent subComponent : subComponents) {
 								fileWriter.append(subComponent.getComponentName());
