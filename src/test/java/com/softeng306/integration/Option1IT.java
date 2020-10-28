@@ -3,7 +3,14 @@ package com.softeng306.integration;
 
 import com.softeng306.Main;
 import com.softeng306.helper.CommonPrintingHelper;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 public class Option1IT extends IntegrationTestBase{
 
@@ -18,8 +25,7 @@ public class Option1IT extends IntegrationTestBase{
         inputsBuilder.append("ECSE").append(System.lineSeparator()); // School
         inputsBuilder.append("MALE").append(System.lineSeparator()); // Gender
         inputsBuilder.append("1").append(System.lineSeparator()); // School year
-        inputsBuilder.append("11").append(System.lineSeparator()); // School year
-
+        inputsBuilder.append("11").append(System.lineSeparator()); // Exit
         preparingInputStream();
         Main.main(new String[]{});
 
@@ -82,6 +88,14 @@ public class Option1IT extends IntegrationTestBase{
         CommonPrintingHelper.appendByeMessage(expectedOutput);
 
         assertEquals(expectedOutput.toString(), outContent.toString());
+        try {
+            assertEquals("The files differ!",
+                    FileUtils.readFileToString(csvHelper.getFileToBeTested("studentFile.csv"), "utf-8").trim(),
+                    FileUtils.readFileToString(csvHelper.getFileSampleOutput("studentFileAddedStudentWongabe.csv"), "utf-8").trim());
+
+        } catch (IOException e) {
+            System.err.println("File Not found error - Most likely to do with sample output not being found.");
+        }
     }
 
     @Test

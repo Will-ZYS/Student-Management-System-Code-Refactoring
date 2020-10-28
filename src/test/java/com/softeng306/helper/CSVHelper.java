@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
+import org.apache.commons.io.FileUtils;
 /**
  * This class helps to revert the tested files back to their original state (i.e. before testing has occurred).
  * The files that are compared against in testing are in src/test/resources, while the original state files are
@@ -24,6 +24,8 @@ public class CSVHelper {
 	 * original directory, containing the original states of all files
 	 */
 	private static final String originalDirectory = "original" + File.separator;
+
+	private static final String sampleOutputDirectory = "sampleOutput" + File.separator;
 
 	private static final String studentFileName = "studentFile.csv";
 
@@ -124,5 +126,23 @@ public class CSVHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * File Getter for Test csv files
+	 * @param toBeTested - the file being tested
+	 */
+	public File getFileToBeTested(String toBeTested) {
+		Path toBeTestedPath = Paths.get(testPath, toBeTested);
+		return toBeTestedPath.toFile();
+	}
+
+	/**
+	 * File Getter for Sample output files
+	 * @param sampleOutputs - the file in sample outputs to be compared against
+	 */
+	public File getFileSampleOutput(String sampleOutputs) {
+		Path sampleOutputsPath = Paths.get(testPath, sampleOutputDirectory, sampleOutputs);
+		return sampleOutputsPath.toFile();
 	}
 }

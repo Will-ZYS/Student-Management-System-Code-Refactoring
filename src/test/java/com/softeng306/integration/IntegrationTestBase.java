@@ -19,10 +19,8 @@ import java.util.List;
 public class IntegrationTestBase {
 
     protected final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    protected final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     protected final InputStream originalIn = System.in;
     protected final PrintStream originalOut = System.out;
-    protected final PrintStream originalErr = System.err;
 
     protected List<IStudent> students;
     protected List<ICourse> courses;
@@ -45,7 +43,6 @@ public class IntegrationTestBase {
 
         // Switch the output stream for testing purposes
         System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
 
         // Reverting all files before test
         csvHelper.revertAll();
@@ -74,7 +71,6 @@ public class IntegrationTestBase {
         // Set the input, output and error streams back to original
         System.setIn(originalIn);
         System.setOut(originalOut);
-        System.setErr(originalErr);
         ScannerSingleton.refreshSystemIn();
 
         // Reverting all files before test
