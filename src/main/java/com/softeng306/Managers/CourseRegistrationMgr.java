@@ -3,6 +3,7 @@ package com.softeng306.Managers;
 import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Database.Database;
 import com.softeng306.Entity.*;
+import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
@@ -73,17 +74,17 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         ArrayList<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
-        selectedLectureGroupName = printer.printGroupWithVacancyInfo("lecture", lecGroups);
+        selectedLectureGroupName = printer.printGroupWithVacancyInfo(GroupType.LECTURE, lecGroups);
 
         ArrayList<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
-        selectedTutorialGroupName = printer.printGroupWithVacancyInfo("tutorial", tutGroups);
+        selectedTutorialGroupName = printer.printGroupWithVacancyInfo(GroupType.TUTORIAL, tutGroups);
 
         ArrayList<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
-        selectedLabGroupName = printer.printGroupWithVacancyInfo("lab", labGroups);
+        selectedLabGroupName = printer.printGroupWithVacancyInfo(GroupType.LAB, labGroups);
 
         currentCourse.decrementCourseVacancy();
 

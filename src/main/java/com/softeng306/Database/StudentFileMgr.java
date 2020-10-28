@@ -95,7 +95,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 */
 	public List<IStudent> loadStudents() {
 		BufferedReader fileReader = null;
-		ArrayList<IStudent> students = new ArrayList<>(0);
+		List<IStudent> students = new ArrayList<>(0);
 		IStudentMgr studentMgr = StudentMgr.getInstance();
 		try {
 			String line;

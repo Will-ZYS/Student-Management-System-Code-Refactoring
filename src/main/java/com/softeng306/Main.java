@@ -3,6 +3,7 @@ package com.softeng306;
 import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Database.Database;
 import com.softeng306.Database.MarkFileMgr;
+import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Database.IMarkFileMgr;

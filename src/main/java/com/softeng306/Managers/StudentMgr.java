@@ -30,8 +30,6 @@ public class StudentMgr implements IStudentMgr {
      */
     private int idNumber = 1800000;
 
-
-
     /**
      * Adds a student and put the student into file
      */

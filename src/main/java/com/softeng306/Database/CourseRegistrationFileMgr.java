@@ -91,7 +91,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	 */
 	public List<ICourseRegistration> loadCourseRegistration() {
 		BufferedReader fileReader = null;
-		ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
+		List<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
 		ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
 		IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 		try {

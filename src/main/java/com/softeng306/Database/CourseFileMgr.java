@@ -133,9 +133,9 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 *
 	 * @return a list of all the courses.
 	 */
-	public ArrayList<ICourse> loadCourses() {
+	public List<ICourse> loadCourses() {
 		IProfessorFileMgr professorFileMgr = ProfessorFileMgr.getInstance();
-		ArrayList<ICourse> courses = new ArrayList<>(0);
+		List<ICourse> courses = new ArrayList<>(0);
 		BufferedReader fileReader = null;
 		try {
 			String line;

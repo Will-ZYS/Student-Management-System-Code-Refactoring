@@ -146,7 +146,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	 */
 	public List<IMark> loadStudentMarks() {
 		BufferedReader fileReader = null;
-		ArrayList<IMark> marks = new ArrayList<>(0);
+		List<IMark> marks = new ArrayList<>(0);
 		ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
 		IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
 		try {
@@ -193,7 +193,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 					for (int i = 0; i < eachCourseWorkMark.length; i++) {
 						thisCourseWorkMark = eachCourseWorkMark[i].split(EQUAL_SIGN);
 
-						ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
+						List<ICourseworkComponent> subComponents = new ArrayList<>(0);
 						HashMap<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
 						for (int j = 3; j < thisCourseWorkMark.length; j++) {
 							if (thisCourseWorkMark[3].equals("")) {
