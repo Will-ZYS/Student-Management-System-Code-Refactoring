@@ -59,14 +59,6 @@ public interface IPrinter {
     void printAllCourseType();
 
     /**
-     * Displays a list of all the courses in the inputted department.
-     *
-     * @param department The inputted department.
-     * @return a list of all the department values.
-     */
-    List<String> printCourseInDepartment(String department);
-
-    /**
      * Checks whether the inputted department is valid.
      *
      * @param groupType The type of this group.

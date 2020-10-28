@@ -17,7 +17,6 @@ import java.util.*;
 
 /**
  * Manages all the mark related operations.
-
  */
 
 public class MarkMgr implements IMarkMgr {

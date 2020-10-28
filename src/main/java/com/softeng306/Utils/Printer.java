@@ -28,10 +28,8 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
-
     private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
-
 
     public void print(String content) {
         System.out.println(content);
@@ -155,23 +153,6 @@ public class Printer implements IPrinter {
             System.out.println(index + ": " + courseType);
             index++;
         }
-    }
-
-    /**
-     * Displays a list of all the courses in the inputted department.
-     *
-     * @param department The inputted department.
-     * @return a list of all the department values.
-     */
-    public List<String> printCourseInDepartment(String department) {
-        IDatabase database = Database.getInstance();
-        List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
-        List<String> validCourseString = validCourses.stream().map(ICourse::getCourseID).collect(Collectors.toList());
-        validCourseString.forEach(System.out::println);
-        if (validCourseString.size() == 0) {
-            System.out.println("None.");
-        }
-        return validCourseString;
     }
 
     /**

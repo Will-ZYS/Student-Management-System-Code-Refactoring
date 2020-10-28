@@ -1,7 +1,6 @@
 package com.softeng306.integration;
 
 import com.softeng306.Database.*;
-import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.helper.CSVHelper;
