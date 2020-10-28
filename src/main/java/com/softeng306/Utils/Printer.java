@@ -22,8 +22,6 @@ import com.softeng306.Managers.HelperMgr;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.softeng306.Entity.CourseRegistration.*;
-
 public class Printer implements IPrinter {
 
 
@@ -281,7 +279,7 @@ public class Printer implements IPrinter {
 
             if (opt == 1) { // print by LECTURE
                 String newLec = "";
-                Collections.sort(stuArray, LecComparator);   // Sort by Lecture group
+                Collections.sort(stuArray, courseRegistrationComparator);   // Sort by Lecture group
                 if (stuArray.size() > 0) {
                     for (int i = 0; i < stuArray.size(); i++) {  // loop through all of CourseRegistration Obj
                         if (!newLec.equals(stuArray.get(i).getLectureGroup())) {  // if new lecture group print out group name
@@ -297,7 +295,7 @@ public class Printer implements IPrinter {
 
             } else if (opt == 2) { // print by TUTORIAL
                 String newTut = "";
-                Collections.sort(stuArray, TutComparator);
+                Collections.sort(stuArray, CourseRegistration.courseRegistrationComparator);
                 if (stuArray.size() > 0 && stuArray.get(0).getCourse().getTutorialGroups().size() == 0) {
                     System.out.println("This course does not contain any tutorial group.");
                 } else if (stuArray.size() > 0) {
@@ -314,7 +312,7 @@ public class Printer implements IPrinter {
 
             } else if (opt == 3) { // print by LAB
                 String newLab = "";
-                Collections.sort(stuArray, LabComparator);
+                Collections.sort(stuArray, courseRegistrationComparator);
                 if (stuArray.size() > 0 && stuArray.get(0).getCourse().getLabGroups().size() == 0) {
                     System.out.println("This course does not contain any lab group.");
                 } else if (stuArray.size() > 0) {

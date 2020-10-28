@@ -42,7 +42,7 @@ public class CourseRegistration implements ICourseRegistration {
         return labGroup;
     }
 
-    public static Comparator<ICourseRegistration> LecComparator = new Comparator<ICourseRegistration>() {
+    public static Comparator<ICourseRegistration> courseRegistrationComparator = new Comparator<ICourseRegistration>() {
         @Override
         public int compare(ICourseRegistration o1, ICourseRegistration o2) {
             String group1 = o1.getLectureGroup().toUpperCase();
@@ -52,28 +52,5 @@ public class CourseRegistration implements ICourseRegistration {
             return group1.compareTo(group2);
 
         }
-    };
-    public static Comparator<ICourseRegistration> TutComparator = new Comparator<ICourseRegistration>() {
-        @Override
-        public int compare(ICourseRegistration s1, ICourseRegistration s2) {
-            String group1 = s1.getTutorialGroup().toUpperCase();
-            String group2 = s2.getTutorialGroup().toUpperCase();
-
-            //ascending order
-            return group1.compareTo(group2);
-
-        }
-    };
-    public static Comparator<ICourseRegistration> LabComparator = new Comparator<ICourseRegistration>() {
-
-        @Override
-        public int compare(ICourseRegistration o1, ICourseRegistration o2) {
-            String group1 = o1.getLabGroup().toUpperCase();
-            String group2 = o2.getLabGroup().toUpperCase();
-
-            //ascending order
-            return group1.compareTo(group2);
-        }
-
     };
 }
