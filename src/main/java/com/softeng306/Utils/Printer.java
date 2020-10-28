@@ -257,7 +257,7 @@ public class Printer implements IPrinter {
 
         List<ICourseRegistration> allStuArray = courseRegistrationFileMgr.loadCourseRegistration();
 
-        ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);
+        List<ICourseRegistration> stuArray = new ArrayList<>(0);
         for (ICourseRegistration courseRegistration : allStuArray) {
             if (courseRegistration.getCourse().getCourseID().equals(currentCourse.getCourseID())) {
                 stuArray.add(courseRegistration);
@@ -345,7 +345,7 @@ public class Printer implements IPrinter {
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
-        ArrayList<IMark> thisStudentMark = new ArrayList<>(0);
+        List<IMark> thisStudentMark = new ArrayList<>(0);
         for(IMark mark : database.getMarks()) {
             if (mark.getStudent().getStudentID().equals(studentID)) {
                 thisStudentMark.add(mark);
@@ -424,7 +424,7 @@ public class Printer implements IPrinter {
         ICourse currentCourse = courseValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
-        ArrayList<IMark> thisCourseMark = new ArrayList<>(0);
+        List<IMark> thisCourseMark = new ArrayList<>(0);
         for(IMark mark : database.getMarks()) {
             if (mark.getCourse().getCourseID().equals(courseID)) {
                 thisCourseMark.add(mark);

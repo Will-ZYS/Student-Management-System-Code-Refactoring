@@ -71,17 +71,17 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         System.out.println("Student " + currentStudent.getStudentName() + " with ID: " + currentStudent.getStudentID() +
                 " wants to register " + currentCourse.getCourseID() + " " + currentCourse.getCourseName());
 
-        ArrayList<IGroup> lecGroups = new ArrayList<>(0);
+        List<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
         selectedLectureGroupName = printer.printGroupWithVacancyInfo(GroupType.LECTURE, lecGroups);
 
-        ArrayList<IGroup> tutGroups = new ArrayList<>(0);
+        List<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
         selectedTutorialGroupName = printer.printGroupWithVacancyInfo(GroupType.TUTORIAL, tutGroups);
 
-        ArrayList<IGroup> labGroups = new ArrayList<>(0);
+        List<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
         selectedLabGroupName = printer.printGroupWithVacancyInfo(GroupType.LAB, labGroups);

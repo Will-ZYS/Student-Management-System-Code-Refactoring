@@ -74,9 +74,9 @@ public class MarkMgr implements IMarkMgr {
                 //put the set mark function here
                 if (!isExam) {
                     System.out.println("Here are the choices you can have: ");
-                    ArrayList<String> availableChoices = new ArrayList<String>(0);
-                    ArrayList<Double> weights = new ArrayList<Double>(0);
-                    ArrayList<Boolean> isMainAss = new ArrayList<Boolean>(0);
+                    List<String> availableChoices = new ArrayList<String>(0);
+                    List<Double> weights = new ArrayList<Double>(0);
+                    List<Boolean> isMainAss = new ArrayList<Boolean>(0);
                     for (Map.Entry<ICourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
                         ICourseworkComponent key = assessmentResult.getKey();
                         if (key instanceof MainComponent) {
