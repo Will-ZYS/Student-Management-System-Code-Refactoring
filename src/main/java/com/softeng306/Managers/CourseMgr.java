@@ -7,7 +7,7 @@ import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.Validation.IGroupValidationMgr;
-import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.Validation.IProfessorValidationMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
@@ -35,7 +35,7 @@ public class CourseMgr implements ICourseMgr {
         boolean groupNameExists;
         int seatsLeft;
         IDatabase database = Database.getInstance();
-        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
+        IProfessorValidationMgr professorValidationMgr = ProfessorValidationMgr.getInstance();
         IGroupValidationMgr groupValidationMgr = GroupValidationMgr.getInstance();
         ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
         // Can make the sameCourseID as boolean, set to false.
@@ -256,7 +256,7 @@ public class CourseMgr implements ICourseMgr {
                 profID = scanner.nextLine();
             }
 
-            profInCharge = professorMgr.checkProfExists(profID);
+            profInCharge = professorValidationMgr.checkProfExists(profID);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
                     break;
