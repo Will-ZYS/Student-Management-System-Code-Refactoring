@@ -13,11 +13,11 @@ public class MainIT extends IntegrationTestBase{
 
     @Test
     public void testMain(){
+        // ============= PREPARING THE INPUTS ===========================
         inputsBuilder.append("11").append(System.lineSeparator());
+        //======================================================================
 
-        preparingInputStream();
-        Main.main(new String[]{});
-
+        // ======================== PREPARING OUTPUT ======================
         expectedOutput.appendLine();
         expectedOutput.appendLine("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
         expectedOutput.appendLine("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
@@ -53,18 +53,24 @@ public class MainIT extends IntegrationTestBase{
         expectedOutput.appendLine("                 #    ##      ##      #                         ");
         expectedOutput.appendLine("                 ######       ##      #######                   ");
         expectedOutput.appendLine();
+        //======================================================================
+
+        // ============= SENDING THE INPUTS & RUNNING THE SYSTEM=================
+        preparingInputStream();
+        Main.main(new String[]{});
+        //======================================================================
 
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
 
     @Test
     public void testPrintOptions(){
+        // ============= PREPARING THE INPUTS ===========================
         inputsBuilder.append("0").append(System.lineSeparator());
         inputsBuilder.append("11").append(System.lineSeparator());
+        //======================================================================
 
-        preparingInputStream();
-        Main.main(new String[]{});
-
+        // ======================== PREPARING OUTPUT ======================
         expectedOutput.appendLine();
         expectedOutput.appendLine("****************** Hello! Welcome to SOFTENG 306 Project 2! ******************");
         expectedOutput.appendLine("Please note this application is not developed in The University of Auckland. All rights reserved for the original developers.");
@@ -117,6 +123,12 @@ public class MainIT extends IntegrationTestBase{
         expectedOutput.appendLine("                 #    ##      ##      #                         ");
         expectedOutput.appendLine("                 ######       ##      #######                   ");
         expectedOutput.appendLine();
+        //======================================================================
+
+        // ============= SENDING THE INPUTS & RUNNING THE SYSTEM=================
+        preparingInputStream();
+        Main.main(new String[]{});
+        //======================================================================
 
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
@@ -127,10 +139,12 @@ public class MainIT extends IntegrationTestBase{
         inputsBuilder.append("10").append(System.lineSeparator());
         inputsBuilder.append("U1822838J").append(System.lineSeparator()); // Course ID
         inputsBuilder.append("11").append(System.lineSeparator()); // Exit
+        //======================================================================
 
         // ============= SENDING THE INPUTS & RUNNING THE SYSTEM=================
         preparingInputStream();
         Main.main(new String[]{});
+        //======================================================================
 
         try {
             assertEquals("The files differ!",
