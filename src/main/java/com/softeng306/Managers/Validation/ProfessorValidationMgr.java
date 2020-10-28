@@ -1,10 +1,9 @@
-package com.softeng306.Managers;
+package com.softeng306.Managers.Validation;
 
 import com.softeng306.Database.Database;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Utils.ScannerSingleton;
-import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.Validation.IProfessorValidationMgr;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,10 +12,8 @@ import java.util.stream.Collectors;
  * Manages all the professor related operations
  *
  */
-public class ProfessorMgr implements IProfessorMgr {
-    private static ProfessorMgr instance = null;
-
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+public class ProfessorValidationMgr implements IProfessorValidationMgr {
+    private static ProfessorValidationMgr instance = null;
 
     /**
      * Checks whether this professor ID is used by other professors.
@@ -30,18 +27,17 @@ public class ProfessorMgr implements IProfessorMgr {
         if(anyProf.size() == 0){
             return null;
         }
-        // System.out.println("Sorry. The professor ID is used. This professor already exists.");
         return anyProf.get(0);
 
     }
 
     /**
-     * get the instance of the ProfessorMgr class
+     * get the instance of the ProfessorValidationMgr class
      * @return the singleton instance
      */
-    public static ProfessorMgr getInstance() {
+    public static ProfessorValidationMgr getInstance() {
         if (instance == null) {
-            instance = new ProfessorMgr();
+            instance = new ProfessorValidationMgr();
         }
         return instance;
     }

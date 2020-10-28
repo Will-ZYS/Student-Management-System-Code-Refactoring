@@ -7,22 +7,23 @@ import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
+import com.softeng306.Interfaces.Managers.Validation.ICourseRegistrationValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Managers.Validation.CourseRegistrationValidationMgr;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
-import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
     private static CourseRegistrationMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
 
 
     /**
@@ -36,22 +37,24 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         // Get all necessary manager classes
         IHelperMgr helperMgr = HelperMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
-        ICourseMgr courseMgr = CourseMgr.getInstance();
-        IStudentMgr studentMgr = StudentMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
+        ICourseRegistrationValidationMgr courseRegistrationValidationMgr = CourseRegistrationValidationMgr.getInstance();
+        IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
         IDatabase database = Database.getInstance();
+        IPrinter printer = Printer.getInstance();
 
-        IStudent currentStudent = studentMgr.checkStudentExists();
+        IStudent currentStudent = studentValidationMgr.checkStudentExists();
 
         String studentID = currentStudent.getStudentID();
 
         helperMgr.checkCourseDepartmentExists();
 
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
 
         String courseID = currentCourse.getCourseID();
 
-        if (checkCourseRegistrationExists(studentID, courseID) != null) {
+        if (courseRegistrationValidationMgr.checkCourseRegistrationExists(studentID, courseID) != null) {
             return;
         }
 
@@ -83,7 +86,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         selectedLabGroupName = printer.printGroupWithVacancyInfo(GroupType.LAB, labGroups);
 
-        currentCourse.enrolledIn();
+        currentCourse.decrementCourseVacancy();
 
         ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
 
@@ -104,25 +107,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         }
         System.out.println();
     }
-
-    /**
-     * Checks whether this course registration record exists.
-     * @param studentID The inputted student ID.
-     * @param courseID The inputted course ID.
-     * @return the existing course registration record or else null.
-     */
-    public ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
-        IDatabase database = Database.getInstance();
-        List<ICourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
-
-        if(courseRegistrations.size() == 0){
-            return null;
-        }
-        System.out.println("Sorry. This student already registers this course.");
-        return courseRegistrations.get(0);
-
-    }
-
 
     /**
      * get the instance of the CourseRegistrationMgr class

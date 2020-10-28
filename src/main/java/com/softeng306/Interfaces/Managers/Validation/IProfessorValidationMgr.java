@@ -1,8 +1,8 @@
-package com.softeng306.Interfaces.Managers;
+package com.softeng306.Interfaces.Managers.Validation;
 
 import com.softeng306.Interfaces.Entity.IProfessor;
 
-public interface IProfessorMgr {
+public interface IProfessorValidationMgr {
 
     /**
      * Checks whether this professor ID is used by other professors.

@@ -18,10 +18,9 @@ import java.util.regex.*;
 
 public class HelperMgr implements IHelperMgr {
 
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static HelperMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
 
 
     /**
@@ -42,6 +41,7 @@ public class HelperMgr implements IHelperMgr {
      * @return the inputted department.
      */
     public String checkCourseDepartmentExists() {
+        IPrinter printer = Printer.getInstance();
         String courseDepartment;
         while(true){
             System.out.println("Which department's courses are you interested? (-h to print all the departments)");

@@ -7,10 +7,14 @@ import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
-import com.softeng306.Interfaces.Managers.IGroupMgr;
-import com.softeng306.Interfaces.Managers.IProfessorMgr;
+import com.softeng306.Interfaces.Managers.Validation.IGroupValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.IProfessorValidationMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.GroupValidationMgr;
+import com.softeng306.Managers.Validation.ProfessorValidationMgr;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
@@ -19,14 +23,10 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class CourseMgr implements ICourseMgr {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static CourseMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
 
     /**
      * Creates a new course and stores it in the file.
@@ -36,7 +36,8 @@ public class CourseMgr implements ICourseMgr {
         String courseName;
         String profID;
         IDatabase database = Database.getInstance();
-        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
+        IProfessorValidationMgr professorValidationMgr = ProfessorValidationMgr.getInstance();
         ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
         // Can make the sameCourseID as boolean, set to false.
 
@@ -55,9 +56,8 @@ public class CourseMgr implements ICourseMgr {
 
         // Add Lecture Groups
         int noOfLectureGroups = obtainValidNumberOfGroups(GroupType.LECTURE, totalSeats, 0);
-        int seatsLeft = totalSeats;
         int lecWeeklyHour = obtainValidWeeklyHour(GroupType.LECTURE, academicUnit, noOfLectureGroups);
-        List<IGroup> lectureGroups = addGroups(GroupType.LECTURE, totalSeats, seatsLeft, noOfLectureGroups);
+        List<IGroup> lectureGroups = addGroups(GroupType.LECTURE, totalSeats, totalSeats, noOfLectureGroups);
 
         // Add Tutorial Groups
         int noOfTutorialGroups = obtainValidNumberOfGroups(GroupType.TUTORIAL, totalSeats, noOfLectureGroups);
@@ -71,7 +71,6 @@ public class CourseMgr implements ICourseMgr {
         int labWeeklyHour = obtainValidWeeklyHour(GroupType.LAB, academicUnit, noOfLabGroups);
         List<IGroup> labGroups = addGroups(GroupType.LAB, totalSeats, totalLabSeats, noOfLectureGroups);
 
-
         IProfessor profInCharge;
         List<String> professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
         while (true) {
@@ -83,7 +82,7 @@ public class CourseMgr implements ICourseMgr {
                 profID = scanner.nextLine();
             }
 
-            profInCharge = professorMgr.checkProfExists(profID);
+            profInCharge = professorValidationMgr.checkProfExists(profID);
             if (profInCharge != null) {
                 if (professorsInDepartment.contains(profID)) {
                     break;
@@ -138,7 +137,7 @@ public class CourseMgr implements ICourseMgr {
      * @return the list of IGroups created.
      */
     private List<IGroup> addGroups(GroupType groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
-        IGroupMgr groupMgr = GroupMgr.getInstance();
+        IGroupValidationMgr groupMgr = GroupValidationMgr.getInstance();
         List<IGroup> groups = new ArrayList<>();
         String groupName;
         int groupCapacity;
@@ -220,12 +219,13 @@ public class CourseMgr implements ICourseMgr {
      * Checks whether a course (with all of its groups) have available slots and displays the result.
      */
     public void checkAvailableSlots() {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
         ICourse currentCourse;
 
         do {
-            currentCourse = checkCourseExists();
+            currentCourse = courseValidationMgr.checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
@@ -259,6 +259,7 @@ public class CourseMgr implements ICourseMgr {
      * @param currentCourse The course which course work component is to be set.
      */
     public void enterCourseWorkComponentWeightage(ICourse currentCourse) {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
 
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
@@ -266,7 +267,7 @@ public class CourseMgr implements ICourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = checkCourseExists();
+            currentCourse = courseValidationMgr.checkCourseExists();
         }
 
         List<ICourseworkComponent> mainComponents = new ArrayList<>(0);
@@ -352,6 +353,7 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
+<<<<<<< HEAD
      * Assign weightage to a main component
      * @param totWeight total weight to be assigned
      * @param mainComponents the list of main components
@@ -504,16 +506,19 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
+=======
+>>>>>>> master
      * Helper method which queries the user for a valid courseID
      * @return Valid CourseID
      */
     private String obtainValidCourseId() {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         String courseID;
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (checkValidCourseIDInput(courseID)) {
-                if (checkCourseExists(courseID) == null) {
+            if (courseValidationMgr.checkValidCourseIDInput(courseID)) {
+                if (courseValidationMgr.checkCourseExists(courseID) == null) {
                     break;
                 } else {
                     System.out.println("Sorry. The course ID is used. This course already exists.");
@@ -576,6 +581,7 @@ public class CourseMgr implements ICourseMgr {
     private String obtainValidCourseDepartment() {
         String courseDepartment;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         do {
             System.out.println("Enter course's department (uppercase): ");
             System.out.println("Enter -h to print all the departments.");
@@ -594,6 +600,7 @@ public class CourseMgr implements ICourseMgr {
     private String obtainValidCourseType() {
         String courseType;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         do {
             System.out.println("Enter course type (uppercase): ");
             System.out.println("Enter -h to print all the course types.");
@@ -659,60 +666,6 @@ public class CourseMgr implements ICourseMgr {
             }
         } while (true);
         return noOfGroups;
-    }
-
-    /**
-     * Prompts the user to input an existing course.
-     * @return the inputted course.
-     */
-    public ICourse checkCourseExists() {
-        String courseID;
-        ICourse currentCourse;
-        while(true){
-            System.out.println("Enter course ID (-h to print all the course ID):");
-            courseID = scanner.nextLine();
-            while("-h".equals(courseID)){
-                printer.printAllCourses();
-                courseID = scanner.nextLine();
-            }
-
-            currentCourse = checkCourseExists(courseID);
-            if (currentCourse == null) {
-                System.out.println("Invalid Course ID. Please re-enter.");
-            }else{
-                break;
-            }
-        }
-        return currentCourse;
-    }
-
-    /**
-     * Checks whether this course ID is used by other courses.
-     * @param courseID The inputted course ID.
-     * @return the existing course or else null.
-     */
-    public ICourse checkCourseExists(String courseID) {
-        IDatabase database = Database.getInstance();
-        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
-
-        if(anyCourse.size() == 0){
-            return null;
-        }
-        return anyCourse.get(0);
-    }
-
-    /**
-     * Checks whether the inputted course ID is in the correct format.
-     * @param courseID The inputted course ID.
-     * @return boolean indicates whether the inputted course ID is valid.
-     */
-    public boolean checkValidCourseIDInput(String courseID) {
-        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
-        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
-        if(!valid){
-            System.out.println("Wrong format of course ID.");
-        }
-        return valid;
     }
 
     /**

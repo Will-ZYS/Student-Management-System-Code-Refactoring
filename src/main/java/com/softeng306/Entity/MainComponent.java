@@ -1,8 +1,6 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**

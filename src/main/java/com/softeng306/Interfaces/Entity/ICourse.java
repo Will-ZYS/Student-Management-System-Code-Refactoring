@@ -19,7 +19,7 @@ public interface ICourse {
      * Gets the course's AU.
      * @return the AU of this course.
      */
-    int getAU();
+    int getAcademicUnit();
 
     /**
      * Gets the course's professor in charge.
@@ -102,7 +102,7 @@ public interface ICourse {
     /**
      * Updates the available vacancies of this course after someone has registered this group.
      */
-    void enrolledIn();
+    void decrementCourseVacancy();
 
     /**
      * Sets the tutorial groups of the lecture groups.
