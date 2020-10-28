@@ -10,6 +10,7 @@ import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
 	private static CourseRegistrationFileMgr instance;
@@ -55,16 +56,10 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	 * @param courseRegistration courseRegistration to be added into file
 	 */
 	public void writeCourseRegistrationIntoFile(ICourseRegistration courseRegistration) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(courseRegistrationFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(courseRegistrationFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(courseRegistration_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistration_HEADER);
+
 			fileWriter.append(courseRegistration.getStudent().getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(courseRegistration.getCourse().getCourseID());
@@ -92,9 +87,9 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	/**
 	 * Load all the course registration records from file into the system.
 	 *
-	 * @return an array list of all the course registration records.
+	 * @return a list of all the course registration records.
 	 */
-	public ArrayList<ICourseRegistration> loadCourseRegistration() {
+	public List<ICourseRegistration> loadCourseRegistration() {
 		BufferedReader fileReader = null;
 		ArrayList<ICourseRegistration> courseRegistrations = new ArrayList<>(0);
 		ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
@@ -103,7 +98,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 			String line;
 			IStudent currentStudent = null;
 			ICourse currentCourse = null;
-			ArrayList<IStudent> students = studentFileMgr.loadStudents();
+			List<IStudent> students = studentFileMgr.loadStudents();
 
 			fileReader = new BufferedReader(new FileReader(courseRegistrationFileName));
 			fileReader.readLine();//read the header to skip it
@@ -120,7 +115,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 						}
 					}
 					String courseID = tokens[courseIdInRegistrationIndex];
-					ArrayList<ICourse> courses = courseFileMgr.loadCourses();
+					List<ICourse> courses = courseFileMgr.loadCourses();
 					for (ICourse course : courses) {
 						if (course.getCourseID().equals(courseID)) {
 							currentCourse = course;

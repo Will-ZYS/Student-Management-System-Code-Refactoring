@@ -6,6 +6,7 @@ import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Course implements ICourse {
@@ -57,7 +58,7 @@ public class Course implements ICourse {
     /**
      * The lecture groups of this course.
      */
-    private ArrayList<IGroup> lectureGroups;
+    private List<IGroup> lectureGroups;
 
 
     /**
@@ -69,7 +70,7 @@ public class Course implements ICourse {
     /**
      * The tutorial groups of this course.
      */
-    private ArrayList<IGroup> tutorialGroups = new ArrayList<>(0);
+    private List<IGroup> tutorialGroups = new ArrayList<>(0);
 
     /**
      * The weekly lab hour of this course.
@@ -79,12 +80,12 @@ public class Course implements ICourse {
     /**
      * The lab groups of this course.
      */
-    private ArrayList<IGroup> labGroups = new ArrayList<>(0);
+    private List<IGroup> labGroups = new ArrayList<>(0);
 
     /**
      * The assessment components of this course.
      */
-    private ArrayList<ICourseworkComponent> mainComponents = new ArrayList<ICourseworkComponent>(0);
+    private List<ICourseworkComponent> mainComponents = new ArrayList<ICourseworkComponent>(0);
 
 
     /**
@@ -101,7 +102,7 @@ public class Course implements ICourse {
      * @param lecWeeklyHour The lecture weekly hour of this course.
      */
 
-    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, List<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -236,7 +237,7 @@ public class Course implements ICourse {
      * Gets the course's lecture groups.
      * @return the lecture groups of this course.
      */
-    public ArrayList<IGroup> getLectureGroups() {
+    public List<IGroup> getLectureGroups() {
         return lectureGroups;
     }
 
@@ -244,7 +245,7 @@ public class Course implements ICourse {
      * Gets the course's tutorial groups
      * @return the tutorial groups of this course
      */
-    public ArrayList<IGroup> getTutorialGroups() {
+    public List<IGroup> getTutorialGroups() {
         return this.tutorialGroups;
     }
 
@@ -252,7 +253,7 @@ public class Course implements ICourse {
      * Gets the course's lab groups.
      * @return the lab groups of this course.
      */
-    public ArrayList<IGroup> getLabGroups() {
+    public List<IGroup> getLabGroups() {
         return this.labGroups;
     }
 
@@ -260,7 +261,7 @@ public class Course implements ICourse {
      * Gets the course's main assessment components.
      * @return the main assessment components of this course.
      */
-    public ArrayList<ICourseworkComponent> getMainComponents() {
+    public List<ICourseworkComponent> getMainComponents() {
         return this.mainComponents;
     }
 
@@ -281,7 +282,7 @@ public class Course implements ICourse {
      * Sets the tutorial groups of the lecture groups.
      * @param tutorialGroups this course's tutorial groups.
      */
-    public void setTutorialGroups(ArrayList<IGroup> tutorialGroups) {
+    public void setTutorialGroups(List<IGroup> tutorialGroups) {
         this.tutorialGroups = tutorialGroups;
     }
 
@@ -289,7 +290,7 @@ public class Course implements ICourse {
      * Sets the lab groups of the lecture groups.
      * @param labGroups this course's lab groups.
      */
-    public void setLabGroups(ArrayList<IGroup> labGroups) {
+    public void setLabGroups(List<IGroup> labGroups) {
         this.labGroups = labGroups;
     }
 
@@ -297,7 +298,7 @@ public class Course implements ICourse {
      * Sets the main assessment of the lecture groups.
      * @param mainComponents this course's main assessment.
      */
-    public void setMainComponents(ArrayList<ICourseworkComponent> mainComponents) {
+    public void setMainComponents(List<ICourseworkComponent> mainComponents) {
         this.mainComponents = mainComponents;
     }
 

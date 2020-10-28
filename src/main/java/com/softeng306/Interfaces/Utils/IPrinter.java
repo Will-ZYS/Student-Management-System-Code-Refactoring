@@ -70,10 +70,10 @@ public interface IPrinter {
      * Checks whether the inputted department is valid.
      *
      * @param groupType The type of this group.
-     * @param groups    An array list of a certain type of groups in a course.
+     * @param groups    A list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    String printGroupWithVacancyInfo(String groupType, ArrayList<IGroup> groups);
+    String printGroupWithVacancyInfo(String groupType, List<IGroup> groups);
 
     /**
      * Prints the list of courses
