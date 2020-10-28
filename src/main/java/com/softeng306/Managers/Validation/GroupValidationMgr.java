@@ -1,4 +1,4 @@
-package com.softeng306.Managers;
+package com.softeng306.Managers.Validation;
 
 import com.softeng306.Interfaces.Managers.Validation.IGroupValidationMgr;
 

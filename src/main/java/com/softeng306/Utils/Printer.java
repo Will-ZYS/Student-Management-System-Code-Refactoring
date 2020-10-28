@@ -15,6 +15,8 @@ import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.*;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.StudentValidationMgr;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -10,6 +10,9 @@ import com.softeng306.Interfaces.Managers.Validation.ICourseRegistrationValidati
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Managers.Validation.CourseRegistrationValidationMgr;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;

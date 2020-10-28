@@ -13,6 +13,8 @@ import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
