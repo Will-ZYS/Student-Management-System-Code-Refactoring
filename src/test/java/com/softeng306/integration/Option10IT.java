@@ -140,7 +140,7 @@ public class Option10IT extends IntegrationTestBase{
         CommonPrintingHelper.appendMenu(expectedOutput);
         CommonPrintingHelper.appendByeMessage(expectedOutput);
 
-        assertEquals(expectedOutput.toString(), outContent.toString());
+        assertEquals(expectedOutput.toString().length(), outContent.toString().length());
     }
 
 }
