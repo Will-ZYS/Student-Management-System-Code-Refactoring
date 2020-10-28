@@ -1,8 +1,5 @@
 package com.softeng306.Entity;
 
-import com.softeng306.Database.Database;
-import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Main;
 import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Managers.StudentMgr;
 
@@ -14,8 +11,6 @@ import com.softeng306.Managers.StudentMgr;
  */
 
 public class Student implements IStudent {
-
-    private static IDatabase database = Database.getInstance();
 
     /**
      * The ID of this student.
