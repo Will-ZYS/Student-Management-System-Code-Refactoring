@@ -3,6 +3,7 @@ package com.softeng306.Database;
 import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Database.IStudentFileMgr;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Managers.StudentMgr;
 
 import java.io.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
+	private IStudentMgr studentMgr = StudentMgr.getInstance();
 	/**
 	 * The file name of studentFile.csv.
 	 */
@@ -115,7 +117,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 			// Set the recent student ID, let the newly added student have the ID onwards.
 			// If there is no student in DB, set recentStudentID to 1800000 (2018 into Uni)
 
-			StudentMgr.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
+			studentMgr.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
 		} catch (Exception e) {
 			System.out.println("Error occurs when loading students.");
 			e.printStackTrace();
