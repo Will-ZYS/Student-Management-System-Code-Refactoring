@@ -13,11 +13,9 @@ import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Managers.CourseMgr;
-import com.softeng306.Managers.MarkMgr;
-import com.softeng306.Managers.StudentMgr;
-import com.softeng306.Managers.HelperMgr;
+import com.softeng306.Managers.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -245,10 +243,10 @@ public class Printer implements IPrinter {
      * Prints the students in a course according to their lecture group, tutorial group or lab group.
      */
     public void printStudents() {
-        ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         System.out.println("printStudent is called");
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -419,11 +417,11 @@ public class Printer implements IPrinter {
      */
     public void printCourseStatistics() {
         IMarkMgr markMgr = MarkMgr.getInstance();
-        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         IDatabase database = Database.getInstance();
         System.out.println("printCourseStatistics is called");
 
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
         ArrayList<IMark> thisCourseMark = new ArrayList<>(0);

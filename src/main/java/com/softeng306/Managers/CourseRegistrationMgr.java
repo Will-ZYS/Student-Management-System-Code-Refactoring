@@ -6,6 +6,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -35,7 +36,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         // Get all necessary manager classes
         IHelperMgr helperMgr = HelperMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
-        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
         IDatabase database = Database.getInstance();
@@ -46,7 +47,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         helperMgr.checkCourseDepartmentExists();
 
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
 
         String courseID = currentCourse.getCourseID();
 

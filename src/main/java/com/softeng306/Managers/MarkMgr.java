@@ -13,6 +13,7 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
@@ -58,14 +59,14 @@ public class MarkMgr implements IMarkMgr {
      * @param isExam whether this coursework component refers to "Exam"
      */
     public void setCourseWorkMark(boolean isExam) {
-        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
         IDatabase database = Database.getInstance();
 
         System.out.println("enterCourseWorkMark is called");
 
         String studentID = studentMgr.checkStudentExists().getStudentID();
-        String courseID = courseMgr.checkCourseExists().getCourseID();
+        String courseID = courseValidationMgr.checkCourseExists().getCourseID();
 
 
         for(IMark mark: database.getMarks()) {

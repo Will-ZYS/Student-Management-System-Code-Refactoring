@@ -9,6 +9,7 @@ import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IGroupMgr;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -18,12 +19,9 @@ import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class CourseMgr implements ICourseMgr {
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
 
@@ -310,12 +308,13 @@ public class CourseMgr implements ICourseMgr {
      * Checks whether a course (with all of its groups) have available slots and displays the result.
      */
     public void checkAvailableSlots() {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         //printout the result directly
         System.out.println("checkAvailableSlots is called");
         ICourse currentCourse;
 
         do {
-            currentCourse = checkCourseExists();
+            currentCourse = courseValidationMgr.checkCourseExists();
             if (currentCourse != null) {
                 System.out.println(currentCourse.getCourseID() + " " + currentCourse.getCourseName() + " (Available/Total): " + currentCourse.getVacancies() + "/" + currentCourse.getTotalSeats());
                 System.out.println("--------------------------------------------");
@@ -349,6 +348,7 @@ public class CourseMgr implements ICourseMgr {
      * @param currentCourse The course which course work component is to be set.
      */
     public void enterCourseWorkComponentWeightage(ICourse currentCourse) {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
 
         // Assume when course is created, no components are added yet
         // Assume once components are created and set, cannot be changed.
@@ -359,7 +359,7 @@ public class CourseMgr implements ICourseMgr {
 
         System.out.println("enterCourseWorkComponentWeightage is called");
         if (currentCourse == null) {
-            currentCourse = checkCourseExists();
+            currentCourse = courseValidationMgr.checkCourseExists();
         }
 
 
@@ -571,70 +571,17 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
-     * Prompts the user to input an existing course.
-     * @return the inputted course.
-     */
-    public ICourse checkCourseExists() {
-        String courseID;
-        ICourse currentCourse;
-        while(true){
-            System.out.println("Enter course ID (-h to print all the course ID):");
-            courseID = scanner.nextLine();
-            while("-h".equals(courseID)){
-                printer.printAllCourses();
-                courseID = scanner.nextLine();
-            }
-
-            currentCourse = checkCourseExists(courseID);
-            if (currentCourse == null) {
-                System.out.println("Invalid Course ID. Please re-enter.");
-            }else{
-                break;
-            }
-        }
-        return currentCourse;
-    }
-
-    /**
-     * Checks whether this course ID is used by other courses.
-     * @param courseID The inputted course ID.
-     * @return the existing course or else null.
-     */
-    public ICourse checkCourseExists(String courseID) {
-        IDatabase database = Database.getInstance();
-        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
-
-        if(anyCourse.size() == 0){
-            return null;
-        }
-        return anyCourse.get(0);
-    }
-
-    /**
-     * Checks whether the inputted course ID is in the correct format.
-     * @param courseID The inputted course ID.
-     * @return boolean indicates whether the inputted course ID is valid.
-     */
-    public boolean checkValidCourseIDInput(String courseID) {
-        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
-        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
-        if(!valid){
-            System.out.println("Wrong format of course ID.");
-        }
-        return valid;
-    }
-
-    /**
      * Helper method which queries the user for a valid courseID
      * @return Valid CourseID
      */
     private String obtainValidCourseId() {
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         String courseID;
         while (true) {
             System.out.println("Give this course an ID: ");
             courseID = scanner.nextLine();
-            if (checkValidCourseIDInput(courseID)) {
-                if (checkCourseExists(courseID) == null) {
+            if (courseValidationMgr.checkValidCourseIDInput(courseID)) {
+                if (courseValidationMgr.checkCourseExists(courseID) == null) {
                     break;
                 } else {
                     System.out.println("Sorry. The course ID is used. This course already exists.");
