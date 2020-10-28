@@ -73,6 +73,14 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		}
 	}
 
+	/**
+	 * private helper method to write marks back into the CSV file
+	 *
+	 * @param fileWriter
+	 * @param mark
+	 * @param isSubComponentInitialized
+	 * @throws IOException
+	 */
 	private void writeMarkToCSV(FileWriter fileWriter, IMark mark, boolean isSubComponentInitialized) throws IOException {
 		fileWriter.append(mark.getStudent().getStudentID());
 		fileWriter.append(COMMA_DELIMITER);

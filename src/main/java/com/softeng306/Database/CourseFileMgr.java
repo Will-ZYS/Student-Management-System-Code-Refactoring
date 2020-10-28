@@ -281,6 +281,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @param course the course to be written
 	 * @throws IOException throws IOException to the caller
 	 */
+	//TODO maybe make a helper method with two parameters
 	private void writeCourseToCSV(FileWriter fileWriter, ICourse course) throws IOException{
 		fileWriter.append(course.getCourseID());
 		fileWriter.append(COMMA_DELIMITER);

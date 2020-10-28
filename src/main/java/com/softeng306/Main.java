@@ -25,13 +25,6 @@ import com.softeng306.Utils.ScannerSingleton;
  */
 public class Main {
 
-//    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-//    private static IDatabase database = Database.getInstance();
-//    private static IPrinter printer = Printer.getInstance();
-//    private static ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
-//    private static IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-
-
     /**
      * The main function of the system.
      * Command line interface.
@@ -39,7 +32,6 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        //TODO maybe use getInstance again so we dont need static?
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();

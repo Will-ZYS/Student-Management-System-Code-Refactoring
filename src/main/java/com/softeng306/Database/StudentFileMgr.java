@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
-	private static StudentFileMgr instance;
+	private static StudentFileMgr instance = null;
 	/**
 	 * The file name of studentFile.csv.
 	 */
@@ -145,6 +145,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 		return instance;
 	}
 
+	/**
+	 * Method used for testing purposes
+	 * @param studentFileName
+	 */
 	public void setStudentFileName(String studentFileName) {
 		this.studentFileName = studentFileName;
 	}

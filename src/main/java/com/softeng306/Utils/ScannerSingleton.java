@@ -21,6 +21,9 @@ public class ScannerSingleton implements IScannerSingleton {
     }
 
     //TODO STATIC? For setting test to normal but using getInstance works
+    /**
+     * Made to reset the Scanner. Main purpose is to ensure consistent testing results
+     */
     public void refreshSystemIn(){
         scanner = new Scanner(System.in);
     }

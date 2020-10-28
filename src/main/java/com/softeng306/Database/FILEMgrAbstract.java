@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * contains common fields which all FILEMgr's use
+ */
 public abstract class FILEMgrAbstract {
 
     /**
@@ -52,5 +55,11 @@ public abstract class FILEMgrAbstract {
             fileWriter.append(NEW_LINE_SEPARATOR);
         }
         return fileWriter;
+    }
+
+    //TODO may be useful in reducing lines
+    private void writeToFile(FileWriter fileWriter, String content, String separater)  throws IOException{
+        fileWriter.append(content);
+        fileWriter.append(separater);
     }
 }

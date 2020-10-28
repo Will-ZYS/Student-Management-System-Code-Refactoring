@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
-	private static CourseRegistrationFileMgr instance;
+	private static CourseRegistrationFileMgr instance = null;
 
 	/**
 	 * The file name of courseRegistrationFile.csv.
