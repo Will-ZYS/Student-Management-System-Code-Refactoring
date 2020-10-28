@@ -29,14 +29,6 @@ public class Printer implements IPrinter {
 
     public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
-    private IHelperMgr helperMgr = HelperMgr.getInstance();
-    private IMarkMgr markMgr = MarkMgr.getInstance();
-    private ICourseMgr courseMgr = CourseMgr.getInstance();
-    private IStudentMgr studentMgr = StudentMgr.getInstance();
-
-
-    private static IDatabase database = Database.getInstance();
-    private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
 
 
     public void print(String content) {
@@ -99,6 +91,8 @@ public class Printer implements IPrinter {
      * @return A list of all the names of professors in the inputted department or else null.
      */
     public List<String> printProfInDepartment(String department, boolean printOut) {
+        IHelperMgr helperMgr = HelperMgr.getInstance();
+        IDatabase database = Database.getInstance();
         if (helperMgr.checkDepartmentValidation(department)) {
             List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
             if (printOut) {
@@ -114,6 +108,7 @@ public class Printer implements IPrinter {
      * Displays a list of IDs of all the students.
      */
     public void printAllStudents() {
+        IDatabase database = Database.getInstance();
         database.getStudents().stream().map(s -> s.getStudentID()).forEach(System.out::println);
     }
 
@@ -121,8 +116,8 @@ public class Printer implements IPrinter {
      * Displays a list of IDs of all the courses.
      */
     public void printAllCourses() {
+        IDatabase database = Database.getInstance();
         database.getCourses().stream().map(c -> c.getCourseID()).forEach(System.out::println);
-
     }
 
     /**
@@ -167,6 +162,7 @@ public class Printer implements IPrinter {
      * @return a list of all the department values.
      */
     public List<String> printCourseInDepartment(String department) {
+        IDatabase database = Database.getInstance();
         List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
         List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
         /**
@@ -236,6 +232,7 @@ public class Printer implements IPrinter {
      * Prints the list of courses
      */
     public void printCourses() {
+        IDatabase database = Database.getInstance();
         System.out.println("Course List: ");
         System.out.println("| Course ID | Course Name | Professor in Charge |");
         for (ICourse course : database.getCourses()) {
@@ -248,6 +245,8 @@ public class Printer implements IPrinter {
      * Prints the students in a course according to their lecture group, tutorial group or lab group.
      */
     public void printStudents() {
+        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
         System.out.println("printStudent is called");
         ICourse currentCourse = courseMgr.checkCourseExists();
 
@@ -340,6 +339,9 @@ public class Printer implements IPrinter {
      * Prints transcript (Results of course taken) for a particular student
      */
     public void  printStudentTranscript() {
+        IMarkMgr markMgr = MarkMgr.getInstance();
+        IStudentMgr studentMgr = StudentMgr.getInstance();
+        IDatabase database = Database.getInstance();
         String studentID = studentMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
@@ -416,6 +418,9 @@ public class Printer implements IPrinter {
      * Prints the course statics including enrollment rate, average result for every assessment component and the average overall performance of this course.
      */
     public void printCourseStatistics() {
+        IMarkMgr markMgr = MarkMgr.getInstance();
+        ICourseMgr courseMgr = CourseMgr.getInstance();
+        IDatabase database = Database.getInstance();
         System.out.println("printCourseStatistics is called");
 
         ICourse currentCourse = courseMgr.checkCourseExists();

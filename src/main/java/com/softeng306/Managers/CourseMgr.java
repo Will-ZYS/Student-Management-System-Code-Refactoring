@@ -26,12 +26,6 @@ public class CourseMgr implements ICourseMgr {
 
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IHelperMgr helperMgr = HelperMgr.getInstance();
-    private IDatabase database = Database.getInstance();
-
-    private IProfessorMgr professorMgr = ProfessorMgr.getInstance();
-    private IGroupMgr groupMgr = GroupMgr.getInstance();
-    private ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
 
     /**
      * Creates a new course and stores it in the file.
@@ -42,6 +36,10 @@ public class CourseMgr implements ICourseMgr {
         String profID;
         boolean groupNameExists;
         int seatsLeft;
+        IDatabase database = Database.getInstance();
+        IProfessorMgr professorMgr = ProfessorMgr.getInstance();
+        IGroupMgr groupMgr = GroupMgr.getInstance();
+        ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
         // Can make the sameCourseID as boolean, set to false.
 
         courseID = obtainValidCourseId();
@@ -603,6 +601,7 @@ public class CourseMgr implements ICourseMgr {
      * @return the existing course or else null.
      */
     public ICourse checkCourseExists(String courseID) {
+        IDatabase database = Database.getInstance();
         List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
 
         if(anyCourse.size() == 0){
@@ -697,6 +696,7 @@ public class CourseMgr implements ICourseMgr {
      */
     private String obtainValidCourseDepartment() {
         String courseDepartment;
+        IHelperMgr helperMgr = HelperMgr.getInstance();
         while (true) {
             System.out.println("Enter course's department (uppercase): ");
             System.out.println("Enter -h to print all the departments.");
@@ -718,6 +718,7 @@ public class CourseMgr implements ICourseMgr {
      */
     private String obtainValidCourseType() {
         String courseType;
+        IHelperMgr helperMgr = HelperMgr.getInstance();
         while (true) {
             System.out.println("Enter course type (uppercase): ");
             System.out.println("Enter -h to print all the course types.");
