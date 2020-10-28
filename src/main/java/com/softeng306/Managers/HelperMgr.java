@@ -1,10 +1,9 @@
 package com.softeng306.Managers;
 
-import com.softeng306.Database.Database;
+
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
-import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
@@ -23,8 +22,6 @@ public class HelperMgr implements IHelperMgr {
 
     private static HelperMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-
-    private IDatabase database = Database.getInstance();
 
 
     /**
@@ -113,13 +110,13 @@ public class HelperMgr implements IHelperMgr {
 
 
     /**
-     * Gets all the departments as an array list.
+     * Gets all the departments a list.
      *
-     * @return an array list of all the departments.
+     * @return a list of all the departments.
      */
-    private ArrayList<String> getAllDepartment() {
+    private List<String> getAllDepartment() {
         Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
-        ArrayList<String> departmentStringList = new ArrayList<String>(0);
+        List<String> departmentStringList = new ArrayList<String>(0);
         Iterator iter = departmentEnumSet.iterator();
         while (iter.hasNext()) {
             departmentStringList.add(iter.next().toString());
@@ -129,13 +126,13 @@ public class HelperMgr implements IHelperMgr {
     }
 
     /**
-     * Gets all the genders as an array list.
+     * Gets all the genders a list.
      *
-     * @return an array list of all the genders.
+     * @return a list of all the genders.
      */
-    private ArrayList<String> getAllGender() {
+    private List<String> getAllGender() {
         Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
-        ArrayList<String> genderStringList = new ArrayList<String>(0);
+        List<String> genderStringList = new ArrayList<String>(0);
         Iterator iter = genderEnumSet.iterator();
         while (iter.hasNext()) {
             genderStringList.add(iter.next().toString());
@@ -144,13 +141,13 @@ public class HelperMgr implements IHelperMgr {
     }
 
     /**
-     * Gets all the course types as an array list.
+     * Gets all the course types a list.
      *
-     * @return an array list of all the course types.
+     * @return a list of all the course types.
      */
-    private ArrayList<String> getAllCourseType() {
+    private List<String> getAllCourseType() {
         Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
-        ArrayList<String> courseTypeStringSet = new ArrayList<String>(0);
+        List<String> courseTypeStringSet = new ArrayList<String>(0);
         Iterator iter = courseTypeEnumSet.iterator();
         while (iter.hasNext()) {
             courseTypeStringSet.add(iter.next().toString());

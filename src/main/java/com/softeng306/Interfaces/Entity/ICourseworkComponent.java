@@ -1,6 +1,6 @@
 package com.softeng306.Interfaces.Entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ICourseworkComponent {
     /**
@@ -21,5 +21,5 @@ public interface ICourseworkComponent {
      * Gets the sub components of this main component.
      * @return the sub components of this main component.
      */
-    ArrayList<ICourseworkComponent> getSubComponents();
+    List<ICourseworkComponent> getSubComponents();
 }

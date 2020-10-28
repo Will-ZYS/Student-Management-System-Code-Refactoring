@@ -1,10 +1,5 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Interfaces.Entity.ICourse;
-import com.softeng306.Interfaces.Entity.ICourseRegistration;
-import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Interfaces.Entity.IStudent;
-
 public interface IHelperMgr {
 
     /**
@@ -41,10 +36,4 @@ public interface IHelperMgr {
      * @return the inputted department.
      */
     String checkCourseDepartmentExists();
-
-
-
-
-
-
 }
