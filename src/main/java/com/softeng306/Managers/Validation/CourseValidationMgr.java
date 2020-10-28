@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 
 public class CourseValidationMgr implements ICourseValidationMgr {
     private static CourseValidationMgr instance = null;
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-    private static IPrinter printer = Printer.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     /**
      * Prompts the user to input an existing course.
      * @return the inputted course.
      */
     public ICourse checkCourseExists() {
+        IPrinter printer = Printer.getInstance();
         String courseID;
         ICourse currentCourse;
         while(true){

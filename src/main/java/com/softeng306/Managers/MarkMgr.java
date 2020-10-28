@@ -25,8 +25,7 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static MarkMgr instance = null;
 
     /**

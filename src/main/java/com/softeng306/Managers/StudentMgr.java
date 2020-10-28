@@ -22,11 +22,8 @@ import com.softeng306.Utils.ScannerSingleton;
  */
 public class StudentMgr implements IStudentMgr {
 
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static StudentMgr instance = null;
-
-    private static IPrinter printer = Printer.getInstance();
 
     /**
      * Uses idNumber to generate student ID.
@@ -184,6 +181,7 @@ public class StudentMgr implements IStudentMgr {
     private void setSchool(IStudent currentStudent) {
         String studentSchool;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         while (true) {
             System.out.println("Enter student's school (uppercase): ");
             System.out.println("Enter -h to print all the schools.");
@@ -208,6 +206,7 @@ public class StudentMgr implements IStudentMgr {
     private void setGender(IStudent currentStudent) {
         String studentGender;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         while (true) {
             System.out.println("Enter student gender (uppercase): ");
             System.out.println("Enter -h to print all the genders.");

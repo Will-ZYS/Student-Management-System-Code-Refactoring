@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 
 public class StudentValidationMgr implements IStudentValidationMgr {
     private static StudentValidationMgr instance = null;
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
-    private static IPrinter printer = Printer.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     /**
      * Checks whether this student ID is used by other students.
@@ -37,6 +36,7 @@ public class StudentValidationMgr implements IStudentValidationMgr {
      * @return the inputted student.
      */
     public IStudent checkStudentExists() {
+        IPrinter printer = Printer.getInstance();
         String studentID;
         IStudent currentStudent = null;
         while (true) {

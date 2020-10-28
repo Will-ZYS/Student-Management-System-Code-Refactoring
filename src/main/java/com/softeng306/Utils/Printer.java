@@ -26,7 +26,7 @@ import static com.softeng306.Entity.CourseRegistration.*;
 public class Printer implements IPrinter {
 
 
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
 
 

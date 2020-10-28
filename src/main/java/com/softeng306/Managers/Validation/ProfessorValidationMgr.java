@@ -3,7 +3,6 @@ package com.softeng306.Managers.Validation;
 import com.softeng306.Database.Database;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IProfessor;
-import com.softeng306.Utils.ScannerSingleton;
 import com.softeng306.Interfaces.Managers.Validation.IProfessorValidationMgr;
 
 import java.util.List;
@@ -15,8 +14,6 @@ import java.util.stream.Collectors;
  */
 public class ProfessorValidationMgr implements IProfessorValidationMgr {
     private static ProfessorValidationMgr instance = null;
-
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     /**
      * Checks whether this professor ID is used by other professors.
@@ -30,7 +27,6 @@ public class ProfessorValidationMgr implements IProfessorValidationMgr {
         if(anyProf.size() == 0){
             return null;
         }
-        // System.out.println("Sorry. The professor ID is used. This professor already exists.");
         return anyProf.get(0);
 
     }

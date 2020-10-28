@@ -24,9 +24,8 @@ import com.softeng306.Utils.ScannerSingleton;
 import java.util.*;
 
 public class CourseMgr implements ICourseMgr {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static CourseMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
 
     /**
      * Creates a new course and stores it in the file.
@@ -38,6 +37,7 @@ public class CourseMgr implements ICourseMgr {
         boolean groupNameExists;
         int seatsLeft;
         IDatabase database = Database.getInstance();
+        IPrinter printer = Printer.getInstance();
         IProfessorValidationMgr professorValidationMgr = ProfessorValidationMgr.getInstance();
         IGroupValidationMgr groupValidationMgr = GroupValidationMgr.getInstance();
         ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
@@ -647,6 +647,7 @@ public class CourseMgr implements ICourseMgr {
     private String obtainValidCourseDepartment() {
         String courseDepartment;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         while (true) {
             System.out.println("Enter course's department (uppercase): ");
             System.out.println("Enter -h to print all the departments.");
@@ -669,6 +670,7 @@ public class CourseMgr implements ICourseMgr {
     private String obtainValidCourseType() {
         String courseType;
         IHelperMgr helperMgr = HelperMgr.getInstance();
+        IPrinter printer = Printer.getInstance();
         while (true) {
             System.out.println("Enter course type (uppercase): ");
             System.out.println("Enter -h to print all the course types.");

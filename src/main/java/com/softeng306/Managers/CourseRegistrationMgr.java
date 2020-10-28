@@ -18,14 +18,11 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
-import com.softeng306.Utils.ScannerSingleton;
 
 import java.util.*;
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static CourseRegistrationMgr instance = null;
-    private static IPrinter printer = Printer.getInstance();
 
 
     /**
@@ -41,10 +38,10 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         IMarkMgr markMgr = MarkMgr.getInstance();
         ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         ICourseRegistrationValidationMgr courseRegistrationValidationMgr = CourseRegistrationValidationMgr.getInstance();
-        IStudentMgr studentMgr = StudentMgr.getInstance();
         IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
         IDatabase database = Database.getInstance();
+        IPrinter printer = Printer.getInstance();
 
         IStudent currentStudent = studentValidationMgr.checkStudentExists();
 
