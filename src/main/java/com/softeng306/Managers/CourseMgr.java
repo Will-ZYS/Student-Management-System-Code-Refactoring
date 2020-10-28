@@ -63,13 +63,13 @@ public class CourseMgr implements ICourseMgr {
         int noOfTutorialGroups = obtainValidNumberOfGroups(GroupType.TUTORIAL, totalSeats, noOfLectureGroups);
         int totalTutorialSeats = 0;
         int tutWeeklyHour = obtainValidWeeklyHour(GroupType.TUTORIAL, academicUnit, noOfTutorialGroups);
-        List<IGroup> tutorialGroups = addGroups(GroupType.TUTORIAL, totalSeats, totalTutorialSeats, noOfLectureGroups);
+        List<IGroup> tutorialGroups = addGroups(GroupType.TUTORIAL, totalSeats, totalTutorialSeats, noOfTutorialGroups);
 
         // Add Lab Groups
         int noOfLabGroups = obtainValidNumberOfGroups(GroupType.LAB, totalSeats, noOfLectureGroups);
         int totalLabSeats = 0;
         int labWeeklyHour = obtainValidWeeklyHour(GroupType.LAB, academicUnit, noOfLabGroups);
-        List<IGroup> labGroups = addGroups(GroupType.LAB, totalSeats, totalLabSeats, noOfLectureGroups);
+        List<IGroup> labGroups = addGroups(GroupType.LAB, totalSeats, totalLabSeats, noOfLabGroups);
 
         IProfessor profInCharge;
         List<String> professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
@@ -138,11 +138,16 @@ public class CourseMgr implements ICourseMgr {
      */
     private List<IGroup> addGroups(GroupType groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
         IGroupValidationMgr groupMgr = GroupValidationMgr.getInstance();
+
+        // Console output are slightly different for each group type
+        // "the" is used for lecture groups and tutorial groups while "this" is used for lab groups
+        String word = groupType == GroupType.LAB ? "this " : "the ";
+
         List<IGroup> groups = new ArrayList<>();
         String groupName;
         int groupCapacity;
         for (int i = 0; i < noOfGroups; i++) {
-            System.out.println("Give a name to this " + groupType + " group");
+            System.out.println("Give a name to " + word + groupType + " group");
             boolean groupNameExists;
             do {
                 groupNameExists = false;
@@ -198,8 +203,8 @@ public class CourseMgr implements ICourseMgr {
                         totalGroupSeats += groupCapacity;
                         boolean isValidGroupSeatNumber = (i != noOfGroups - 1) || (totalGroupSeats >= totalSeats);
                         if (isValidGroupSeatNumber) {
-                            IGroup labGroup = new Group(groupName, groupCapacity, groupCapacity);
-                            groups.add(labGroup);
+                            IGroup group = new Group(groupName, groupCapacity, groupCapacity);
+                            groups.add(group);
                             break;
                         } else {
                             System.out.println("Sorry, the total capacity you allocated for all the " + groupType + " groups is not enough for this course.");
@@ -646,9 +651,13 @@ public class CourseMgr implements ICourseMgr {
      * @return Valid number of lab groups
      */
     private int obtainValidNumberOfGroups(GroupType groupType, int totalSeats, int noOfLectureGroups) {
+
+        // Console output are slightly different for each group type
+        String space = groupType == GroupType.TUTORIAL ? "" : " ";
+
         int noOfGroups;
         do {
-            System.out.println("Enter the number of " + groupType + " groups: ");
+            System.out.println("Enter the number of " + groupType + " groups:" + space);
             if (scanner.hasNextInt()) {
                 noOfGroups = scanner.nextInt();
                 if (groupType == GroupType.LECTURE) {
