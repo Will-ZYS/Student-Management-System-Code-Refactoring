@@ -9,6 +9,7 @@ import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
+import com.softeng306.Interfaces.Utils.IScannerSingleton;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
 import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.ScannerSingleton;
@@ -20,7 +21,7 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
-    private ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScannerSingleton scanner = ScannerSingleton.getInstance();
     private static MarkMgr instance = null;
 
     /**

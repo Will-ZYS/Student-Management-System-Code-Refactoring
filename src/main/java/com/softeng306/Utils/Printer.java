@@ -16,6 +16,7 @@ import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Interfaces.Utils.IScannerSingleton;
 import com.softeng306.Managers.HelperMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
@@ -26,9 +27,12 @@ import java.util.stream.Collectors;
 
 import static com.softeng306.Entity.CourseRegistration.*;
 
+/**
+ * Class used to format output to terminal
+ */
 public class Printer implements IPrinter {
 
-    private ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
 
     public void print(String content) {
