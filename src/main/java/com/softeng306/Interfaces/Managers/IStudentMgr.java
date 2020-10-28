@@ -1,7 +1,5 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Interfaces.Entity.IStudent;
-
 public interface IStudentMgr {
 
     /**
