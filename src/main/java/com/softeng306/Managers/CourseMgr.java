@@ -132,6 +132,14 @@ public class CourseMgr implements ICourseMgr {
         printer.printCourses();
     }
 
+    /**
+     * Create a list groups
+     * @param groupType the type of groups to be created
+     * @param totalSeats total number of seats for all group types
+     * @param totalGroupSeats total number of seats for all groups of the specified type
+     * @param noOfGroups number of groups for the specified type
+     * @return the list of IGroups created.
+     */
     private List<IGroup> addGroups(String groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
         IGroupMgr groupMgr = GroupMgr.getInstance();
         List<IGroup> groups = new ArrayList<>();
@@ -346,6 +354,13 @@ public class CourseMgr implements ICourseMgr {
         }
     }
 
+    /**
+     * Assign weightage to a main component
+     * @param totWeight total weight to be assigned
+     * @param mainComponents the list of main components
+     * @param componentIndex the index of the current main component in the list
+     * @return the updated total weight
+     */
     private int assignMainComponentWeightage(int totWeight, List<ICourseworkComponent> mainComponents, int componentIndex) {
         String mainComponentName = obtainValidComponentName(true, totWeight, mainComponents, componentIndex);
 
@@ -398,6 +413,13 @@ public class CourseMgr implements ICourseMgr {
 
     }
 
+    /**
+     * Assign weightage to a main component
+     * @param subTotWeight total weight to be assigned
+     * @param subComponents the list of sub components
+     * @param componentIndex the index of the current sub component in the list
+     * @return the updated sub total weight
+     */
     private int assignSubComponentWeightage(int subTotWeight, List<ICourseworkComponent> subComponents, int componentIndex) {
 
         String subComponentName = obtainValidComponentName(false, subTotWeight, subComponents, componentIndex);
@@ -410,6 +432,13 @@ public class CourseMgr implements ICourseMgr {
         return subTotWeight - subWeight;
     }
 
+    /**
+     * Helper method which queries the user for valid component weight
+     * @param isMainComponent true if the component is a main component
+     * @param totWeight total weight of component
+     * @param componentIndex component index in the list of components
+     * @return a valid component weight, which is queried from the user
+     */
     private int obtainValidComponentWeight(boolean isMainComponent, int totWeight, int componentIndex) {
         int subWeight;
         String componentType = isMainComponent ? "main" : "sub";
@@ -435,6 +464,14 @@ public class CourseMgr implements ICourseMgr {
         return subWeight;
     }
 
+    /**
+     * Helper method which queries the user for valid component name
+     * @param isMainComponent true if the component is a main component
+     * @param totWeight total weight of component
+     * @param components the list of components
+     * @param componentIndex component index in the list of components
+     * @return a valid component name, which is queried from the user
+     */
     private String obtainValidComponentName(boolean isMainComponent, int totWeight, List<ICourseworkComponent> components, int componentIndex) {
         boolean componentExist;
         String componentName;
@@ -628,7 +665,7 @@ public class CourseMgr implements ICourseMgr {
 
     /**
      * Helper method which queries the user for valid lecture hour
-     * @param academicUnit
+     * @param academicUnit number of academic unit for this course
      * @return Valid lecture hour
      */
     private int obtainValidWeeklyHour(String groupType, int academicUnit, int noOfGroups) {
