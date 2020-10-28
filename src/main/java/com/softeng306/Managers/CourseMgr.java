@@ -60,24 +60,23 @@ public class CourseMgr implements ICourseMgr {
         int noOfLectureGroups = obtainValidNumberOfGroups(LECTURE_GROUP, totalSeats, 0);
         int seatsLeft = totalSeats;
         int lecWeeklyHour = obtainValidWeeklyHour(LECTURE_GROUP, academicUnit, noOfLectureGroups);
-        ArrayList<IGroup> lectureGroups = addGroups(LECTURE_GROUP, totalSeats, seatsLeft, noOfLectureGroups);
+        List<IGroup> lectureGroups = addGroups(LECTURE_GROUP, totalSeats, seatsLeft, noOfLectureGroups);
 
         // Add Tutorial Groups
         int noOfTutorialGroups = obtainValidNumberOfGroups(TUTORIAL_GROUP, totalSeats, noOfLectureGroups);
         int totalTutorialSeats = 0;
         int tutWeeklyHour = obtainValidWeeklyHour(TUTORIAL_GROUP, academicUnit, noOfTutorialGroups);
-        ArrayList<IGroup> tutorialGroups = addGroups(TUTORIAL_GROUP, totalSeats, totalTutorialSeats, noOfLectureGroups);
+        List<IGroup> tutorialGroups = addGroups(TUTORIAL_GROUP, totalSeats, totalTutorialSeats, noOfLectureGroups);
 
         // Add Lab Groups
         int noOfLabGroups = obtainValidNumberOfGroups(LAB_GROUP, totalSeats, noOfLectureGroups);
         int totalLabSeats = 0;
         int labWeeklyHour = obtainValidWeeklyHour(LAB_GROUP, academicUnit, noOfLabGroups);
-        ArrayList<IGroup> labGroups = addGroups(LAB_GROUP, totalSeats, totalLabSeats, noOfLectureGroups);
+        List<IGroup> labGroups = addGroups(LAB_GROUP, totalSeats, totalLabSeats, noOfLectureGroups);
 
 
         IProfessor profInCharge;
-        List<String> professorsInDepartment = new ArrayList<String>(0);
-        professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
+        List<String> professorsInDepartment = printer.printProfInDepartment(courseDepartment, false);
         while (true) {
             System.out.println("Enter the ID for the professor in charge please:");
             System.out.println("Enter -h to print all the professors in " + courseDepartment + ".");
@@ -133,9 +132,9 @@ public class CourseMgr implements ICourseMgr {
         printer.printCourses();
     }
 
-    private ArrayList<IGroup> addGroups(String groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
+    private List<IGroup> addGroups(String groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
         IGroupMgr groupMgr = GroupMgr.getInstance();
-        ArrayList<IGroup> groups = new ArrayList<>();
+        List<IGroup> groups = new ArrayList<>();
         String groupName;
         int groupCapacity;
         for (int i = 0; i < noOfGroups; i++) {
@@ -265,7 +264,7 @@ public class CourseMgr implements ICourseMgr {
             currentCourse = checkCourseExists();
         }
 
-        ArrayList<ICourseworkComponent> mainComponents = new ArrayList<>(0);
+        List<ICourseworkComponent> mainComponents = new ArrayList<>(0);
         // Check if mainComponent is empty
         if (currentCourse.getMainComponents().size() == 0) {
             // empty course
@@ -354,7 +353,7 @@ public class CourseMgr implements ICourseMgr {
 
         totWeight -= weight;
 
-        ArrayList<ICourseworkComponent> subComponents = new ArrayList<>(0);
+        List<ICourseworkComponent> subComponents = new ArrayList<>(0);
         int noOfSub;
         do {
             System.out.println("Enter number of sub component under main component " + (componentIndex + 1) + ":");

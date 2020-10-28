@@ -132,7 +132,7 @@ public class Course implements ICourse {
      * @param tutWeeklyHour The tutorial weekly hour of this course.
      * @param labWeeklyHour The lab weekly hour of this course.
      */
-    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, List<IGroup> lectureGroups, List<IGroup> tutorialGroups, List<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
