@@ -10,9 +10,9 @@ import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Managers.*;
 
@@ -217,7 +217,7 @@ public class Printer implements IPrinter {
 
             for (IGroup group : groups) {
                 if (group.getGroupName().equals(selectedGroupName)) {
-                    group.enrolledIn();
+                    group.decrementGroupVacancy();
                     break;
                 }
             }
@@ -337,9 +337,9 @@ public class Printer implements IPrinter {
      */
     public void  printStudentTranscript() {
         IMarkMgr markMgr = MarkMgr.getInstance();
-        IStudentMgr studentMgr = StudentMgr.getInstance();
+        IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         IDatabase database = Database.getInstance();
-        String studentID = studentMgr.checkStudentExists().getStudentID();
+        String studentID = studentValidationMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
         int thisStudentAU = 0;

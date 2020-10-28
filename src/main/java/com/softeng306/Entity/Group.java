@@ -71,7 +71,7 @@ public class Group implements IGroup {
     /**
      * Updates the available vacancies of this group after someone has registered this group.
      */
-    public void enrolledIn() {
+    public void decrementGroupVacancy() {
         this.availableVacancies -= 1;
     }
 }

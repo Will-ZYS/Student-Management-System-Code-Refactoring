@@ -25,5 +25,5 @@ public interface IGroup {
     /**
      * Updates the available vacancies of this group after someone has registered this group.
      */
-    void enrolledIn();
+    void decrementGroupVacancy();
 }

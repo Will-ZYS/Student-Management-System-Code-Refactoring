@@ -276,7 +276,7 @@ public class Course implements ICourse {
     /**
      * Updates the available vacancies of this course after someone has registered this group.
      */
-    public void enrolledIn() { this.vacancies = vacancies - 1; }
+    public void decrementCourseVacancy() { this.vacancies = vacancies - 1; }
 
     /**
      * Sets the tutorial groups of the lecture groups.

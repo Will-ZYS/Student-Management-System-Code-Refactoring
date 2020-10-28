@@ -6,16 +6,13 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Database.IStudentFileMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
+import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import com.softeng306.Entity.Student;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.ScannerSingleton;
-
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Manages the student related operations.
@@ -49,6 +46,7 @@ public class StudentMgr implements IStudentMgr {
         IStudent currentStudent = null;
         IDatabase database = Database.getInstance();
         IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
+        IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         System.out.println("addStudent is called");
         System.out.println("Choose the way you want to add a student:");
         System.out.println("1. Manually input the student ID.");
@@ -77,8 +75,8 @@ public class StudentMgr implements IStudentMgr {
                 System.out.println();
                 System.out.println("Give this student an ID: ");
                 studentID = scanner.nextLine();
-                if (checkValidStudentIDInput(studentID)) {
-                    if (checkStudentExists(studentID) == null) {
+                if (studentValidationMgr.checkValidStudentIDInput(studentID)) {
+                    if (studentValidationMgr.checkStudentExists(studentID) == null) {
                         break;
                     } else {
                         System.out.println("Sorry. The student ID is used. This student already exists.");
@@ -158,61 +156,7 @@ public class StudentMgr implements IStudentMgr {
         return generateStudentID;
     }
 
-    /**
-     * Checks whether this student ID is used by other students.
-     * @param studentID This student's ID.
-     * @return the existing student or else null.
-     */
-    public IStudent checkStudentExists(String studentID) {
-        IDatabase database = Database.getInstance();
-        List<IStudent> anyStudent = database.getStudents().stream().filter(s->studentID.equals(s.getStudentID())).collect(Collectors.toList());
-        if(anyStudent.size() == 0){
-            return null;
-        }
-        return anyStudent.get(0);
 
-    }
-
-    /**
-     * Prompts the user to input an existing student.
-     * @return the inputted student.
-     */
-    public IStudent checkStudentExists() {
-        String studentID;
-        IStudent currentStudent = null;
-        while (true) {
-            System.out.println("Enter Student ID (-h to print all the student ID):");
-            studentID = scanner.nextLine();
-            while("-h".equals(studentID)){
-                printer.printAllStudents();
-                studentID = scanner.nextLine();
-            }
-
-            currentStudent = checkStudentExists(studentID);
-            if (currentStudent == null) {
-                System.out.println("Invalid Student ID. Please re-enter.");
-            }else {
-                break;
-            }
-
-        }
-        return currentStudent;
-    }
-
-    /**
-     * Checks whether the inputted student ID is in the correct format.
-     * @param studentID The inputted student ID.
-     * @return boolean indicates whether the inputted student ID is valid.
-     */
-    public boolean checkValidStudentIDInput(String studentID) {
-        String REGEX = "^U[0-9]{7}[A-Z]$";
-        boolean valid = Pattern.compile(REGEX).matcher(studentID).matches();
-        if(!valid){
-            System.out.println("Wrong format of student ID.");
-        }
-        return valid;
-
-    }
 
     /**
      * Helper method which queries the user for a valid student name

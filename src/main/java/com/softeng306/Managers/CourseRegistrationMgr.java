@@ -8,6 +8,7 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.*;
 import com.softeng306.Interfaces.Managers.Validation.ICourseRegistrationValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Interfaces.Entity.ICourse;
@@ -38,10 +39,11 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         ICourseRegistrationValidationMgr courseRegistrationValidationMgr = CourseRegistrationValidationMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
+        IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
         IDatabase database = Database.getInstance();
 
-        IStudent currentStudent = studentMgr.checkStudentExists();
+        IStudent currentStudent = studentValidationMgr.checkStudentExists();
 
         String studentID = currentStudent.getStudentID();
 
@@ -83,7 +85,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         selectedLabGroupName = printer.printGroupWithVacancyInfo("lab", labGroups);
 
-        currentCourse.enrolledIn();
+        currentCourse.decrementCourseVacancy();
 
         ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
 
