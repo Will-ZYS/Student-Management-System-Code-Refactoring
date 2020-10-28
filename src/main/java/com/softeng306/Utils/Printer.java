@@ -182,10 +182,10 @@ public class Printer implements IPrinter {
      * Checks whether the inputted department is valid.
      *
      * @param groupType The type of this group.
-     * @param groups    An array list of a certain type of groups in a course.
+     * @param groups    A list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    public String printGroupWithVacancyInfo(String groupType, ArrayList<IGroup> groups) {
+    public String printGroupWithVacancyInfo(String groupType, List<IGroup> groups) {
         int index;
         HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
         int selectedGroupNum;
@@ -255,10 +255,8 @@ public class Printer implements IPrinter {
         System.out.println("(1) Lecture group");
         System.out.println("(2) Tutorial group");
         System.out.println("(3) Lab group");
-        // READ courseRegistrationFILE
-        // return ArrayList of Object(student,course,lecture,tut,lab)
-        ArrayList<ICourseRegistration> allStuArray = courseRegistrationFileMgr.loadCourseRegistration();
 
+        List<ICourseRegistration> allStuArray = courseRegistrationFileMgr.loadCourseRegistration();
 
         ArrayList<ICourseRegistration> stuArray = new ArrayList<>(0);
         for (ICourseRegistration courseRegistration : allStuArray) {
@@ -375,7 +373,7 @@ public class Printer implements IPrinter {
                 if(assessment instanceof MainComponent) {
                     System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
                     int mainAssessmentWeight = assessment.getComponentWeight();
-                    ArrayList<ICourseworkComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
+                    List<ICourseworkComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
                     for (ICourseworkComponent subAssessment : subAssessments) {
                         System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
                         String subAssessmentName = subAssessment.getComponentName();
@@ -464,7 +462,7 @@ public class Printer implements IPrinter {
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
 
-                ArrayList<ICourseworkComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
+                List<ICourseworkComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
                 if (thisSubComponents.size() == 0) { continue; }
                 for (ICourseworkComponent subComponent : thisSubComponents) {
                     averageMark = 0;

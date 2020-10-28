@@ -8,6 +8,7 @@ import com.softeng306.Managers.StudentMgr;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
@@ -58,16 +59,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 * @param student a student to be added into the file
 	 */
 	public void writeStudentsIntoFile(IStudent student) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(studentFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(studentFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(student_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(studentFileName, student_HEADER);
+
 			fileWriter.append(student.getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(student.getStudentName());
@@ -97,9 +92,9 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	/**
 	 * Load all the students' information from file into the system.
 	 *
-	 * @return an array list of all the students.
+	 * @return a list of all the students.
 	 */
-	public ArrayList<IStudent> loadStudents() {
+	public List<IStudent> loadStudents() {
 		BufferedReader fileReader = null;
 		ArrayList<IStudent> students = new ArrayList<>(0);
 		try {

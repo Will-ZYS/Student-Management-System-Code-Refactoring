@@ -1,6 +1,6 @@
 package com.softeng306.Interfaces.Entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ICourse {
     /**
@@ -73,25 +73,25 @@ public interface ICourse {
      * Gets the course's lecture groups.
      * @return the lecture groups of this course.
      */
-    ArrayList<IGroup> getLectureGroups();
+    List<IGroup> getLectureGroups();
 
     /**
      * Gets the course's tutorial groups
      * @return the tutorial groups of this course
      */
-    ArrayList<IGroup> getTutorialGroups();
+    List<IGroup> getTutorialGroups();
 
     /**
      * Gets the course's lab groups.
      * @return the lab groups of this course.
      */
-    ArrayList<IGroup> getLabGroups();
+    List<IGroup> getLabGroups();
 
     /**
      * Gets the course's main assessment components.
      * @return the main assessment components of this course.
      */
-    ArrayList<ICourseworkComponent> getMainComponents();
+    List<ICourseworkComponent> getMainComponents();
 
     /**
      * Sets the course's current current vacancy.
@@ -108,19 +108,19 @@ public interface ICourse {
      * Sets the tutorial groups of the lecture groups.
      * @param tutorialGroups this course's tutorial groups.
      */
-    void setTutorialGroups(ArrayList<IGroup> tutorialGroups);
+    void setTutorialGroups(List<IGroup> tutorialGroups);
 
     /**
      * Sets the lab groups of the lecture groups.
      * @param labGroups this course's lab groups.
      */
-    void setLabGroups(ArrayList<IGroup> labGroups);
+    void setLabGroups(List<IGroup> labGroups);
 
     /**
      * Sets the main assessment of the lecture groups.
      * @param mainComponents this course's main assessment.
      */
-    void setMainComponents(ArrayList<ICourseworkComponent> mainComponents);
+    void setMainComponents(List<ICourseworkComponent> mainComponents);
 
     /**
      * Sets the weekly hour of the tutorials.
