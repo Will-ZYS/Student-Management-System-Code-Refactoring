@@ -11,6 +11,7 @@ import com.softeng306.Interfaces.Entity.IStudent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
 	private static CourseRegistrationFileMgr instance;
@@ -75,7 +76,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error occurs when flushing or closing the file.");

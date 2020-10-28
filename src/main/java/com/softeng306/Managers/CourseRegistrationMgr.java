@@ -31,9 +31,9 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      */
     public void registerCourse() {
         System.out.println("registerCourse is called");
-        String selectedLectureGroupName = null;
-        String selectedTutorialGroupName = null;
-        String selectedLabGroupName = null;
+        String selectedLectureGroupName;
+        String selectedTutorialGroupName;
+        String selectedLabGroupName;
         // Get all necessary manager classes
         IHelperMgr helperMgr = HelperMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();

@@ -41,7 +41,7 @@ public abstract class FILEMgrAbstract {
      * @param filename The CSV files
      * @param header The headers for the CSV file
      * @return fileWriter object for the CSV
-     * @throws IOException
+     * @throws IOException throes IOException to the caller
      */
     protected FileWriter initializeCSV(String filename, String header) throws IOException {
         File file = new File(filename);

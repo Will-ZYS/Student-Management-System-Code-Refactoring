@@ -9,6 +9,7 @@ import com.softeng306.Managers.StudentMgr;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
@@ -79,7 +80,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error in flushing or closing the file.");
@@ -123,7 +124,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileReader.close();
+				Objects.requireNonNull(fileReader).close();
 			} catch (IOException e) {
 				System.out.println("Error occurs when closing the fileReader.");
 				e.printStackTrace();

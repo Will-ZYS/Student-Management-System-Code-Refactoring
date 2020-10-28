@@ -94,7 +94,7 @@ public class Printer implements IPrinter {
         IHelperMgr helperMgr = HelperMgr.getInstance();
         IDatabase database = Database.getInstance();
         if (helperMgr.checkDepartmentValidation(department)) {
-            List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(p -> p.getProfID()).collect(Collectors.toList());
+            List<String> validProfString = database.getProfessors().stream().filter(p -> String.valueOf(department).equals(p.getProfDepartment())).map(IProfessor::getProfID).collect(Collectors.toList());
             if (printOut) {
                 validProfString.forEach(System.out::println);
             }
@@ -109,7 +109,7 @@ public class Printer implements IPrinter {
      */
     public void printAllStudents() {
         IDatabase database = Database.getInstance();
-        database.getStudents().stream().map(s -> s.getStudentID()).forEach(System.out::println);
+        database.getStudents().stream().map(IStudent::getStudentID).forEach(System.out::println);
     }
 
     /**
@@ -117,7 +117,7 @@ public class Printer implements IPrinter {
      */
     public void printAllCourses() {
         IDatabase database = Database.getInstance();
-        database.getCourses().stream().map(c -> c.getCourseID()).forEach(System.out::println);
+        database.getCourses().stream().map(ICourse::getCourseID).forEach(System.out::println);
     }
 
     /**
@@ -164,13 +164,11 @@ public class Printer implements IPrinter {
     public List<String> printCourseInDepartment(String department) {
         IDatabase database = Database.getInstance();
         List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
-        List<String> validCourseString = validCourses.stream().map(c -> c.getCourseID()).collect(Collectors.toList());
-        /**
+        List<String> validCourseString = validCourses.stream().map(ICourse::getCourseID).collect(Collectors.toList());
         validCourseString.forEach(System.out::println);
         if (validCourseString.size() == 0) {
             System.out.println("None.");
         }
-         **/
         return validCourseString;
     }
 
@@ -264,7 +262,6 @@ public class Printer implements IPrinter {
             }
         }
 
-
         int opt;
         do {
             opt = scanner.nextInt();
@@ -277,61 +274,48 @@ public class Printer implements IPrinter {
             }
 
             if (opt == 1) { // print by LECTURE
-                String newLec = "";
-                Collections.sort(stuArray, LecComparator);   // Sort by Lecture group
-                if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {  // loop through all of CourseRegistration Obj
-                        if (!newLec.equals(stuArray.get(i).getLectureGroup())) {  // if new lecture group print out group name
-                            newLec = stuArray.get(i).getLectureGroup();
-                            System.out.println("Lecture group : " + newLec);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
-
+                printStudentByGroup(stuArray, GroupType.LECTURE);
             } else if (opt == 2) { // print by TUTORIAL
-                String newTut = "";
-                Collections.sort(stuArray, TutComparator);
-                if (stuArray.size() > 0 && stuArray.get(0).getCourse().getTutorialGroups().size() == 0) {
-                    System.out.println("This course does not contain any tutorial group.");
-                } else if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {
-                        if (!newTut.equals(stuArray.get(i).getTutorialGroup())) {
-                            newTut = stuArray.get(i).getTutorialGroup();
-                            System.out.println("Tutorial group : " + newTut);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
+                printStudentByGroup(stuArray, GroupType.TUTORIAL);
             } else if (opt == 3) { // print by LAB
-                String newLab = "";
-                Collections.sort(stuArray, LabComparator);
-                if (stuArray.size() > 0 && stuArray.get(0).getCourse().getLabGroups().size() == 0) {
-                    System.out.println("This course does not contain any lab group.");
-                } else if (stuArray.size() > 0) {
-                    for (int i = 0; i < stuArray.size(); i++) {
-                        if (!newLab.equals(stuArray.get(i).getLabGroup())) {
-                            newLab = stuArray.get(i).getLabGroup();
-                            System.out.println("Lab group : " + newLab);
-                        }
-                        System.out.print("Student Name: " + stuArray.get(i).getStudent().getStudentName());
-                        System.out.println(" Student ID: " + stuArray.get(i).getStudent().getStudentID());
-                    }
-                    System.out.println();
-                }
-
+                printStudentByGroup(stuArray, GroupType.LAB);
             } else {
                 System.out.println("Invalid input. Please re-enter.");
             }
             System.out.println("------------------------------------------------------");
         } while (opt < 1 || opt > 3);
 
+    }
+
+    /**
+     * Prints the students according to a group type
+     * @param stuArray the list of students
+     * @param groupType the specified group type
+     */
+    private void printStudentByGroup(List<ICourseRegistration> stuArray, GroupType groupType) {
+        String newGroup = "";
+        if (groupType == GroupType.LAB) {
+            stuArray.sort(LabComparator);   // Sort by Lab group
+        }
+        else if (groupType == GroupType.TUTORIAL) {
+            stuArray.sort(TutComparator);   // Sort by Tutorial group
+        }
+        else {
+            stuArray.sort(LecComparator);   // Sort by Lecture group
+        }
+
+        if (stuArray.size() > 0) {
+            for (ICourseRegistration iCourseRegistration : stuArray) {  // loop through all of CourseRegistration Obj
+                if (!newGroup.equals(iCourseRegistration.getLectureGroup())) {  // if new lecture group print out group name
+                    newGroup = iCourseRegistration.getLectureGroup();
+                    String type = groupType.toString().substring(0, 1).toUpperCase() + groupType.toString().substring(1);
+                    System.out.println(type + " group : " + newGroup);
+                }
+                System.out.print("Student Name: " + iCourseRegistration.getStudent().getStudentName());
+                System.out.println(" Student ID: " + iCourseRegistration.getStudent().getStudentID());
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -374,7 +358,7 @@ public class Printer implements IPrinter {
                 if(assessment instanceof MainComponent) {
                     System.out.println("Main Assessment: " + assessment.getComponentName() + " ----- (" + assessment.getComponentWeight() + "%)");
                     int mainAssessmentWeight = assessment.getComponentWeight();
-                    List<ICourseworkComponent> subAssessments = ((MainComponent) assessment).getSubComponents();
+                    List<ICourseworkComponent> subAssessments = assessment.getSubComponents();
                     for (ICourseworkComponent subAssessment : subAssessments) {
                         System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
                         String subAssessmentName = subAssessment.getComponentName();
@@ -382,7 +366,7 @@ public class Printer implements IPrinter {
                             ICourseworkComponent subKey = subEntry.getKey();
                             Double subValue = subEntry.getValue();
                             if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
-                                System.out.println("Mark: " + String.valueOf(subValue));
+                                System.out.println("Mark: " + subValue);
                                 break;
                             }
                         }
@@ -444,7 +428,7 @@ public class Printer implements IPrinter {
 
         int examWeight = 0;
         boolean hasExam = false;
-        double averageMark = 0;
+        double averageMark;
         // Find marks for every assessment components
         for (ICourseworkComponent courseworkComponent : currentCourse.getMainComponents()) {
             String thisComponentName = courseworkComponent.getComponentName();
@@ -465,7 +449,7 @@ public class Printer implements IPrinter {
                 averageMark = averageMark / thisCourseMark.size();
                 System.out.println("\t Average: " + averageMark);
 
-                List<ICourseworkComponent> thisSubComponents = ((MainComponent)courseworkComponent).getSubComponents();
+                List<ICourseworkComponent> thisSubComponents = courseworkComponent.getSubComponents();
                 if (thisSubComponents.size() == 0) { continue; }
                 for (ICourseworkComponent subComponent : thisSubComponents) {
                     averageMark = 0;

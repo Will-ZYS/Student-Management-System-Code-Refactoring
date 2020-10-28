@@ -7,6 +7,7 @@ import com.softeng306.Interfaces.Entity.IProfessor;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileMgr {
 	private static ProfessorFileMgr instance;
@@ -56,7 +57,7 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 			e.printStackTrace();
 		} finally {
 			try {
-				fileReader.close();
+				Objects.requireNonNull(fileReader).close();
 			} catch (IOException e) {
 				System.out.println("Error occurs when closing the fileReader.");
 				e.printStackTrace();

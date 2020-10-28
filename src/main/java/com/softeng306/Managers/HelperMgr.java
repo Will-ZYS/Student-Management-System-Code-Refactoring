@@ -104,10 +104,7 @@ public class HelperMgr implements IHelperMgr {
         return valid;
     }
 
-    /**
-     * HELPER METHODS
-     */
-
+    // HELPER METHODS
 
     /**
      * Gets all the departments a list.
@@ -116,10 +113,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllDepartment() {
         Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
-        List<String> departmentStringList = new ArrayList<String>(0);
-        Iterator iter = departmentEnumSet.iterator();
-        while (iter.hasNext()) {
-            departmentStringList.add(iter.next().toString());
+        List<String> departmentStringList = new ArrayList<>(0);
+        for (Department department : departmentEnumSet) {
+            departmentStringList.add(department.toString());
         }
         return departmentStringList;
 
@@ -132,10 +128,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllGender() {
         Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
-        List<String> genderStringList = new ArrayList<String>(0);
-        Iterator iter = genderEnumSet.iterator();
-        while (iter.hasNext()) {
-            genderStringList.add(iter.next().toString());
+        List<String> genderStringList = new ArrayList<>(0);
+        for (Gender gender : genderEnumSet) {
+            genderStringList.add(gender.toString());
         }
         return genderStringList;
     }
@@ -147,10 +142,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllCourseType() {
         Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
-        List<String> courseTypeStringSet = new ArrayList<String>(0);
-        Iterator iter = courseTypeEnumSet.iterator();
-        while (iter.hasNext()) {
-            courseTypeStringSet.add(iter.next().toString());
+        List<String> courseTypeStringSet = new ArrayList<>(0);
+        for (CourseType courseType : courseTypeEnumSet) {
+            courseTypeStringSet.add(courseType.toString());
         }
         return courseTypeStringSet;
     }
