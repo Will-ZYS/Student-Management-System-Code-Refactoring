@@ -12,8 +12,8 @@ public class Option5IT extends IntegrationTestBase{
     public void testPrintStudentByClass(){
 
         inputsBuilder.append("5").append(System.lineSeparator());
-        inputsBuilder.append("SE2006").append(System.lineSeparator()); // Student ID
-        inputsBuilder.append("1").append(System.lineSeparator()); // Exit
+        inputsBuilder.append("SE2006").append(System.lineSeparator()); // Course ID
+        inputsBuilder.append("1").append(System.lineSeparator()); // Choose Lecture group
         inputsBuilder.append("11").append(System.lineSeparator()); // Exit
 
         preparingInputStream();
@@ -52,8 +52,8 @@ public class Option5IT extends IntegrationTestBase{
         inputsBuilder.append("1").append(System.lineSeparator()); // tutorial group
 
         inputsBuilder.append("5").append(System.lineSeparator());
-        inputsBuilder.append("SE2007").append(System.lineSeparator()); // Student ID
-        inputsBuilder.append("1").append(System.lineSeparator()); // Exit
+        inputsBuilder.append("SE2007").append(System.lineSeparator()); // Course ID
+        inputsBuilder.append("1").append(System.lineSeparator()); // Choose Lecture group
         inputsBuilder.append("11").append(System.lineSeparator()); // Exit
 
         preparingInputStream();

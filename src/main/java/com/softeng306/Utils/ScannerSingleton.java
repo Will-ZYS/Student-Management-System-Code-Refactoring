@@ -27,24 +27,12 @@ public class ScannerSingleton {
         return  scanner.nextInt();
     }
 
-    public boolean hasNextLine() {
-        return scanner.hasNextLine();
-    }
-
     public String nextLine() {
         return scanner.nextLine();
     }
 
-    public boolean hasNextDouble() {
-        return scanner.hasNextDouble();
-    }
-
     public Double nextDouble() {
         return scanner.nextDouble();
-    }
-
-    public boolean hasNext() {
-        return scanner.hasNext();
     }
 
     public String next() {

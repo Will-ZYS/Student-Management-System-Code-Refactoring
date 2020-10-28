@@ -1,18 +1,11 @@
 package com.softeng306.integration;
 
 import com.softeng306.Main;
-import com.softeng306.Utils.ScannerSingleton;
-import com.softeng306.helper.CSVHelper;
-import com.softeng306.helper.StringBuilderPlus;
-import org.junit.After;
-import org.junit.Before;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -128,4 +121,24 @@ public class MainIT extends IntegrationTestBase{
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
 
+    @Test
+    public void testingCSVRemainsTheSame() {
+        // ============= PREPARING THE INPUTS ===========================
+        inputsBuilder.append("10").append(System.lineSeparator());
+        inputsBuilder.append("U1822838J").append(System.lineSeparator()); // Course ID
+        inputsBuilder.append("11").append(System.lineSeparator()); // Exit
+
+        // ============= SENDING THE INPUTS & RUNNING THE SYSTEM=================
+        preparingInputStream();
+        Main.main(new String[]{});
+
+        try {
+            assertEquals("The files differ!",
+                    FileUtils.readFileToString(csvHelper.getFileToBeTested("studentFile.csv"), "utf-8").trim(),
+                    FileUtils.readFileToString(csvHelper.getFileSampleOutput("studentFile.csv"), "utf-8").trim());
+        } catch (IOException e) {
+            fail();
+        }
+
+    }
 }
