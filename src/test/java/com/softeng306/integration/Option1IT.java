@@ -1,27 +1,10 @@
 package com.softeng306.integration;
 
-import com.softeng306.Database.Database;
-import com.softeng306.Entity.Student;
-import com.softeng306.Interfaces.Entity.*;
+
 import com.softeng306.Main;
-import com.softeng306.Utils.ScannerSingleton;
-import com.softeng306.helper.CSVHelper;
 import com.softeng306.helper.CommonPrintingHelper;
-import com.softeng306.helper.StringBuilderPlus;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import static org.junit.Assert.*;
-
 public class Option1IT extends IntegrationTestBase{
 
     @Test
