@@ -1,16 +1,12 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Database.Database;
-import com.softeng306.Database.MarkFileMgr;
-import com.softeng306.Entity.*;
 
+import com.softeng306.Entity.MainComponent;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
-import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
@@ -27,32 +23,6 @@ import java.util.*;
 public class MarkMgr implements IMarkMgr {
     private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static MarkMgr instance = null;
-
-    /**
-     * Initializes marks for a student when he/she just registered a course.
-     * @param student the student this mark record belongs to.
-     * @param course the course this mark record about.
-     * @return the new added mark.
-     */
-    public IMark initializeMark(IStudent student, ICourse course) {
-        IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-        Map<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
-        double totalMark = 0d;
-        List<ICourseworkComponent> mainComponents = course.getMainComponents();
-
-        for (ICourseworkComponent mainComponent : mainComponents) {
-            courseWorkMarks.put(mainComponent, 0d);
-            if (mainComponent.getSubComponents().size() > 0) {
-                for (ICourseworkComponent subComponent : mainComponent.getSubComponents()) {
-                    courseWorkMarks.put(subComponent, 0d);
-                }
-            }
-        }
-        IMark mark = new Mark(student, course, courseWorkMarks, totalMark);
-
-        markFileMgr.updateStudentMarks(mark);
-        return mark;
-    }
 
     /**
      * Sets the coursework mark for the mark record.

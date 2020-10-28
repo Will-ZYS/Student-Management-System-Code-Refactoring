@@ -2,7 +2,8 @@ package com.softeng306.Utils;
 
 import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Entity.*;
+import com.softeng306.Entity.MainComponent;
+import com.softeng306.Entity.SubComponent;
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
@@ -15,7 +16,8 @@ import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Managers.*;
+import com.softeng306.Managers.HelperMgr;
+import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
 import com.softeng306.Managers.Validation.StudentValidationMgr;
 

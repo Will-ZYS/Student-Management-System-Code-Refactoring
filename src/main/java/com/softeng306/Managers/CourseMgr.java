@@ -2,7 +2,10 @@ package com.softeng306.Managers;
 
 import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Entity.*;
+import com.softeng306.Entity.Course;
+import com.softeng306.Entity.Group;
+import com.softeng306.Entity.MainComponent;
+import com.softeng306.Entity.SubComponent;
 import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;

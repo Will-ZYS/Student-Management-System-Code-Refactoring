@@ -5,6 +5,8 @@ import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +32,29 @@ public class Mark implements IMark {
      * The total mark of this student mark record.
      */
     private double totalMark;
+
+    /**
+     * Creates a new student mark record with the student of this student mark record, the course of this student mark record.
+     *  the course work marks of this student mark record, the total mark of this student mark record.
+     * @param student The student of this student mark record.
+     * @param course The course of this student mark record.
+     */
+    public Mark(IStudent student, ICourse course) {
+        Map<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
+        List<ICourseworkComponent> mainComponents = course.getMainComponents();
+        for (ICourseworkComponent mainComponent : mainComponents) {
+            courseWorkMarks.put(mainComponent, 0d);
+            if (mainComponent.getSubComponents().size() > 0) {
+                for (ICourseworkComponent subComponent : mainComponent.getSubComponents()) {
+                    courseWorkMarks.put(subComponent, 0d);
+                }
+            }
+        }
+        this.student = student;
+        this.course = course;
+        this.courseWorkMarks = courseWorkMarks;
+        this.totalMark = 0d;
+    }
 
     /**
      * Creates a new student mark record with the student of this student mark record, the course of this student mark record.

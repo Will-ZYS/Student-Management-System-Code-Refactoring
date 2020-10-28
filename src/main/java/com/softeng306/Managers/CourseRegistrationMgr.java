@@ -20,7 +20,9 @@ import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private static CourseRegistrationMgr instance = null;
@@ -94,7 +96,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         database.getCourseRegistrations().add(courseRegistration);
 
-        database.getMarks().add(markMgr.initializeMark(currentStudent, currentCourse));
+        database.getMarks().add(new Mark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());

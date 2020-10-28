@@ -8,8 +8,12 @@ import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.ScannerSingleton;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
 
 /**
  * Manages all the validation check in this system.
@@ -96,7 +100,7 @@ public class HelperMgr implements IHelperMgr {
      */
     public boolean checkValidPersonNameInput(String personName) {
         String REGEX = "^[ a-zA-Z]+$";
-        boolean valid =  Pattern.compile(REGEX).matcher(personName).matches();
+        boolean valid = Pattern.compile(REGEX).matcher(personName).matches();
         if(!valid){
             System.out.println("Wrong format of name.");
         }
