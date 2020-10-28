@@ -9,7 +9,6 @@ import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
-import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
@@ -348,7 +347,7 @@ public class Printer implements IPrinter {
         for(IMark mark : database.getMarks()) {
             if (mark.getStudent().getStudentID().equals(studentID)) {
                 thisStudentMark.add(mark);
-                thisStudentAU += mark.getCourse().getAU();
+                thisStudentAU += mark.getCourse().getAcademicUnit();
             }
         }
 
@@ -392,7 +391,7 @@ public class Printer implements IPrinter {
             }
 
             System.out.println("Course Total: " + mark.getTotalMark());
-            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
+            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAcademicUnit();
             System.out.println();
         }
         studentGPA /= thisStudentAU;
@@ -433,7 +432,7 @@ public class Printer implements IPrinter {
 
         System.out.println("*************** Course Statistic ***************");
         System.out.println("Course ID: " + currentCourse.getCourseID() + "\tCourse Name: " + currentCourse.getCourseName());
-        System.out.println("Course AU: " + currentCourse.getAU());
+        System.out.println("Course AU: " + currentCourse.getAcademicUnit());
         System.out.println();
         System.out.print("Total Slots: " + currentCourse.getTotalSeats());
         int enrolledNumber = (currentCourse.getTotalSeats() - currentCourse.getVacancies());

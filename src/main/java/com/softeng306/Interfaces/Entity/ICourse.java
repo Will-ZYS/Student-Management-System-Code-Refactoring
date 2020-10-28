@@ -19,7 +19,7 @@ public interface ICourse {
      * Gets the course's AU.
      * @return the AU of this course.
      */
-    int getAU();
+    int getAcademicUnit();
 
     /**
      * Gets the course's professor in charge.

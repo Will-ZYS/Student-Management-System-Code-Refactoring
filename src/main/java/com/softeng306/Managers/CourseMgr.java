@@ -6,7 +6,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
-import com.softeng306.Interfaces.Managers.IGroupMgr;
+import com.softeng306.Interfaces.Managers.Validation.IGroupValidationMgr;
 import com.softeng306.Interfaces.Managers.IProfessorMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
@@ -36,7 +36,7 @@ public class CourseMgr implements ICourseMgr {
         int seatsLeft;
         IDatabase database = Database.getInstance();
         IProfessorMgr professorMgr = ProfessorMgr.getInstance();
-        IGroupMgr groupMgr = GroupMgr.getInstance();
+        IGroupValidationMgr groupValidationMgr = GroupValidationMgr.getInstance();
         ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
         // Can make the sameCourseID as boolean, set to false.
 
@@ -69,7 +69,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 lectureGroupName = scanner.nextLine();
-                if (!groupMgr.checkValidGroupNameInput(lectureGroupName)) {
+                if (!groupValidationMgr.checkValidGroupNameInput(lectureGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -144,7 +144,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 tutorialGroupName = scanner.nextLine();
-                if (!groupMgr.checkValidGroupNameInput(tutorialGroupName)) {
+                if (!groupValidationMgr.checkValidGroupNameInput(tutorialGroupName)) {
                     groupNameExists = true;
                     continue;
                 }
@@ -211,7 +211,7 @@ public class CourseMgr implements ICourseMgr {
                 groupNameExists = false;
                 System.out.println("Enter a group Name: ");
                 labGroupName = scanner.nextLine();
-                if (!groupMgr.checkValidGroupNameInput(labGroupName)) {
+                if (!groupValidationMgr.checkValidGroupNameInput(labGroupName)) {
                     groupNameExists = true;
                     continue;
                 }

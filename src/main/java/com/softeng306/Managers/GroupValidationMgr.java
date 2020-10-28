@@ -1,12 +1,12 @@
 package com.softeng306.Managers;
 
-import com.softeng306.Interfaces.Managers.IGroupMgr;
+import com.softeng306.Interfaces.Managers.Validation.IGroupValidationMgr;
 
 import java.util.regex.Pattern;
 
-public class GroupMgr implements IGroupMgr {
+public class GroupValidationMgr implements IGroupValidationMgr {
 
-    private static GroupMgr instance = null;
+    private static GroupValidationMgr instance = null;
 
 
     /**
@@ -24,12 +24,12 @@ public class GroupMgr implements IGroupMgr {
     }
 
     /**
-     * Get the instance of the GroupMgr class.
+     * Get the instance of the GroupValidationMgr class.
      * @return the singleton instance
      */
-    public static GroupMgr getInstance() {
+    public static GroupValidationMgr getInstance() {
         if (instance == null) {
-            instance = new GroupMgr();
+            instance = new GroupValidationMgr();
         }
         return instance;
     }

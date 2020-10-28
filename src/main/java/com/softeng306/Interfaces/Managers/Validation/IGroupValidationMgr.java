@@ -1,6 +1,6 @@
-package com.softeng306.Interfaces.Managers;
+package com.softeng306.Interfaces.Managers.Validation;
 
-public interface IGroupMgr {
+public interface IGroupValidationMgr {
     /**
      * Checks whether the inputted group name is in the correct format.
      * @param groupName The inputted group name.
