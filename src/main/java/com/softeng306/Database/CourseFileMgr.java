@@ -312,7 +312,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		writeCourseworkComponentToCSV(fileWriter, mainComponents);
 
 		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(course.getAU()));
+		fileWriter.append(String.valueOf(course.getAcademicUnit()));
 		fileWriter.append(COMMA_DELIMITER);
 		fileWriter.append(course.getCourseDepartment());
 		fileWriter.append(COMMA_DELIMITER);

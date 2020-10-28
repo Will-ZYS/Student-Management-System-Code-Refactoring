@@ -23,7 +23,7 @@ public class Course implements ICourse {
     /** The AU of this course.
      *
      */
-    private int AU;
+    private int academicUnit;
 
     /**
      * The professor in charge of this course.
@@ -96,20 +96,20 @@ public class Course implements ICourse {
      * @param vacancies The current vacancy of this course.
      * @param totalSeats The total seats of this course.
      * @param lectureGroups The lecture groups of this course.
-     * @param AU The AU of this course.
+     * @param academicUnit The AU of this course.
      * @param courseDepartment The course department of this course.
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
      */
 
-    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, List<IGroup> lectureGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, List<IGroup> lectureGroups, int academicUnit, String courseDepartment, String courseType, int lecWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
         this.vacancies = vacancies;
         this.totalSeats = totalSeats;
         this.lectureGroups = lectureGroups;
-        this.AU = AU;
+        this.academicUnit = academicUnit;
         this.courseDepartment = courseDepartment;
         this.courseType = courseType;
         this.lecWeeklyHour = lecWeeklyHour;
@@ -125,14 +125,14 @@ public class Course implements ICourse {
      * @param lectureGroups The lecture groups of this course.
      * @param tutorialGroups The tutorial groups of this course.
      * @param labGroups The lab groups of this course.
-     * @param AU The AU of this course.
+     * @param academicUnit The AU of this course.
      * @param courseDepartment The course department of this course.
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
      * @param tutWeeklyHour The tutorial weekly hour of this course.
      * @param labWeeklyHour The lab weekly hour of this course.
      */
-    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int AU, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
+    public Course(String courseID, String courseName, IProfessor profInCharge, int vacancies, int totalSeats, ArrayList<IGroup> lectureGroups, ArrayList<IGroup> tutorialGroups, ArrayList<IGroup> labGroups, int academicUnit, String courseDepartment, String courseType, int lecWeeklyHour, int tutWeeklyHour, int labWeeklyHour) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.profInCharge = profInCharge;
@@ -141,7 +141,7 @@ public class Course implements ICourse {
         this.lectureGroups = lectureGroups;
         this.tutorialGroups = tutorialGroups;
         this.labGroups = labGroups;
-        this.AU = AU;
+        this.academicUnit = academicUnit;
         this.courseDepartment = courseDepartment;
         this.courseType = courseType;
         this.lecWeeklyHour = lecWeeklyHour;
@@ -169,7 +169,7 @@ public class Course implements ICourse {
      * Gets the course's AU.
      * @return the AU of this course.
      */
-    public int getAU() { return AU; }
+    public int getAcademicUnit() { return academicUnit; }
 
     /**
      * Gets the course's professor in charge.
@@ -276,7 +276,7 @@ public class Course implements ICourse {
     /**
      * Updates the available vacancies of this course after someone has registered this group.
      */
-    public void enrolledIn() { this.vacancies = vacancies - 1; }
+    public void decrementCourseVacancy() { this.vacancies = vacancies - 1; }
 
     /**
      * Sets the tutorial groups of the lecture groups.

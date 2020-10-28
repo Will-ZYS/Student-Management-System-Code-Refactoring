@@ -9,15 +9,14 @@ import com.softeng306.Enum.Gender;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
-import com.softeng306.Interfaces.Managers.ICourseMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
+import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
+import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Managers.CourseMgr;
-import com.softeng306.Managers.MarkMgr;
-import com.softeng306.Managers.StudentMgr;
-import com.softeng306.Managers.HelperMgr;
+import com.softeng306.Managers.*;
+import com.softeng306.Managers.Validation.CourseValidationMgr;
+import com.softeng306.Managers.Validation.StudentValidationMgr;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ import static com.softeng306.Entity.CourseRegistration.*;
 public class Printer implements IPrinter {
 
 
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static Printer instance = null;
 
 
@@ -220,7 +219,7 @@ public class Printer implements IPrinter {
 
             for (IGroup group : groups) {
                 if (group.getGroupName().equals(selectedGroupName)) {
-                    group.enrolledIn();
+                    group.decrementGroupVacancy();
                     break;
                 }
             }
@@ -245,10 +244,10 @@ public class Printer implements IPrinter {
      * Prints the students in a course according to their lecture group, tutorial group or lab group.
      */
     public void printStudents() {
-        ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         System.out.println("printStudent is called");
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
 
         System.out.println("Print student by: ");
         System.out.println("(1) Lecture group");
@@ -340,9 +339,9 @@ public class Printer implements IPrinter {
      */
     public void  printStudentTranscript() {
         IMarkMgr markMgr = MarkMgr.getInstance();
-        IStudentMgr studentMgr = StudentMgr.getInstance();
+        IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
         IDatabase database = Database.getInstance();
-        String studentID = studentMgr.checkStudentExists().getStudentID();
+        String studentID = studentValidationMgr.checkStudentExists().getStudentID();
 
         double studentGPA = 0d;
         int thisStudentAU = 0;
@@ -350,7 +349,7 @@ public class Printer implements IPrinter {
         for(IMark mark : database.getMarks()) {
             if (mark.getStudent().getStudentID().equals(studentID)) {
                 thisStudentMark.add(mark);
-                thisStudentAU += mark.getCourse().getAU();
+                thisStudentAU += mark.getCourse().getAcademicUnit();
             }
         }
 
@@ -394,7 +393,7 @@ public class Printer implements IPrinter {
             }
 
             System.out.println("Course Total: " + mark.getTotalMark());
-            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAU();
+            studentGPA += markMgr.gpaCalculator(mark.getTotalMark()) * mark.getCourse().getAcademicUnit();
             System.out.println();
         }
         studentGPA /= thisStudentAU;
@@ -419,11 +418,11 @@ public class Printer implements IPrinter {
      */
     public void printCourseStatistics() {
         IMarkMgr markMgr = MarkMgr.getInstance();
-        ICourseMgr courseMgr = CourseMgr.getInstance();
+        ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         IDatabase database = Database.getInstance();
         System.out.println("printCourseStatistics is called");
 
-        ICourse currentCourse = courseMgr.checkCourseExists();
+        ICourse currentCourse = courseValidationMgr.checkCourseExists();
         String courseID = currentCourse.getCourseID();
 
         ArrayList<IMark> thisCourseMark = new ArrayList<>(0);
@@ -435,7 +434,7 @@ public class Printer implements IPrinter {
 
         System.out.println("*************** Course Statistic ***************");
         System.out.println("Course ID: " + currentCourse.getCourseID() + "\tCourse Name: " + currentCourse.getCourseName());
-        System.out.println("Course AU: " + currentCourse.getAU());
+        System.out.println("Course AU: " + currentCourse.getAcademicUnit());
         System.out.println();
         System.out.print("Total Slots: " + currentCourse.getTotalSeats());
         int enrolledNumber = (currentCourse.getTotalSeats() - currentCourse.getVacancies());
