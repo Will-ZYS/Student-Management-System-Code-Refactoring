@@ -358,7 +358,6 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
-<<<<<<< HEAD
      * Assign weightage to a main component
      * @param totWeight total weight to be assigned
      * @param mainComponents the list of main components
@@ -511,8 +510,6 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
-=======
->>>>>>> master
      * Helper method which queries the user for a valid courseID
      * @return Valid CourseID
      */

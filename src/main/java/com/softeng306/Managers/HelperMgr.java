@@ -1,6 +1,5 @@
 package com.softeng306.Managers;
 
-
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;

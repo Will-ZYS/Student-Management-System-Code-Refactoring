@@ -1,6 +1,5 @@
 package com.softeng306.Interfaces.Entity;
 
-
 public interface ICourseRegistration {
 
     IStudent getStudent();
