@@ -47,15 +47,6 @@ public class Option9IT extends IntegrationTestBase{
 
         CommonPrintingHelper.appendMenu(expectedOutput);
         CommonPrintingHelper.appendByeMessage(expectedOutput);
-        //======================================================================
-
-//        byte[] ascii = expectedOutput.toString().getBytes(StandardCharsets.US_ASCII);
-//        String asciiString = Arrays.toString(ascii);
-//        System.out.println(asciiString);
-//
-//        byte[] ascii1 = outContent.toString().getBytes(StandardCharsets.US_ASCII);
-//        String asciiString1 = Arrays.toString(ascii1);
-//        System.out.println(asciiString1);
 
         assertEquals(expectedOutput.toString(), outContent.toString());
     }
