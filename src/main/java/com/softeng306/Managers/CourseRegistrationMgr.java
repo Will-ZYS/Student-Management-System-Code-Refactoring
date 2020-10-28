@@ -20,7 +20,9 @@ import com.softeng306.Interfaces.Entity.ICourseRegistration;
 import com.softeng306.Interfaces.Entity.IGroup;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CourseRegistrationMgr implements ICourseRegistrationMgr {
     private static CourseRegistrationMgr instance = null;
@@ -31,9 +33,9 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      */
     public void registerCourse() {
         System.out.println("registerCourse is called");
-        String selectedLectureGroupName = null;
-        String selectedTutorialGroupName = null;
-        String selectedLabGroupName = null;
+        String selectedLectureGroupName;
+        String selectedTutorialGroupName;
+        String selectedLabGroupName;
         // Get all necessary manager classes
         IHelperMgr helperMgr = HelperMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
@@ -71,17 +73,17 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         System.out.println("Student " + currentStudent.getStudentName() + " with ID: " + currentStudent.getStudentID() +
                 " wants to register " + currentCourse.getCourseID() + " " + currentCourse.getCourseName());
 
-        ArrayList<IGroup> lecGroups = new ArrayList<>(0);
+        List<IGroup> lecGroups = new ArrayList<>(0);
         lecGroups.addAll(currentCourse.getLectureGroups());
 
         selectedLectureGroupName = printer.printGroupWithVacancyInfo(GroupType.LECTURE, lecGroups);
 
-        ArrayList<IGroup> tutGroups = new ArrayList<>(0);
+        List<IGroup> tutGroups = new ArrayList<>(0);
         tutGroups.addAll(currentCourse.getTutorialGroups());
 
         selectedTutorialGroupName = printer.printGroupWithVacancyInfo(GroupType.TUTORIAL, tutGroups);
 
-        ArrayList<IGroup> labGroups = new ArrayList<>(0);
+        List<IGroup> labGroups = new ArrayList<>(0);
         labGroups.addAll(currentCourse.getLabGroups());
 
         selectedLabGroupName = printer.printGroupWithVacancyInfo(GroupType.LAB, labGroups);
@@ -94,7 +96,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         database.getCourseRegistrations().add(courseRegistration);
 
-        database.getMarks().add(markMgr.initializeMark(currentStudent, currentCourse));
+        database.getMarks().add(new Mark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());

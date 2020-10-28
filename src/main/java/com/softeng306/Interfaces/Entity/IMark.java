@@ -1,6 +1,6 @@
 package com.softeng306.Interfaces.Entity;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface IMark {
 
@@ -18,9 +18,9 @@ public interface IMark {
 
     /**
      * Gets the course work marks of this student mark record.
-     * @return a hashmap contains the course work marks of this student mark record.
+     * @return a map contains the course work marks of this student mark record.
      */
-    HashMap<ICourseworkComponent, Double> getCourseWorkMarks();
+    Map<ICourseworkComponent, Double> getCourseWorkMarks();
     /**
      * Gets the total mark of this student mark record.
      * @return the total mark of this student mark record.

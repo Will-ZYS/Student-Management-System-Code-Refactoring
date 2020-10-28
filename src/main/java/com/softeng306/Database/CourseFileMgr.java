@@ -14,6 +14,7 @@ import com.softeng306.Interfaces.Entity.IProfessor;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
@@ -119,7 +120,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error occurs occurs when flushing or closing the file.");
@@ -265,7 +266,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error occurs when flushing or closing the file.");
@@ -278,7 +279,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * Writes course details to the CSV file
 	 * @param fileWriter the fileWriter object
 	 * @param course the course to be written
-	 * @throws IOException
+	 * @throws IOException throws IOException to the caller
 	 */
 	private void writeCourseToCSV(FileWriter fileWriter, ICourse course) throws IOException{
 		fileWriter.append(course.getCourseID());
@@ -330,7 +331,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * Writes group details to the CSV file
 	 * @param fileWriter the fileWriter object
 	 * @param groups the groups to be written
-	 * @throws IOException
+	 * @throws IOException throws IOException to the caller
 	 */
 	private void writeGroupToCSV(FileWriter fileWriter, List<IGroup> groups) throws IOException{
 		if (groups.size() != 0) {
@@ -355,7 +356,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * Writes CourseworkComponent details to the CSV file
 	 * @param fileWriter the fileWriter object
 	 * @param components the CourseworkComponents to be written
-	 * @throws IOException
+	 * @throws IOException throws IOException to the caller
 	 */
 	private void writeCourseworkComponentToCSV(FileWriter fileWriter, List<ICourseworkComponent> components) throws IOException {
 		if (components.size() != 0) {

@@ -1,16 +1,12 @@
 package com.softeng306.Managers;
 
 import com.softeng306.Database.Database;
-import com.softeng306.Database.MarkFileMgr;
-import com.softeng306.Entity.*;
 
+import com.softeng306.Entity.MainComponent;
 import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Database.IMarkFileMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
-import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
@@ -21,38 +17,11 @@ import java.util.*;
 
 /**
  * Manages all the mark related operations.
-
  */
 
 public class MarkMgr implements IMarkMgr {
     private ScannerSingleton scanner = ScannerSingleton.getInstance();
     private static MarkMgr instance = null;
-
-    /**
-     * Initializes marks for a student when he/she just registered a course.
-     * @param student the student this mark record belongs to.
-     * @param course the course this mark record about.
-     * @return the new added mark.
-     */
-    public IMark initializeMark(IStudent student, ICourse course) {
-        IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-        HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
-        double totalMark = 0d;
-        List<ICourseworkComponent> mainComponents = course.getMainComponents();
-
-        for (ICourseworkComponent mainComponent : mainComponents) {
-            courseWorkMarks.put(mainComponent, 0d);
-            if (mainComponent.getSubComponents().size() > 0) {
-                for (ICourseworkComponent subComponent : mainComponent.getSubComponents()) {
-                    courseWorkMarks.put(subComponent, 0d);
-                }
-            }
-        }
-        IMark mark = new Mark(student, course, courseWorkMarks, totalMark);
-
-        markFileMgr.updateStudentMarks(mark);
-        return mark;
-    }
 
     /**
      * Sets the coursework mark for the mark record.
@@ -74,9 +43,9 @@ public class MarkMgr implements IMarkMgr {
                 //put the set mark function here
                 if (!isExam) {
                     System.out.println("Here are the choices you can have: ");
-                    ArrayList<String> availableChoices = new ArrayList<String>(0);
-                    ArrayList<Double> weights = new ArrayList<Double>(0);
-                    ArrayList<Boolean> isMainAss = new ArrayList<Boolean>(0);
+                    List<String> availableChoices = new ArrayList<>(0);
+                    List<Double> weights = new ArrayList<>(0);
+                    List<Boolean> isMainAss = new ArrayList<>(0);
                     for (Map.Entry<ICourseworkComponent, Double> assessmentResult : mark.getCourseWorkMarks().entrySet()){
                         ICourseworkComponent key = assessmentResult.getKey();
                         if (key instanceof MainComponent) {
@@ -167,7 +136,7 @@ public class MarkMgr implements IMarkMgr {
 
         double averageMark = 0;
         for (IMark mark : thisCourseMark) {
-            HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+            Map<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
             for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
                 ICourseworkComponent key = entry.getKey();
                 double value = entry.getValue();

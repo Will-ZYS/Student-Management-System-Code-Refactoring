@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import org.apache.commons.io.FileUtils;
+
 /**
  * This class helps to revert the tested files back to their original state (i.e. before testing has occurred).
  * The files that are compared against in testing are in src/test/resources, while the original state files are

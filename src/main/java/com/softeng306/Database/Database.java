@@ -57,10 +57,10 @@ public class Database implements IDatabase {
 
     /**
      * sets student collection
-     * @param students
+     * @param students the list of students to be set
      */
     public void setStudents(List<IStudent> students) {
-        this.students = students;
+        Database.students = students;
     }
 
     /**
@@ -73,10 +73,10 @@ public class Database implements IDatabase {
 
     /**
      * sets course collection
-     * @param courses
+     * @param courses the list of courses to be set
      */
     public void setCourses(List<ICourse> courses) {
-        this.courses = courses;
+        Database.courses = courses;
     }
 
     /**
@@ -89,10 +89,10 @@ public class Database implements IDatabase {
 
     /**
      * sets courseRegistrations collection
-     * @param courseRegistrations
+     * @param courseRegistrations the list of courseRegistrations to be set
      */
     public void setCourseRegistrations(List<ICourseRegistration> courseRegistrations) {
-        this.courseRegistrations = courseRegistrations;
+        Database.courseRegistrations = courseRegistrations;
     }
 
     /**
@@ -105,10 +105,10 @@ public class Database implements IDatabase {
 
     /**
      * sets marks collection
-     * @param marks
+     * @param marks  the list of marks to be set
      */
     public void setMarks(List<IMark> marks) {
-        this.marks = marks;
+        Database.marks = marks;
     }
 
     /**
@@ -121,10 +121,10 @@ public class Database implements IDatabase {
 
     /**
      * sets professor collection
-     * @param professors
+     * @param professors  the list of professors to be set
      */
     public void setProfessors(List<IProfessor> professors) {
-        this.professors = professors;
+        Database.professors = professors;
     }
 
     /**

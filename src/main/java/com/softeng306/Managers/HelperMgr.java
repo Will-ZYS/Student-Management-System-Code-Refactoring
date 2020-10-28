@@ -1,16 +1,23 @@
 package com.softeng306.Managers;
 
-
+import com.softeng306.Database.Database;
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
+import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.ScannerSingleton;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 
 /**
  * Manages all the validation check in this system.
@@ -21,7 +28,6 @@ public class HelperMgr implements IHelperMgr {
     private ScannerSingleton scanner = ScannerSingleton.getInstance();
 
     private static HelperMgr instance = null;
-
 
     /**
      * Checks whether the inputted department is valid.
@@ -52,7 +58,7 @@ public class HelperMgr implements IHelperMgr {
             }
             if(checkDepartmentValidation(courseDepartment)){
                 List<String> validCourseString;
-                validCourseString = printer.printCourseInDepartment(courseDepartment);
+                validCourseString = getCourseInDepartment(courseDepartment);
                 if(validCourseString.size() == 0){
                     System.out.println("Invalid choice of department.");
                 }else{
@@ -97,17 +103,26 @@ public class HelperMgr implements IHelperMgr {
      */
     public boolean checkValidPersonNameInput(String personName) {
         String REGEX = "^[ a-zA-Z]+$";
-        boolean valid =  Pattern.compile(REGEX).matcher(personName).matches();
+        boolean valid = Pattern.compile(REGEX).matcher(personName).matches();
         if(!valid){
             System.out.println("Wrong format of name.");
         }
         return valid;
     }
 
-    /**
-     * HELPER METHODS
-     */
+    // HELPER METHODS
 
+    /**
+     * Displays a list of all the courses in the inputted department.
+     *
+     * @param department The inputted department.
+     * @return a list of all the department values.
+     */
+    public List<String> getCourseInDepartment(String department) {
+        IDatabase database = Database.getInstance();
+        List<ICourse> validCourses = database.getCourses().stream().filter(c -> department.equals(c.getCourseDepartment())).collect(Collectors.toList());
+        return validCourses.stream().map(ICourse::getCourseID).collect(Collectors.toList());
+    }
 
     /**
      * Gets all the departments a list.
@@ -116,10 +131,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllDepartment() {
         Set<Department> departmentEnumSet = EnumSet.allOf(Department.class);
-        List<String> departmentStringList = new ArrayList<String>(0);
-        Iterator iter = departmentEnumSet.iterator();
-        while (iter.hasNext()) {
-            departmentStringList.add(iter.next().toString());
+        List<String> departmentStringList = new ArrayList<>(0);
+        for (Department department : departmentEnumSet) {
+            departmentStringList.add(department.toString());
         }
         return departmentStringList;
 
@@ -132,10 +146,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllGender() {
         Set<Gender> genderEnumSet = EnumSet.allOf(Gender.class);
-        List<String> genderStringList = new ArrayList<String>(0);
-        Iterator iter = genderEnumSet.iterator();
-        while (iter.hasNext()) {
-            genderStringList.add(iter.next().toString());
+        List<String> genderStringList = new ArrayList<>(0);
+        for (Gender gender : genderEnumSet) {
+            genderStringList.add(gender.toString());
         }
         return genderStringList;
     }
@@ -147,10 +160,9 @@ public class HelperMgr implements IHelperMgr {
      */
     private List<String> getAllCourseType() {
         Set<CourseType> courseTypeEnumSet = EnumSet.allOf(CourseType.class);
-        List<String> courseTypeStringSet = new ArrayList<String>(0);
-        Iterator iter = courseTypeEnumSet.iterator();
-        while (iter.hasNext()) {
-            courseTypeStringSet.add(iter.next().toString());
+        List<String> courseTypeStringSet = new ArrayList<>(0);
+        for (CourseType courseType : courseTypeEnumSet) {
+            courseTypeStringSet.add(courseType.toString());
         }
         return courseTypeStringSet;
     }

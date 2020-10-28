@@ -34,12 +34,11 @@ public class StudentMgr implements IStudentMgr {
      * Adds a student and put the student into file
      */
     public void addStudent() {
-        String studentName, studentSchool;
+        String studentName;
         String studentID = null;
-        int choice, studentYear;
-        boolean studentExists;
+        int choice;
         String GPA = "not available";
-        IStudent currentStudent = null;
+        IStudent currentStudent;
         IDatabase database = Database.getInstance();
         IStudentFileMgr studentFileMgr = StudentFileMgr.getInstance();
         IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();
@@ -133,22 +132,19 @@ public class StudentMgr implements IStudentMgr {
         String generateStudentID;
         boolean studentIDUsed;
         IDatabase database = Database.getInstance();
-        do{
-            int rand = (int)(Math.random() * ((76 - 65) + 1)) + 65;
-            String lastPlace = Character.toString ((char) rand);
+        do {
+            int rand = (int) (Math.random() * ((76 - 65) + 1)) + 65;
+            String lastPlace = Character.toString((char) rand);
             idNumber += 1;
-            generateStudentID = "U" + String.valueOf(idNumber) + lastPlace;
+            generateStudentID = "U" + idNumber + lastPlace;
             studentIDUsed = false;
-            for(IStudent student: database.getStudents()){
-                if(generateStudentID.equals(student.getStudentID())){
+            for (IStudent student : database.getStudents()) {
+                if (generateStudentID.equals(student.getStudentID())) {
                     studentIDUsed = true;
                     break;
                 }
             }
-            if(!studentIDUsed){
-                break;
-            }
-        }while(true);
+        } while (studentIDUsed);
         return generateStudentID;
     }
 
@@ -161,20 +157,16 @@ public class StudentMgr implements IStudentMgr {
     private String obtainValidStudentName() {
         String studentName;
         IHelperMgr helperMgr = HelperMgr.getInstance();
-        while (true) {
+        do {
             System.out.println("Enter student Name: ");
             studentName = scanner.nextLine();
-            if (helperMgr.checkValidPersonNameInput(studentName)) {
-                break;
-            }
-        }
+        } while (!helperMgr.checkValidPersonNameInput(studentName));
         return studentName;
     }
 
     /**
      * Helper method which sets the school of the student
-     * @param currentStudent
-     * @return void
+     * @param currentStudent the specified student
      */
     private void setSchool(IStudent currentStudent) {
         String studentSchool;
@@ -198,8 +190,7 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which sets the gender of the student
-     * @param currentStudent
-     * @return void
+     * @param currentStudent the specified student
      */
     private void setGender(IStudent currentStudent) {
         String studentGender;
@@ -223,8 +214,7 @@ public class StudentMgr implements IStudentMgr {
 
     /**
      * Helper method which sets the year of the student
-     * @param currentStudent
-     * @return void
+     * @param currentStudent the specified student
      */
     private void setYear(IStudent currentStudent) {
         int studentYear;
@@ -252,6 +242,6 @@ public class StudentMgr implements IStudentMgr {
      * @param idNumber static variable idNumber of this class.
      */
     public void setIdNumber(int idNumber) {
-        idNumber = idNumber;
+        this.idNumber = idNumber;
     }
 }

@@ -42,38 +42,27 @@ public class CourseRegistration implements ICourseRegistration {
         return labGroup;
     }
 
-    public static Comparator<ICourseRegistration> LecComparator = new Comparator<ICourseRegistration>() {
-        @Override
-        public int compare(ICourseRegistration o1, ICourseRegistration o2) {
-            String group1 = o1.getLectureGroup().toUpperCase();
-            String group2 = o2.getLectureGroup().toUpperCase();
+    public static Comparator<ICourseRegistration> LecComparator = (o1, o2) -> {
+        String group1 = o1.getLectureGroup().toUpperCase();
+        String group2 = o2.getLectureGroup().toUpperCase();
 
-            //ascending order
-            return group1.compareTo(group2);
+        //ascending order
+        return group1.compareTo(group2);
 
-        }
     };
-    public static Comparator<ICourseRegistration> TutComparator = new Comparator<ICourseRegistration>() {
-        @Override
-        public int compare(ICourseRegistration s1, ICourseRegistration s2) {
-            String group1 = s1.getTutorialGroup().toUpperCase();
-            String group2 = s2.getTutorialGroup().toUpperCase();
+    public static Comparator<ICourseRegistration> TutComparator = (s1, s2) -> {
+        String group1 = s1.getTutorialGroup().toUpperCase();
+        String group2 = s2.getTutorialGroup().toUpperCase();
 
-            //ascending order
-            return group1.compareTo(group2);
+        //ascending order
+        return group1.compareTo(group2);
 
-        }
     };
-    public static Comparator<ICourseRegistration> LabComparator = new Comparator<ICourseRegistration>() {
+    public static Comparator<ICourseRegistration> LabComparator = (o1, o2) -> {
+        String group1 = o1.getLabGroup().toUpperCase();
+        String group2 = o2.getLabGroup().toUpperCase();
 
-        @Override
-        public int compare(ICourseRegistration o1, ICourseRegistration o2) {
-            String group1 = o1.getLabGroup().toUpperCase();
-            String group2 = o2.getLabGroup().toUpperCase();
-
-            //ascending order
-            return group1.compareTo(group2);
-        }
-
+        //ascending order
+        return group1.compareTo(group2);
     };
 }

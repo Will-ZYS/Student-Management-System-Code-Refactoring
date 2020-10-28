@@ -38,7 +38,7 @@ public class StudentValidationMgr implements IStudentValidationMgr {
     public IStudent checkStudentExists() {
         IPrinter printer = Printer.getInstance();
         String studentID;
-        IStudent currentStudent = null;
+        IStudent currentStudent;
         while (true) {
             System.out.println("Enter Student ID (-h to print all the student ID):");
             studentID = scanner.nextLine();

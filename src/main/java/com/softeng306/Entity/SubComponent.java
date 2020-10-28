@@ -3,6 +3,7 @@ package com.softeng306.Entity;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a sub-component of a main component.
@@ -23,7 +24,7 @@ public class SubComponent extends CourseworkComponent {
     }
 
     @Override
-    public ArrayList<ICourseworkComponent> getSubComponents() {
+    public List<ICourseworkComponent> getSubComponents() {
         return new ArrayList<>();
     }
 }

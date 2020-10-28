@@ -9,7 +9,7 @@ public interface IStudentMgr {
 
     /**
      * returns the ID number used to generate random ID's
-     * @return
+     * @return the generated student id
      */
     String generateStudentID();
 

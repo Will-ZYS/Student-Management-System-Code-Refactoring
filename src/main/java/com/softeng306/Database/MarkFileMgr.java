@@ -12,10 +12,7 @@ import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
@@ -67,7 +64,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error occurs in flushing or closing the file.");
@@ -81,7 +78,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		fileWriter.append(COMMA_DELIMITER);
 		fileWriter.append(mark.getCourse().getCourseID());
 		fileWriter.append(COMMA_DELIMITER);
-		HashMap<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
+		Map<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
 		if (!courseworkMarks.isEmpty()) {
 			int index = 0;
 			for (Map.Entry<ICourseworkComponent, Double> entry : courseworkMarks.entrySet()) {
@@ -162,7 +159,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 				IStudent currentStudent = null;
 				ICourse currentCourse = null;
 
-				HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>(0);
+				Map<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>(0);
 				String[] thisCourseWorkMark;
 
 				String[] tokens = line.split(COMMA_DELIMITER);
@@ -190,11 +187,11 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 					String[] eachCourseWorkMark = courseWorkMarksString.split(Pattern.quote(LINE_DELIMITER));
 
 					// Get all the main components
-					for (int i = 0; i < eachCourseWorkMark.length; i++) {
-						thisCourseWorkMark = eachCourseWorkMark[i].split(EQUAL_SIGN);
+					for (String s : eachCourseWorkMark) {
+						thisCourseWorkMark = s.split(EQUAL_SIGN);
 
 						List<ICourseworkComponent> subComponents = new ArrayList<>(0);
-						HashMap<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
+						Map<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
 						for (int j = 3; j < thisCourseWorkMark.length; j++) {
 							if (thisCourseWorkMark[3].equals("")) {
 								break;
@@ -212,7 +209,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 							courseWorkMarks.put(subComponent, subComponentResult);
 						}
 					}
-					Double totalMark = Double.parseDouble(tokens[totalMarkIndex]);
+					double totalMark = Double.parseDouble(tokens[totalMarkIndex]);
 					IMark mark = new Mark(currentStudent, currentCourse, courseWorkMarks, totalMark);
 					marks.add(mark);
 				}
@@ -253,7 +250,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 			e.printStackTrace();
 		} finally {
 			try {
-				fileWriter.flush();
+				Objects.requireNonNull(fileWriter).flush();
 				fileWriter.close();
 			} catch (IOException e) {
 				System.out.println("Error occurs in flushing or closing the file.");
