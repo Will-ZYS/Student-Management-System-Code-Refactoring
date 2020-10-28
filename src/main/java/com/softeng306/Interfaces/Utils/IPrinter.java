@@ -3,7 +3,6 @@ package com.softeng306.Interfaces.Utils;
 import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Entity.IGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IPrinter {
