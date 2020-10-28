@@ -3,6 +3,7 @@ package com.softeng306.Managers;
 import com.softeng306.Database.CourseFileMgr;
 import com.softeng306.Database.Database;
 import com.softeng306.Entity.*;
+import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Managers.ICourseMgr;
@@ -26,10 +27,6 @@ public class CourseMgr implements ICourseMgr {
 
     private static CourseMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-
-    private static final String LECTURE_GROUP = "lecture";
-    private static final String TUTORIAL_GROUP = "tutorial";
-    private static final String LAB_GROUP = "lab";
 
     /**
      * Creates a new course and stores it in the file.
@@ -57,22 +54,22 @@ public class CourseMgr implements ICourseMgr {
         String courseType = obtainValidCourseType();
 
         // Add Lecture Groups
-        int noOfLectureGroups = obtainValidNumberOfGroups(LECTURE_GROUP, totalSeats, 0);
+        int noOfLectureGroups = obtainValidNumberOfGroups(GroupType.LECTURE, totalSeats, 0);
         int seatsLeft = totalSeats;
-        int lecWeeklyHour = obtainValidWeeklyHour(LECTURE_GROUP, academicUnit, noOfLectureGroups);
-        List<IGroup> lectureGroups = addGroups(LECTURE_GROUP, totalSeats, seatsLeft, noOfLectureGroups);
+        int lecWeeklyHour = obtainValidWeeklyHour(GroupType.LECTURE, academicUnit, noOfLectureGroups);
+        List<IGroup> lectureGroups = addGroups(GroupType.LECTURE, totalSeats, seatsLeft, noOfLectureGroups);
 
         // Add Tutorial Groups
-        int noOfTutorialGroups = obtainValidNumberOfGroups(TUTORIAL_GROUP, totalSeats, noOfLectureGroups);
+        int noOfTutorialGroups = obtainValidNumberOfGroups(GroupType.TUTORIAL, totalSeats, noOfLectureGroups);
         int totalTutorialSeats = 0;
-        int tutWeeklyHour = obtainValidWeeklyHour(TUTORIAL_GROUP, academicUnit, noOfTutorialGroups);
-        List<IGroup> tutorialGroups = addGroups(TUTORIAL_GROUP, totalSeats, totalTutorialSeats, noOfLectureGroups);
+        int tutWeeklyHour = obtainValidWeeklyHour(GroupType.TUTORIAL, academicUnit, noOfTutorialGroups);
+        List<IGroup> tutorialGroups = addGroups(GroupType.TUTORIAL, totalSeats, totalTutorialSeats, noOfLectureGroups);
 
         // Add Lab Groups
-        int noOfLabGroups = obtainValidNumberOfGroups(LAB_GROUP, totalSeats, noOfLectureGroups);
+        int noOfLabGroups = obtainValidNumberOfGroups(GroupType.LAB, totalSeats, noOfLectureGroups);
         int totalLabSeats = 0;
-        int labWeeklyHour = obtainValidWeeklyHour(LAB_GROUP, academicUnit, noOfLabGroups);
-        List<IGroup> labGroups = addGroups(LAB_GROUP, totalSeats, totalLabSeats, noOfLectureGroups);
+        int labWeeklyHour = obtainValidWeeklyHour(GroupType.LAB, academicUnit, noOfLabGroups);
+        List<IGroup> labGroups = addGroups(GroupType.LAB, totalSeats, totalLabSeats, noOfLectureGroups);
 
 
         IProfessor profInCharge;
@@ -140,7 +137,7 @@ public class CourseMgr implements ICourseMgr {
      * @param noOfGroups number of groups for the specified type
      * @return the list of IGroups created.
      */
-    private List<IGroup> addGroups(String groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
+    private List<IGroup> addGroups(GroupType groupType, int totalSeats, int totalGroupSeats, int noOfGroups) {
         IGroupMgr groupMgr = GroupMgr.getInstance();
         List<IGroup> groups = new ArrayList<>();
         String groupName;
@@ -170,7 +167,7 @@ public class CourseMgr implements ICourseMgr {
 
             do {
                 System.out.println("Enter this " + groupType + " group's capacity: ");
-                if (groupType.equals(LECTURE_GROUP)) {
+                if (groupType == GroupType.LECTURE) {
                     do {
                         if (scanner.hasNextInt()) {
                             groupCapacity = scanner.nextInt();
@@ -507,60 +504,6 @@ public class CourseMgr implements ICourseMgr {
     }
 
     /**
-     * Prompts the user to input an existing course.
-     * @return the inputted course.
-     */
-    public ICourse checkCourseExists() {
-        String courseID;
-        ICourse currentCourse;
-        while(true){
-            System.out.println("Enter course ID (-h to print all the course ID):");
-            courseID = scanner.nextLine();
-            while("-h".equals(courseID)){
-                printer.printAllCourses();
-                courseID = scanner.nextLine();
-            }
-
-            currentCourse = checkCourseExists(courseID);
-            if (currentCourse == null) {
-                System.out.println("Invalid Course ID. Please re-enter.");
-            }else{
-                break;
-            }
-        }
-        return currentCourse;
-    }
-
-    /**
-     * Checks whether this course ID is used by other courses.
-     * @param courseID The inputted course ID.
-     * @return the existing course or else null.
-     */
-    public ICourse checkCourseExists(String courseID) {
-        IDatabase database = Database.getInstance();
-        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
-
-        if(anyCourse.size() == 0){
-            return null;
-        }
-        return anyCourse.get(0);
-    }
-
-    /**
-     * Checks whether the inputted course ID is in the correct format.
-     * @param courseID The inputted course ID.
-     * @return boolean indicates whether the inputted course ID is valid.
-     */
-    public boolean checkValidCourseIDInput(String courseID) {
-        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
-        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
-        if(!valid){
-            System.out.println("Wrong format of course ID.");
-        }
-        return valid;
-    }
-
-    /**
      * Helper method which queries the user for a valid courseID
      * @return Valid CourseID
      */
@@ -668,7 +611,7 @@ public class CourseMgr implements ICourseMgr {
      * @param academicUnit number of academic unit for this course
      * @return Valid lecture hour
      */
-    private int obtainValidWeeklyHour(String groupType, int academicUnit, int noOfGroups) {
+    private int obtainValidWeeklyHour(GroupType groupType, int academicUnit, int noOfGroups) {
 
         int weeklyHour = 0;
         if (noOfGroups != 0) {
@@ -695,13 +638,13 @@ public class CourseMgr implements ICourseMgr {
      * @param totalSeats, noOfLectureGroups
      * @return Valid number of lab groups
      */
-    private int obtainValidNumberOfGroups(String groupType, int totalSeats, int noOfLectureGroups) {
+    private int obtainValidNumberOfGroups(GroupType groupType, int totalSeats, int noOfLectureGroups) {
         int noOfGroups;
         do {
             System.out.println("Enter the number of " + groupType + " groups: ");
             if (scanner.hasNextInt()) {
                 noOfGroups = scanner.nextInt();
-                if (groupType.equals(LECTURE_GROUP)) {
+                if (groupType == GroupType.LECTURE) {
                     noOfLectureGroups = noOfGroups;
                 }
                 scanner.nextLine();
@@ -716,6 +659,60 @@ public class CourseMgr implements ICourseMgr {
             }
         } while (true);
         return noOfGroups;
+    }
+
+    /**
+     * Prompts the user to input an existing course.
+     * @return the inputted course.
+     */
+    public ICourse checkCourseExists() {
+        String courseID;
+        ICourse currentCourse;
+        while(true){
+            System.out.println("Enter course ID (-h to print all the course ID):");
+            courseID = scanner.nextLine();
+            while("-h".equals(courseID)){
+                printer.printAllCourses();
+                courseID = scanner.nextLine();
+            }
+
+            currentCourse = checkCourseExists(courseID);
+            if (currentCourse == null) {
+                System.out.println("Invalid Course ID. Please re-enter.");
+            }else{
+                break;
+            }
+        }
+        return currentCourse;
+    }
+
+    /**
+     * Checks whether this course ID is used by other courses.
+     * @param courseID The inputted course ID.
+     * @return the existing course or else null.
+     */
+    public ICourse checkCourseExists(String courseID) {
+        IDatabase database = Database.getInstance();
+        List<ICourse> anyCourse = database.getCourses().stream().filter(c->courseID.equals(c.getCourseID())).collect(Collectors.toList());
+
+        if(anyCourse.size() == 0){
+            return null;
+        }
+        return anyCourse.get(0);
+    }
+
+    /**
+     * Checks whether the inputted course ID is in the correct format.
+     * @param courseID The inputted course ID.
+     * @return boolean indicates whether the inputted course ID is valid.
+     */
+    public boolean checkValidCourseIDInput(String courseID) {
+        String REGEX = "^[A-Z]{2}[0-9]{3,4}$";
+        boolean valid = Pattern.compile(REGEX).matcher(courseID).matches();
+        if(!valid){
+            System.out.println("Wrong format of course ID.");
+        }
+        return valid;
     }
 
     /**

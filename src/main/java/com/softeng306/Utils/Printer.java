@@ -6,6 +6,7 @@ import com.softeng306.Entity.*;
 import com.softeng306.Enum.CourseType;
 import com.softeng306.Enum.Department;
 import com.softeng306.Enum.Gender;
+import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.*;
@@ -181,7 +182,7 @@ public class Printer implements IPrinter {
      * @param groups    A list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    public String printGroupWithVacancyInfo(String groupType, List<IGroup> groups) {
+    public String printGroupWithVacancyInfo(GroupType groupType, List<IGroup> groups) {
         int index;
         HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
         int selectedGroupNum;
@@ -334,7 +335,6 @@ public class Printer implements IPrinter {
 
     }
 
-
     /**
      * Prints transcript (Results of course taken) for a particular student
      */
@@ -412,7 +412,6 @@ public class Printer implements IPrinter {
         }
         System.out.println("------------------ End of Transcript -------------------");
     }
-
 
     /**
      * Prints the course statics including enrollment rate, average result for every assessment component and the average overall performance of this course.

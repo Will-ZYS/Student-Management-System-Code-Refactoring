@@ -1,5 +1,6 @@
 package com.softeng306.Interfaces.Utils;
 
+import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Entity.IGroup;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public interface IPrinter {
      * @param groups    A list of a certain type of groups in a course.
      * @return the name of the group chosen by the user.
      */
-    String printGroupWithVacancyInfo(String groupType, List<IGroup> groups);
+    String printGroupWithVacancyInfo(GroupType groupType, List<IGroup> groups);
 
     /**
      * Prints the list of courses
