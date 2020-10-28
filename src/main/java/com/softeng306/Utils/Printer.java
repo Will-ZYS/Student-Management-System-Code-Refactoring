@@ -183,7 +183,7 @@ public class Printer implements IPrinter {
      */
     public String printGroupWithVacancyInfo(GroupType groupType, List<IGroup> groups) {
         int index;
-        HashMap<String, Integer> groupAssign = new HashMap<String, Integer>(0);
+        Map<String, Integer> groupAssign = new HashMap<>(0);
         int selectedGroupNum;
         String selectedGroupName = null;
 
@@ -209,7 +209,7 @@ public class Printer implements IPrinter {
                 }
             } while (true);
 
-            for (HashMap.Entry<String, Integer> entry : groupAssign.entrySet()) {
+            for (Map.Entry<String, Integer> entry : groupAssign.entrySet()) {
                 String groupName = entry.getKey();
                 int num = entry.getValue();
                 if (num == selectedGroupNum) {
@@ -368,7 +368,7 @@ public class Printer implements IPrinter {
             System.out.print("Course ID: " + mark.getCourse().getCourseID());
             System.out.println("\tCourse Name: " + mark.getCourse().getCourseName());
 
-            for (HashMap.Entry<ICourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
+            for (Map.Entry<ICourseworkComponent, Double> entry : mark.getCourseWorkMarks().entrySet()) {
                 ICourseworkComponent assessment = entry.getKey();
                 Double result = entry.getValue();
                 if(assessment instanceof MainComponent) {
@@ -378,7 +378,7 @@ public class Printer implements IPrinter {
                     for (ICourseworkComponent subAssessment : subAssessments) {
                         System.out.print("Sub Assessment: " + subAssessment.getComponentName() + " -- (" + subAssessment.getComponentWeight() + "% * " + mainAssessmentWeight + "%) --- ");
                         String subAssessmentName = subAssessment.getComponentName();
-                        for (HashMap.Entry<ICourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
+                        for (Map.Entry<ICourseworkComponent, Double> subEntry : mark.getCourseWorkMarks().entrySet()) {
                             ICourseworkComponent subKey = subEntry.getKey();
                             Double subValue = subEntry.getValue();
                             if (subKey instanceof SubComponent && subKey.getComponentName().equals(subAssessmentName)) {
@@ -488,8 +488,8 @@ public class Printer implements IPrinter {
             System.out.print("Final Exam");
             System.out.print("\tWeight: " + examWeight + "%");
             for (IMark mark : thisCourseMark) {
-                HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
-                for (HashMap.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
+                Map<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+                for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
                     ICourseworkComponent key = entry.getKey();
                     double value = entry.getValue();
                     if (key.getComponentName().equals("Exam")) {

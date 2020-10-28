@@ -5,7 +5,6 @@ import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Entity.IStudent;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,7 +25,7 @@ public class Mark implements IMark {
     /**
      * The course work marks of this student mark record.
      */
-    private HashMap<ICourseworkComponent, Double> courseWorkMarks;
+    private Map<ICourseworkComponent, Double> courseWorkMarks;
     /**
      * The total mark of this student mark record.
      */
@@ -40,7 +39,7 @@ public class Mark implements IMark {
      * @param courseWorkMarks The course work marks of this student mark record.
      * @param totalMark The total mark of this student mark record.
      */
-    public Mark(IStudent student, ICourse course, HashMap<ICourseworkComponent, Double> courseWorkMarks, double totalMark) {
+    public Mark(IStudent student, ICourse course, Map<ICourseworkComponent, Double> courseWorkMarks, double totalMark) {
         this.student = student;
         this.course = course;
         this.courseWorkMarks = courseWorkMarks;
@@ -65,9 +64,9 @@ public class Mark implements IMark {
 
     /**
      * Gets the course work marks of this student mark record.
-     * @return a hashmap contains the course work marks of this student mark record.
+     * @return a map contains the course work marks of this student mark record.
      */
-    public HashMap<ICourseworkComponent, Double> getCourseWorkMarks() {
+    public Map<ICourseworkComponent, Double> getCourseWorkMarks() {
         return courseWorkMarks;
     }
 

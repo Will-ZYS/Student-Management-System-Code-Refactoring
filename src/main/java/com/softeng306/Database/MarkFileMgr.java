@@ -81,7 +81,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		fileWriter.append(COMMA_DELIMITER);
 		fileWriter.append(mark.getCourse().getCourseID());
 		fileWriter.append(COMMA_DELIMITER);
-		HashMap<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
+		Map<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
 		if (!courseworkMarks.isEmpty()) {
 			int index = 0;
 			for (Map.Entry<ICourseworkComponent, Double> entry : courseworkMarks.entrySet()) {
@@ -162,7 +162,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 				IStudent currentStudent = null;
 				ICourse currentCourse = null;
 
-				HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>(0);
+				Map<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>(0);
 				String[] thisCourseWorkMark;
 
 				String[] tokens = line.split(COMMA_DELIMITER);
@@ -194,7 +194,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 						thisCourseWorkMark = eachCourseWorkMark[i].split(EQUAL_SIGN);
 
 						List<ICourseworkComponent> subComponents = new ArrayList<>(0);
-						HashMap<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
+						Map<ICourseworkComponent, Double> subComponentMarks = new HashMap<>();
 						for (int j = 3; j < thisCourseWorkMark.length; j++) {
 							if (thisCourseWorkMark[3].equals("")) {
 								break;

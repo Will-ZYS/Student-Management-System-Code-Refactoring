@@ -36,7 +36,7 @@ public class MarkMgr implements IMarkMgr {
      */
     public IMark initializeMark(IStudent student, ICourse course) {
         IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-        HashMap<ICourseworkComponent, Double> courseWorkMarks = new HashMap<>();
+        Map<ICourseworkComponent, Double> courseWorkMarks = new Map<>();
         double totalMark = 0d;
         List<ICourseworkComponent> mainComponents = course.getMainComponents();
 
@@ -167,7 +167,7 @@ public class MarkMgr implements IMarkMgr {
 
         double averageMark = 0;
         for (IMark mark : thisCourseMark) {
-            HashMap<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
+            Map<ICourseworkComponent, Double> thisComponentMarks = mark.getCourseWorkMarks();
             for (Map.Entry<ICourseworkComponent, Double> entry : thisComponentMarks.entrySet()) {
                 ICourseworkComponent key = entry.getKey();
                 double value = entry.getValue();
