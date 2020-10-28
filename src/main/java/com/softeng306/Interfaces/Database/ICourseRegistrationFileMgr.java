@@ -1,9 +1,8 @@
 package com.softeng306.Interfaces.Database;
 
-import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Entity.ICourseRegistration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ICourseRegistrationFileMgr {
 
@@ -17,7 +16,7 @@ public interface ICourseRegistrationFileMgr {
     /**
      * Load all the course registration records from file into the system.
      *
-     * @return an array list of all the course registration records.
+     * @return a list of all the course registration records.
      */
-     ArrayList<ICourseRegistration> loadCourseRegistration();
+     List<ICourseRegistration> loadCourseRegistration();
 }

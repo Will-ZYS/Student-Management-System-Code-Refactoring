@@ -3,10 +3,12 @@ package com.softeng306.Database;
 import com.softeng306.Entity.Student;
 import com.softeng306.Interfaces.Database.IStudentFileMgr;
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Managers.StudentMgr;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	private static StudentFileMgr instance;
@@ -56,16 +58,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 * @param student a student to be added into the file
 	 */
 	public void writeStudentsIntoFile(IStudent student) {
-		File file;
 		FileWriter fileWriter = null;
 		try {
-			file = new File(studentFileName);
-			//initialize file header if have not done so
-			fileWriter = new FileWriter(studentFileName, true);
-			if (file.length() == 0) {
-				fileWriter.append(student_HEADER);
-				fileWriter.append(NEW_LINE_SEPARATOR);
-			}
+			fileWriter = initializeCSV(studentFileName, student_HEADER);
+
 			fileWriter.append(student.getStudentID());
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(student.getStudentName());
@@ -95,11 +91,12 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	/**
 	 * Load all the students' information from file into the system.
 	 *
-	 * @return an array list of all the students.
+	 * @return a list of all the students.
 	 */
-	public ArrayList<IStudent> loadStudents() {
+	public List<IStudent> loadStudents() {
 		BufferedReader fileReader = null;
 		ArrayList<IStudent> students = new ArrayList<>(0);
+		IStudentMgr studentMgr = StudentMgr.getInstance();
 		try {
 			String line;
 			fileReader = new BufferedReader(new FileReader(studentFileName));
@@ -120,7 +117,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 			// Set the recent student ID, let the newly added student have the ID onwards.
 			// If there is no student in DB, set recentStudentID to 1800000 (2018 into Uni)
 
-			StudentMgr.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
+			studentMgr.setIdNumber(recentStudentID > 0 ? recentStudentID : 1800000);
 		} catch (Exception e) {
 			System.out.println("Error occurs when loading students.");
 			e.printStackTrace();

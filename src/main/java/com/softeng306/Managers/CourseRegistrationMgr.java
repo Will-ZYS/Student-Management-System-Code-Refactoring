@@ -22,14 +22,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
     private static CourseRegistrationMgr instance = null;
     private static IPrinter printer = Printer.getInstance();
-    private IHelperMgr helperMgr = HelperMgr.getInstance();
-    private IMarkMgr markMgr = MarkMgr.getInstance();
-    private ICourseMgr courseMgr = CourseMgr.getInstance();
-    private IStudentMgr studentMgr = StudentMgr.getInstance();
 
-
-    private IDatabase database = Database.getInstance();
-    private ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
 
     /**
      * Registers a course for a student
@@ -39,6 +32,13 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedLectureGroupName = null;
         String selectedTutorialGroupName = null;
         String selectedLabGroupName = null;
+        // Get all necessary manager classes
+        IHelperMgr helperMgr = HelperMgr.getInstance();
+        IMarkMgr markMgr = MarkMgr.getInstance();
+        ICourseMgr courseMgr = CourseMgr.getInstance();
+        IStudentMgr studentMgr = StudentMgr.getInstance();
+        ICourseRegistrationFileMgr courseRegistrationFileMgr = CourseRegistrationFileMgr.getInstance();
+        IDatabase database = Database.getInstance();
 
         IStudent currentStudent = studentMgr.checkStudentExists();
 
@@ -85,7 +85,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         currentCourse.enrolledIn();
 
         ICourseRegistration courseRegistration = new CourseRegistration(currentStudent, currentCourse, selectedLectureGroupName, selectedTutorialGroupName, selectedLabGroupName);
-        // TODO FILEMGR AGAIN
 
         courseRegistrationFileMgr.writeCourseRegistrationIntoFile(courseRegistration);
 
@@ -112,6 +111,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
      * @return the existing course registration record or else null.
      */
     public ICourseRegistration checkCourseRegistrationExists(String studentID, String courseID) {
+        IDatabase database = Database.getInstance();
         List<ICourseRegistration> courseRegistrations = database.getCourseRegistrations().stream().filter(cr->studentID.equals(cr.getStudent().getStudentID())).filter(cr->courseID.equals(cr.getCourse().getCourseID())).collect(Collectors.toList());
 
         if(courseRegistrations.size() == 0){

@@ -1,5 +1,9 @@
 package com.softeng306.Database;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public abstract class FILEMgrAbstract {
 
     /**
@@ -31,4 +35,22 @@ public abstract class FILEMgrAbstract {
      * The string of {@code SLASH}.
      */
     protected static final String SLASH = "/";
+
+    /**
+     * Initialises CSV FileWriter and headers
+     * @param filename The CSV files
+     * @param header The headers for the CSV file
+     * @return fileWriter object for the CSV
+     * @throws IOException
+     */
+    protected FileWriter initializeCSV(String filename, String header) throws IOException {
+        File file = new File(filename);
+        //initialize file header if have not done so
+        FileWriter fileWriter = new FileWriter(filename, true);
+        if (file.length() == 0) {
+            fileWriter.append(header);
+            fileWriter.append(NEW_LINE_SEPARATOR);
+        }
+        return fileWriter;
+    }
 }

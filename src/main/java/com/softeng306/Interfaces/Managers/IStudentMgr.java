@@ -29,7 +29,15 @@ public interface IStudentMgr {
      */
     IStudent checkStudentExists();
 
+    /**
+     * returns the ID number used to generate random ID's
+     * @return
+     */
     String generateStudentID();
 
-//    void setIdNumber(int idNumber);
+    /**
+     * Sets the idNumber variable of this student class.
+     * @param idNumber static variable idNumber of this class.
+     */
+    void setIdNumber(int idNumber);
 }
