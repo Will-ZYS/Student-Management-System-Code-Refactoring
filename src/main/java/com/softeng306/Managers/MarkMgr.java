@@ -2,17 +2,21 @@ package com.softeng306.Managers;
 
 import com.softeng306.Database.Database;
 
+import com.softeng306.Database.MarkFileMgr;
 import com.softeng306.Entity.MainComponent;
+import com.softeng306.Entity.Mark;
 import com.softeng306.Interfaces.Database.IDatabase;
+import com.softeng306.Interfaces.Entity.ICourse;
+import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
 import com.softeng306.Managers.Validation.StudentValidationMgr;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 import java.util.*;
 
@@ -21,8 +25,20 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
-    private IScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScanner scanner = Scanner.getInstance();
     private static MarkMgr instance = null;
+
+    /**
+     * Initializes marks for a student when he/she just registered a course.
+     * @param student the student this mark record belongs to.
+     * @param course the course this mark record about.
+     * @return the new added mark.
+     */
+    public Mark initializeMark(IStudent student, ICourse course) {
+        Mark mark = new Mark(student, course);
+        MarkFileMgr.getInstance().updateStudentMarks(mark);
+        return mark;
+    }
 
     /**
      * Sets the coursework mark for the mark record.

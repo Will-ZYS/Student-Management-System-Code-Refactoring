@@ -1,32 +1,32 @@
 package com.softeng306.Utils;
 
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 
-import java.util.Scanner;
+public class Scanner implements IScanner {
 
-/**
- * Scanner used to read the users input.
- */
-public class ScannerSingleton implements IScannerSingleton {
+    private static java.util.Scanner scanner = null;
+    private static Scanner instance = null;
 
-    private static Scanner scanner = null;
-    private static ScannerSingleton instance = null;
-
-    public static ScannerSingleton getInstance() {
+    /**
+     * Get the instance of the Scanner class.
+     * @return the singleton instance
+     */
+    public static Scanner getInstance() {
         if (instance == null) {
-            scanner = new Scanner(System.in);
-            instance = new ScannerSingleton();
+            scanner = new java.util.Scanner(System.in);
+            instance = new Scanner();
         }
         return instance;
     }
 
-    //TODO STATIC? For setting test to normal but using getInstance works
     /**
      * Made to reset the Scanner. Main purpose is to ensure consistent testing results
      */
     public void refreshSystemIn(){
-        scanner = new Scanner(System.in);
+        scanner = new java.util.Scanner(System.in);
     }
+
+    // Wrapping Methods
 
     public boolean hasNextInt() {
         return scanner.hasNextInt();

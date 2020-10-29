@@ -8,9 +8,9 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class HelperMgr implements IHelperMgr {
 
-    private IScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScanner scanner = Scanner.getInstance();
 
     private static HelperMgr instance = null;
 

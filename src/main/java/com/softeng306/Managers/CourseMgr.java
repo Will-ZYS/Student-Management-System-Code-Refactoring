@@ -15,7 +15,7 @@ import com.softeng306.Interfaces.Managers.Validation.IProfessorValidationMgr;
 import com.softeng306.Interfaces.Managers.IHelperMgr;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
 import com.softeng306.Managers.Validation.GroupValidationMgr;
 import com.softeng306.Managers.Validation.ProfessorValidationMgr;
@@ -24,12 +24,12 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 import java.util.*;
 
 public class CourseMgr implements ICourseMgr {
-    private IScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScanner scanner = Scanner.getInstance();
     private static CourseMgr instance = null;
 
     /**

@@ -11,13 +11,13 @@ import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.StudentMgr;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 /**
  * Main class
@@ -38,7 +38,7 @@ public class Main {
         IMarkMgr markMgr = MarkMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
         IPrinter printer = Printer.getInstance();
-        IScannerSingleton scanner = ScannerSingleton.getInstance();
+        IScanner scanner = Scanner.getInstance();
 
         printer.printWelcome();
 

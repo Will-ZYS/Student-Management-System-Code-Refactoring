@@ -5,9 +5,9 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.IStudent;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Interfaces.Utils.IScannerSingleton;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class StudentValidationMgr implements IStudentValidationMgr {
     private static StudentValidationMgr instance = null;
-    private IScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScanner scanner = Scanner.getInstance();
 
     /**
      * Checks whether this student ID is used by other students.

@@ -1,10 +1,22 @@
 package com.softeng306.Interfaces.Managers;
 
+import com.softeng306.Database.MarkFileMgr;
+import com.softeng306.Entity.Mark;
+import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IMark;
+import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.List;
 
 public interface IMarkMgr {
+
+    /**
+     * Initializes marks for a student when he/she just registered a course.
+     * @param student the student this mark record belongs to.
+     * @param course the course this mark record about.
+     * @return the new added mark.
+     */
+    Mark initializeMark(IStudent student, ICourse course);
 
     /**
      * Sets the coursework mark for the mark record.
