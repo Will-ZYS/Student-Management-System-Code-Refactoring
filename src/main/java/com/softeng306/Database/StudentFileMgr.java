@@ -63,7 +63,6 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 		try {
 			fileWriter = initializeCSV(studentFileName, studentHeader);
 
-			//TODO MODIFIED SHOULD BE FINE
 			writeToFile(fileWriter,student.getStudentID(),COMMA_DELIMITER);
 			writeToFile(fileWriter,student.getStudentName(),COMMA_DELIMITER);
 			writeToFile(fileWriter,student.getStudentSchool(),COMMA_DELIMITER);
@@ -71,18 +70,6 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 			writeToFile(fileWriter,String.valueOf(student.getGPA()),COMMA_DELIMITER);
 			writeToFile(fileWriter,String.valueOf(student.getStudentYear()),NEW_LINE_SEPARATOR);
 
-//			fileWriter.append(student.getStudentID());
-//			fileWriter.append(COMMA_DELIMITER);
-//			fileWriter.append(student.getStudentName());
-//			fileWriter.append(COMMA_DELIMITER);
-//			fileWriter.append(student.getStudentSchool());
-//			fileWriter.append(COMMA_DELIMITER);
-//			fileWriter.append(student.getGender());
-//			fileWriter.append(COMMA_DELIMITER);
-//			fileWriter.append(String.valueOf(student.getGPA()));
-//			fileWriter.append(COMMA_DELIMITER);
-//			fileWriter.append(String.valueOf(student.getStudentYear()));
-//			fileWriter.append(NEW_LINE_SEPARATOR);
 		} catch (Exception e) {
 			System.out.println("Error in adding a student to the file.");
 			e.printStackTrace();

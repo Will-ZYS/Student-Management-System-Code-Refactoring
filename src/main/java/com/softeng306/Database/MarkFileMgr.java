@@ -82,14 +82,9 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	 * @throws IOException
 	 */
 	private void writeMarkToCSV(FileWriter fileWriter, IMark mark, boolean isSubComponentInitialized) throws IOException {
-		//TODO check
+
 		writeToFile(fileWriter,mark.getStudent().getStudentID(),COMMA_DELIMITER);
 		writeToFile(fileWriter,mark.getCourse().getCourseID(),COMMA_DELIMITER);
-
-//		fileWriter.append(mark.getStudent().getStudentID());
-//		fileWriter.append(COMMA_DELIMITER);
-//		fileWriter.append(mark.getCourse().getCourseID());
-//		fileWriter.append(COMMA_DELIMITER);
 
 		Map<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
 		if (!courseworkMarks.isEmpty()) {
