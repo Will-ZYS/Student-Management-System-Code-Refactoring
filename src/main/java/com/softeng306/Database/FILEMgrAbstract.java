@@ -58,7 +58,7 @@ public abstract class FILEMgrAbstract {
     }
 
     //TODO may be useful in reducing lines
-    private void writeToFile(FileWriter fileWriter, String content, String separater)  throws IOException{
+    protected void writeToFile(FileWriter fileWriter, String content, String separater)  throws IOException{
         fileWriter.append(content);
         fileWriter.append(separater);
     }
