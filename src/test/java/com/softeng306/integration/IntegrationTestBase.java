@@ -1,8 +1,7 @@
 package com.softeng306.integration;
 
-import com.softeng306.Database.*;
-import com.softeng306.Interfaces.Entity.*;
-import com.softeng306.Utils.Scanner;
+import com.softeng306.*;
+import com.softeng306.Scanner;
 import com.softeng306.helper.CSVHelper;
 import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;

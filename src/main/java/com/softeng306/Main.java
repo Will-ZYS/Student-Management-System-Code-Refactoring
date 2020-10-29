@@ -1,24 +1,5 @@
 package com.softeng306;
 
-import com.softeng306.Database.CourseFileMgr;
-import com.softeng306.Database.Database;
-import com.softeng306.Database.MarkFileMgr;
-import com.softeng306.Interfaces.Database.ICourseFileMgr;
-import com.softeng306.Interfaces.Database.IDatabase;
-import com.softeng306.Interfaces.Database.IMarkFileMgr;
-import com.softeng306.Interfaces.Managers.ICourseMgr;
-import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
-import com.softeng306.Interfaces.Managers.IMarkMgr;
-import com.softeng306.Interfaces.Managers.IStudentMgr;
-import com.softeng306.Interfaces.Utils.IPrinter;
-import com.softeng306.Interfaces.Utils.IScanner;
-import com.softeng306.Managers.CourseMgr;
-import com.softeng306.Managers.CourseRegistrationMgr;
-import com.softeng306.Managers.MarkMgr;
-import com.softeng306.Managers.StudentMgr;
-import com.softeng306.Utils.Printer;
-import com.softeng306.Utils.Scanner;
-
 /**
  * Main class
  * Initial state waiting for the user input

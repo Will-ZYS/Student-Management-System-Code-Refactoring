@@ -1,7 +1,7 @@
 package com.softeng306.unit;
 
 
-import com.softeng306.Managers.HelperMgr;
+import com.softeng306.HelperMgr;
 import org.junit.Assert;
 import org.junit.Test;
 

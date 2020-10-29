@@ -1,6 +1,6 @@
 package com.softeng306.helper;
 
-import com.softeng306.Database.*;
+import com.softeng306.*;
 
 import java.io.File;
 import java.io.IOException;
