@@ -21,7 +21,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	/**
 	 * The header of studentFile.csv.
 	 */
-	private final String student_HEADER = "studentID,studentName,studentSchool,studentGender,studentGPA,studentYear";
+	private final String studentHeader = "studentID,studentName,studentSchool,studentGender,studentGPA,studentYear";
 
 	/**
 	 * The index of the student ID in studentFile.csv.
@@ -61,7 +61,7 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	public void writeStudentsIntoFile(IStudent student) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(studentFileName, student_HEADER);
+			fileWriter = initializeCSV(studentFileName, studentHeader);
 
 			//TODO MODIFIED SHOULD BE FINE
 			writeToFile(fileWriter,student.getStudentID(),COMMA_DELIMITER);

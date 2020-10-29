@@ -24,7 +24,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	/**
 	 * The header of courseRegistrationFile.csv.
 	 */
-	private final String courseRegistration_HEADER = "studentID,courseID,lectureGroup,tutorialGroup,labGroup";
+	private final String courseRegistrationHeader = "studentID,courseID,lectureGroup,tutorialGroup,labGroup";
 
 	/**
 	 * The index of studentID in courseRegistrationFile.csv.
@@ -59,7 +59,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	public void writeCourseRegistrationIntoFile(ICourseRegistration courseRegistration) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistration_HEADER);
+			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistrationHeader);
 
 			writeToFile(fileWriter,courseRegistration.getStudent().getStudentID(),COMMA_DELIMITER);
 			writeToFile(fileWriter,courseRegistration.getCourse().getCourseID(),COMMA_DELIMITER);
