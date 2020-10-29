@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentFileMgr extends FILEMgr implements IStudentFileMgr {
+public class StudentFileMgr extends FileMgr implements IStudentFileMgr {
 	private static StudentFileMgr instance = null;
 	/**
 	 * The file name of studentFile.csv.

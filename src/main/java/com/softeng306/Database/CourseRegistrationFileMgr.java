@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CourseRegistrationFileMgr extends FILEMgr implements ICourseRegistrationFileMgr {
+public class CourseRegistrationFileMgr extends FileMgr implements ICourseRegistrationFileMgr {
 	private static CourseRegistrationFileMgr instance = null;
 
 	/**
