@@ -17,9 +17,14 @@ public class Scanner {
         return instance;
     }
 
+    /**
+     * Creating a new java scanner with the current System.in
+     */
     public static void refreshSystemIn(){
         scanner = new java.util.Scanner(System.in);
     }
+
+    // Wrapping Methods
 
     public boolean hasNextInt() {
         return scanner.hasNextInt();
