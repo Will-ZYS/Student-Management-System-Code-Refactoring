@@ -15,7 +15,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
+public class MarkFileMgr extends FILEMgr implements IMarkFileMgr {
 	private static MarkFileMgr instance = null;
 
 	/**
