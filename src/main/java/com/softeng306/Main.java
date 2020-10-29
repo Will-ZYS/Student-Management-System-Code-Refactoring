@@ -16,10 +16,10 @@ import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
 import com.softeng306.Managers.StudentMgr;
 import com.softeng306.Utils.Printer;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 public class Main {
-    public static ScannerSingleton scanner = ScannerSingleton.getInstance();
+    public static Scanner scanner = Scanner.getInstance();
 
     private static IDatabase database = Database.getInstance();
 

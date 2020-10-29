@@ -2,7 +2,7 @@ package com.softeng306.integration;
 
 import com.softeng306.Database.*;
 import com.softeng306.Interfaces.Entity.*;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 import com.softeng306.helper.CSVHelper;
 import com.softeng306.helper.StringBuilderPlus;
 import org.junit.After;
@@ -70,7 +70,7 @@ public class IntegrationTestBase {
         // Set the input, output and error streams back to original
         System.setIn(originalIn);
         System.setOut(originalOut);
-        ScannerSingleton.refreshSystemIn();
+        Scanner.refreshSystemIn();
 
         // Reverting all files before test
         csvHelper.revertAll();
@@ -85,7 +85,7 @@ public class IntegrationTestBase {
     protected void preparingInputStream(){
         ByteArrayInputStream in = new ByteArrayInputStream(inputsBuilder.toString().getBytes());
         System.setIn(in);
-        ScannerSingleton.refreshSystemIn();
+        Scanner.refreshSystemIn();
     }
 
 }

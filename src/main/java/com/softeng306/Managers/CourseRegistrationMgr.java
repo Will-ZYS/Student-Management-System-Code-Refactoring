@@ -2,7 +2,7 @@ package com.softeng306.Managers;
 
 import com.softeng306.Database.CourseRegistrationFileMgr;
 import com.softeng306.Database.Database;
-import com.softeng306.Entity.*;
+import com.softeng306.Entity.CourseRegistration;
 import com.softeng306.Enum.GroupType;
 import com.softeng306.Interfaces.Database.ICourseRegistrationFileMgr;
 import com.softeng306.Interfaces.Database.IDatabase;
@@ -96,7 +96,7 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
 
         database.getCourseRegistrations().add(courseRegistration);
 
-        database.getMarks().add(new Mark(currentStudent, currentCourse));
+        database.getMarks().add(markMgr.initializeMark(currentStudent, currentCourse));
 
         System.out.println("Course registration successful!");
         System.out.print("Student: " + currentStudent.getStudentName());

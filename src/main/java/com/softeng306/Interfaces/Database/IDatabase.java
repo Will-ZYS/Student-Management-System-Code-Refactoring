@@ -5,7 +5,6 @@ import com.softeng306.Interfaces.Entity.*;
 import java.util.List;
 
 public interface IDatabase {
-    // TODO I DONT THINK WE EVER USE THE SET METHODS NEED TO CHECK
 
     /**
      * returns a list of Students in the system

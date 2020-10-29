@@ -28,7 +28,7 @@ import static com.softeng306.Entity.CourseRegistration.*;
 
 public class Printer implements IPrinter {
 
-    private ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private Scanner scanner = Scanner.getInstance();
     private static Printer instance = null;
 
     public void print(String content) {

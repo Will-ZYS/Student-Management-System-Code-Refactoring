@@ -23,12 +23,12 @@ import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IProfessor;
 import com.softeng306.Interfaces.Entity.IGroup;
-import com.softeng306.Utils.ScannerSingleton;
+import com.softeng306.Utils.Scanner;
 
 import java.util.*;
 
 public class CourseMgr implements ICourseMgr {
-    private ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private Scanner scanner = Scanner.getInstance();
     private static CourseMgr instance = null;
 
     /**

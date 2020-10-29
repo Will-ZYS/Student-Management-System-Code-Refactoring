@@ -1,22 +1,24 @@
 package com.softeng306.Utils;
 
-import java.util.Scanner;
+public class Scanner {
 
-public class ScannerSingleton {
+    private static java.util.Scanner scanner = null;
+    private static Scanner instance = null;
 
-    private static Scanner scanner = null;
-    private static ScannerSingleton instance = null;
-
-    public static ScannerSingleton getInstance() {
+    /**
+     * 
+     * @return
+     */
+    public static Scanner getInstance() {
         if (instance == null) {
-            scanner = new Scanner(System.in);
-            instance = new ScannerSingleton();
+            scanner = new java.util.Scanner(System.in);
+            instance = new Scanner();
         }
         return instance;
     }
 
     public static void refreshSystemIn(){
-        scanner = new Scanner(System.in);
+        scanner = new java.util.Scanner(System.in);
     }
 
     public boolean hasNextInt() {
