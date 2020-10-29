@@ -28,7 +28,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	/**
 	 * The header of courseFile.csv.
 	 */
-	private final String course_HEADER = "courseID,courseName,profInCharge,vacancies,totalSeats,lectureGroups,TutorialGroups,LabGroups,MainComponents,AU,courseDepartment,courseType,lecHr,tutHr,labHr";
+	private final String courseHeader = "courseID,courseName,profInCharge,vacancies,totalSeats,lectureGroups,TutorialGroups,LabGroups,MainComponents,AU,courseDepartment,courseType,lecHr,tutHr,labHr";
 
 	/**
 	 * The index of the course ID in courseFile.csv.
@@ -112,7 +112,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	public void writeCourseIntoFile(ICourse course) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(courseFileName, course_HEADER);
+			fileWriter = initializeCSV(courseFileName, courseHeader);
 
 			writeCourseToCSV(fileWriter, course);
 		} catch (Exception e) {
@@ -255,7 +255,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		try {
 			fileWriter = new FileWriter(courseFileName);
 
-			fileWriter.append(course_HEADER);
+			fileWriter.append(courseHeader);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			for (ICourse course : courses) {

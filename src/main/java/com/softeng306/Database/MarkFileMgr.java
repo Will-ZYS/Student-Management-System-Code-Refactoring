@@ -26,7 +26,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	/**
 	 * The header of markFile.csv.
 	 */
-	private final String mark_HEADER = "studentID,courseID,courseWorkMarks,totalMark";
+	private final String markHeader = "studentID,courseID,courseWorkMarks,totalMark";
 
 	/**
 	 * The index of studentID in markFile.csv.
@@ -56,7 +56,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	public void updateStudentMarks(IMark mark) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(markFileName, mark_HEADER);
+			fileWriter = initializeCSV(markFileName, markHeader);
 
 			writeMarkToCSV(fileWriter, mark, false);
 		} catch (Exception e) {
@@ -239,7 +239,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		try {
 			fileWriter = new FileWriter(markFileName);
 
-			fileWriter.append(mark_HEADER);
+			fileWriter.append(markHeader);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			for (IMark mark : marks) {
