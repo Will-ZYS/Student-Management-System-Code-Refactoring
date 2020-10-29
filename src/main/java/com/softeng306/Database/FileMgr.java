@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * contains common fields which all FILEMgr's use
  */
-public abstract class FILEMgrAbstract {
+public abstract class FileMgr {
 
     /**
      * The string of {@code COMMA_DELIMITER}.

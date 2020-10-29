@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileMgr {
+public class ProfessorFileMgr extends FileMgr implements IProfessorFileMgr {
 	private static ProfessorFileMgr instance = null;
 	/**
 	 * The file name of professorFile.csv.

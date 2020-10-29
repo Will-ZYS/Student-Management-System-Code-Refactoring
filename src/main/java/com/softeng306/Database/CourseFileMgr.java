@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
+public class CourseFileMgr extends FileMgr implements ICourseFileMgr {
 	private static CourseFileMgr instance;
 
 	/**

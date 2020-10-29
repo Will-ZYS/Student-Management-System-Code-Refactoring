@@ -1,6 +1,7 @@
 package com.softeng306.Entity;
 
 import com.softeng306.Interfaces.Entity.IStudent;
+import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Managers.StudentMgr;
 
 /**
@@ -50,7 +51,7 @@ public class Student implements IStudent {
      */
     public Student(String studentName) {
         this.studentName = studentName;
-        StudentMgr studentMgr = StudentMgr.getInstance();
+        IStudentMgr studentMgr = StudentMgr.getInstance();
         this.studentID = studentMgr.generateStudentID();
     }
 
