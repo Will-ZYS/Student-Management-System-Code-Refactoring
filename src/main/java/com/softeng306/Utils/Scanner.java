@@ -6,8 +6,8 @@ public class Scanner {
     private static Scanner instance = null;
 
     /**
-     * 
-     * @return
+     * Get the instance of the Scanner class.
+     * @return the singleton instance
      */
     public static Scanner getInstance() {
         if (instance == null) {
