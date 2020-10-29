@@ -5,6 +5,7 @@ import com.softeng306.Interfaces.Database.IDatabase;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.Scanner;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class CourseValidationMgr implements ICourseValidationMgr {
     private static CourseValidationMgr instance = null;
-    private Scanner scanner = Scanner.getInstance();
+    private IScanner scanner = Scanner.getInstance();
 
     /**
      * Prompts the user to input an existing course.

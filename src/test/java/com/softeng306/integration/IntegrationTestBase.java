@@ -70,7 +70,7 @@ public class IntegrationTestBase {
         // Set the input, output and error streams back to original
         System.setIn(originalIn);
         System.setOut(originalOut);
-        Scanner.refreshSystemIn();
+        Scanner.getInstance().refreshSystemIn();
 
         // Reverting all files before test
         csvHelper.revertAll();
@@ -85,7 +85,7 @@ public class IntegrationTestBase {
     protected void preparingInputStream(){
         ByteArrayInputStream in = new ByteArrayInputStream(inputsBuilder.toString().getBytes());
         System.setIn(in);
-        Scanner.refreshSystemIn();
+        Scanner.getInstance().refreshSystemIn();
     }
 
 }

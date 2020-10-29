@@ -11,6 +11,7 @@ import com.softeng306.Interfaces.Managers.ICourseRegistrationMgr;
 import com.softeng306.Interfaces.Managers.IMarkMgr;
 import com.softeng306.Interfaces.Managers.IStudentMgr;
 import com.softeng306.Interfaces.Utils.IPrinter;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Managers.CourseMgr;
 import com.softeng306.Managers.CourseRegistrationMgr;
 import com.softeng306.Managers.MarkMgr;
@@ -18,17 +19,11 @@ import com.softeng306.Managers.StudentMgr;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.Scanner;
 
+/**
+ * Main class
+ * Initial state waiting for the user input
+ */
 public class Main {
-    public static Scanner scanner = Scanner.getInstance();
-
-    private static IDatabase database = Database.getInstance();
-
-    private static IPrinter printer = Printer.getInstance();
-
-    private static ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
-
-    private static IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
-
 
     /**
      * The main function of the system.
@@ -37,11 +32,13 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        //to ensure we are talking to the interface rather than the concrete class
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();
         IStudentMgr studentMgr = StudentMgr.getInstance();
-
+        IPrinter printer = Printer.getInstance();
+        IScanner scanner = Scanner.getInstance();
 
         printer.printWelcome();
 
@@ -109,6 +106,11 @@ public class Main {
      * Displays the exiting message.
      */
     public static void exitApplication() {
+        IPrinter printer = Printer.getInstance();
+        ICourseFileMgr courseFileMgr = CourseFileMgr.getInstance();
+        IMarkFileMgr markFileMgr = MarkFileMgr.getInstance();
+        IDatabase database = Database.getInstance();
+
         printer.print("Backing up data before exiting...");
         courseFileMgr.backUpCourse(database.getCourses());
         markFileMgr.backUpMarks(database.getMarks());

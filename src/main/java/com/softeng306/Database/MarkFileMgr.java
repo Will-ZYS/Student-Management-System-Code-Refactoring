@@ -26,7 +26,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	/**
 	 * The header of markFile.csv.
 	 */
-	private final String mark_HEADER = "studentID,courseID,courseWorkMarks,totalMark";
+	private final String markHeader = "studentID,courseID,courseWorkMarks,totalMark";
 
 	/**
 	 * The index of studentID in markFile.csv.
@@ -56,7 +56,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 	public void updateStudentMarks(IMark mark) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(markFileName, mark_HEADER);
+			fileWriter = initializeCSV(markFileName, markHeader);
 
 			writeMarkToCSV(fileWriter, mark, false);
 		} catch (Exception e) {
@@ -73,11 +73,19 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		}
 	}
 
+	/**
+	 * private helper method to write marks back into the CSV file
+	 *
+	 * @param fileWriter
+	 * @param mark
+	 * @param isSubComponentInitialized
+	 * @throws IOException
+	 */
 	private void writeMarkToCSV(FileWriter fileWriter, IMark mark, boolean isSubComponentInitialized) throws IOException {
-		fileWriter.append(mark.getStudent().getStudentID());
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(mark.getCourse().getCourseID());
-		fileWriter.append(COMMA_DELIMITER);
+
+		writeToFile(fileWriter,mark.getStudent().getStudentID(),COMMA_DELIMITER);
+		writeToFile(fileWriter,mark.getCourse().getCourseID(),COMMA_DELIMITER);
+
 		Map<ICourseworkComponent, Double> courseworkMarks = mark.getCourseWorkMarks();
 		if (!courseworkMarks.isEmpty()) {
 			int index = 0;
@@ -85,12 +93,11 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 				ICourseworkComponent key = entry.getKey();
 				Double value = entry.getValue();
 				if (key instanceof MainComponent) {
-					fileWriter.append(key.getComponentName());
-					fileWriter.append(EQUAL_SIGN);
-					fileWriter.append(String.valueOf(key.getComponentWeight()));
-					fileWriter.append(EQUAL_SIGN);
-					fileWriter.append(String.valueOf(value));
-					fileWriter.append(EQUAL_SIGN);
+
+					writeToFile(fileWriter,key.getComponentName(),EQUAL_SIGN);
+					writeToFile(fileWriter,String.valueOf(key.getComponentWeight()),EQUAL_SIGN);
+					writeToFile(fileWriter,String.valueOf(value),EQUAL_SIGN);
+
 					List<ICourseworkComponent> subComponents = key.getSubComponents();
 					int subComponent_index = 0;
 					for (ICourseworkComponent subComponent : subComponents) {
@@ -131,9 +138,10 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		} else {
 			fileWriter.append("NULL");
 		}
+
 		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(mark.getTotalMark()));
-		fileWriter.append(NEW_LINE_SEPARATOR);
+		writeToFile(fileWriter,String.valueOf(mark.getTotalMark()),NEW_LINE_SEPARATOR);
+
 	}
 
 	/**
@@ -239,7 +247,7 @@ public class MarkFileMgr extends FILEMgrAbstract implements IMarkFileMgr {
 		try {
 			fileWriter = new FileWriter(markFileName);
 
-			fileWriter.append(mark_HEADER);
+			fileWriter.append(markHeader);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			for (IMark mark : marks) {

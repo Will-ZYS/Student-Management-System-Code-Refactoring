@@ -38,7 +38,6 @@ public class CourseRegistrationMgr implements ICourseRegistrationMgr {
         String selectedLabGroupName;
         // Get all necessary manager classes
         IHelperMgr helperMgr = HelperMgr.getInstance();
-        IMarkMgr markMgr = MarkMgr.getInstance();
         ICourseValidationMgr courseValidationMgr = CourseValidationMgr.getInstance();
         ICourseRegistrationValidationMgr courseRegistrationValidationMgr = CourseRegistrationValidationMgr.getInstance();
         IStudentValidationMgr studentValidationMgr = StudentValidationMgr.getInstance();

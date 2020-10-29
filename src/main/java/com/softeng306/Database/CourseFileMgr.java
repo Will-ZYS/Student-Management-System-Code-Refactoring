@@ -28,7 +28,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	/**
 	 * The header of courseFile.csv.
 	 */
-	private final String course_HEADER = "courseID,courseName,profInCharge,vacancies,totalSeats,lectureGroups,TutorialGroups,LabGroups,MainComponents,AU,courseDepartment,courseType,lecHr,tutHr,labHr";
+	private final String courseHeader = "courseID,courseName,profInCharge,vacancies,totalSeats,lectureGroups,TutorialGroups,LabGroups,MainComponents,AU,courseDepartment,courseType,lecHr,tutHr,labHr";
 
 	/**
 	 * The index of the course ID in courseFile.csv.
@@ -44,6 +44,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * The index of the professor in charge of this course in courseFile.csv.
 	 */
 	private final int profInChargeIndex = 2;
+
 	/**
 	 * The index of course vacancies in courseFile.csv.
 	 */
@@ -75,9 +76,9 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	private final int mainComponentsIndex = 8;
 
 	/**
-	 * The index of course AU in courseFile.csv.
+	 * The index of course Academic Unit in courseFile.csv.
 	 */
-	private final int AUIndex = 9;
+	private final int academicUnitIndex = 9;
 
 	/**
 	 * The index of course department in courseFile.csv.
@@ -112,7 +113,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	public void writeCourseIntoFile(ICourse course) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(courseFileName, course_HEADER);
+			fileWriter = initializeCSV(courseFileName, courseHeader);
 
 			writeCourseToCSV(fileWriter, course);
 		} catch (Exception e) {
@@ -158,7 +159,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					}
 					int vacancies = Integer.parseInt(tokens[vacanciesIndex]);
 					int totalSeats = Integer.parseInt(tokens[totalSeatsIndex]);
-					int AU = Integer.parseInt(tokens[AUIndex]);
+					int AU = Integer.parseInt(tokens[academicUnitIndex]);
 					String courseDepartment = tokens[courseDepartmentIndex];
 					String courseType = tokens[courseTypeIndex];
 					int lecWeeklyHr = Integer.parseInt(tokens[lecHrIndex]);
@@ -255,7 +256,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		try {
 			fileWriter = new FileWriter(courseFileName);
 
-			fileWriter.append(course_HEADER);
+			fileWriter.append(courseHeader);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			for (ICourse course : courses) {
@@ -282,49 +283,31 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @throws IOException throws IOException to the caller
 	 */
 	private void writeCourseToCSV(FileWriter fileWriter, ICourse course) throws IOException{
-		fileWriter.append(course.getCourseID());
-		fileWriter.append(COMMA_DELIMITER);
-
-		fileWriter.append(course.getCourseName());
-		fileWriter.append(COMMA_DELIMITER);
-
-		fileWriter.append(course.getProfInCharge().getProfID());
-		fileWriter.append(COMMA_DELIMITER);
-
-		fileWriter.append(String.valueOf(course.getVacancies()));
-		fileWriter.append(COMMA_DELIMITER);
-
-		fileWriter.append(String.valueOf(course.getTotalSeats()));
-		fileWriter.append(COMMA_DELIMITER);
+		writeToFile(fileWriter,course.getCourseID(),COMMA_DELIMITER);
+		writeToFile(fileWriter,course.getCourseName(),COMMA_DELIMITER);
+		writeToFile(fileWriter,course.getProfInCharge().getProfID(),COMMA_DELIMITER);
+		writeToFile(fileWriter,String.valueOf(course.getVacancies()),COMMA_DELIMITER);
+		writeToFile(fileWriter,String.valueOf(course.getTotalSeats()),COMMA_DELIMITER);
 
 		List<IGroup> lectureGroups = course.getLectureGroups();
 		writeGroupToCSV(fileWriter, lectureGroups);
-		fileWriter.append(COMMA_DELIMITER);
 
 		List<IGroup> tutorialGroups = course.getTutorialGroups();
 		writeGroupToCSV(fileWriter, tutorialGroups);
-		fileWriter.append(COMMA_DELIMITER);
 
 		List<IGroup> labGroups = course.getLabGroups();
 		writeGroupToCSV(fileWriter, labGroups);
-		fileWriter.append(COMMA_DELIMITER);
 
 		List<ICourseworkComponent> mainComponents = course.getMainComponents();
 		writeCourseworkComponentToCSV(fileWriter, mainComponents);
 
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(course.getAcademicUnit()));
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(course.getCourseDepartment());
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(course.getCourseType());
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(course.getLecWeeklyHour()));
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(course.getTutWeeklyHour()));
-		fileWriter.append(COMMA_DELIMITER);
-		fileWriter.append(String.valueOf(course.getLabWeeklyHour()));
-		fileWriter.append(NEW_LINE_SEPARATOR);
+		writeToFile(fileWriter,String.valueOf(course.getAcademicUnit()),COMMA_DELIMITER);
+		writeToFile(fileWriter,course.getCourseDepartment(),COMMA_DELIMITER);
+		writeToFile(fileWriter,course.getCourseType(),COMMA_DELIMITER);
+		writeToFile(fileWriter,String.valueOf(course.getLecWeeklyHour()),COMMA_DELIMITER);
+		writeToFile(fileWriter,String.valueOf(course.getTutWeeklyHour()),COMMA_DELIMITER);
+		writeToFile(fileWriter,String.valueOf(course.getLabWeeklyHour()),NEW_LINE_SEPARATOR);
+
 	}
 
 	/**
@@ -337,10 +320,9 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		if (groups.size() != 0) {
 			int index = 0;
 			for (IGroup group : groups) {
-				fileWriter.append(group.getGroupName());
-				fileWriter.append(EQUAL_SIGN);
-				fileWriter.append(String.valueOf(group.getAvailableVacancies()));
-				fileWriter.append(EQUAL_SIGN);
+				writeToFile(fileWriter,group.getGroupName(),EQUAL_SIGN);
+				writeToFile(fileWriter,String.valueOf(group.getAvailableVacancies()),EQUAL_SIGN);
+
 				fileWriter.append(String.valueOf(group.getTotalSeats()));
 				index++;
 				if (index != groups.size()) {
@@ -350,6 +332,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		} else {
 			fileWriter.append("NULL");
 		}
+		fileWriter.append(COMMA_DELIMITER);
 	}
 
 	/**
@@ -362,15 +345,12 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		if (components.size() != 0) {
 			int index = 0;
 			for (ICourseworkComponent mainComponent : components) {
-				fileWriter.append(mainComponent.getComponentName());
-				fileWriter.append(EQUAL_SIGN);
-				fileWriter.append(String.valueOf(mainComponent.getComponentWeight()));
-				fileWriter.append(EQUAL_SIGN);
+				writeToFile(fileWriter,mainComponent.getComponentName(),EQUAL_SIGN);
+				writeToFile(fileWriter,String.valueOf(mainComponent.getComponentWeight()),EQUAL_SIGN);
 				List<ICourseworkComponent> subComponents = mainComponent.getSubComponents();
 				int inner_index = 0;
 				for (ICourseworkComponent subComponent : subComponents) {
-					fileWriter.append(subComponent.getComponentName());
-					fileWriter.append(HYPHEN);
+					writeToFile(fileWriter,subComponent.getComponentName(),HYPHEN);
 					fileWriter.append(String.valueOf(subComponent.getComponentWeight()));
 					inner_index++;
 					if (inner_index != subComponents.size()) {
@@ -385,6 +365,8 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 		} else {
 			fileWriter.append("NULL");
 		}
+		fileWriter.append(COMMA_DELIMITER);
+
 	}
 
 	/**

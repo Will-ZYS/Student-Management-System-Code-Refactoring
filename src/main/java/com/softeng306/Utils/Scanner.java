@@ -1,6 +1,8 @@
 package com.softeng306.Utils;
 
-public class Scanner {
+import com.softeng306.Interfaces.Utils.IScanner;
+
+public class Scanner implements IScanner {
 
     private static java.util.Scanner scanner = null;
     private static Scanner instance = null;
@@ -18,9 +20,9 @@ public class Scanner {
     }
 
     /**
-     * Creating a new java scanner with the current System.in
+     * Made to reset the Scanner. Main purpose is to ensure consistent testing results
      */
-    public static void refreshSystemIn(){
+    public void refreshSystemIn(){
         scanner = new java.util.Scanner(System.in);
     }
 

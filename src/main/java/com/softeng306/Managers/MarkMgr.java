@@ -13,6 +13,7 @@ import com.softeng306.Interfaces.Entity.ICourseworkComponent;
 import com.softeng306.Interfaces.Entity.IMark;
 import com.softeng306.Interfaces.Managers.Validation.ICourseValidationMgr;
 import com.softeng306.Interfaces.Managers.Validation.IStudentValidationMgr;
+import com.softeng306.Interfaces.Utils.IScanner;
 import com.softeng306.Managers.Validation.CourseValidationMgr;
 import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.Scanner;
@@ -24,7 +25,7 @@ import java.util.*;
  */
 
 public class MarkMgr implements IMarkMgr {
-    private Scanner scanner = Scanner.getInstance();
+    private IScanner scanner = Scanner.getInstance();
     private static MarkMgr instance = null;
 
     /**

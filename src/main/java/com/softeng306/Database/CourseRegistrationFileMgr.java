@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICourseRegistrationFileMgr {
-	private static CourseRegistrationFileMgr instance;
+	private static CourseRegistrationFileMgr instance = null;
 
 	/**
 	 * The file name of courseRegistrationFile.csv.
@@ -24,7 +24,7 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	/**
 	 * The header of courseRegistrationFile.csv.
 	 */
-	private final String courseRegistration_HEADER = "studentID,courseID,lectureGroup,tutorialGroup,labGroup";
+	private final String courseRegistrationHeader = "studentID,courseID,lectureGroup,tutorialGroup,labGroup";
 
 	/**
 	 * The index of studentID in courseRegistrationFile.csv.
@@ -59,18 +59,14 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	public void writeCourseRegistrationIntoFile(ICourseRegistration courseRegistration) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistration_HEADER);
+			fileWriter = initializeCSV(courseRegistrationFileName, courseRegistrationHeader);
 
-			fileWriter.append(courseRegistration.getStudent().getStudentID());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(courseRegistration.getCourse().getCourseID());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(courseRegistration.getLectureGroup());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(courseRegistration.getTutorialGroup());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(courseRegistration.getLabGroup());
-			fileWriter.append(NEW_LINE_SEPARATOR);
+			writeToFile(fileWriter,courseRegistration.getStudent().getStudentID(),COMMA_DELIMITER);
+			writeToFile(fileWriter,courseRegistration.getCourse().getCourseID(),COMMA_DELIMITER);
+			writeToFile(fileWriter,courseRegistration.getLectureGroup(),COMMA_DELIMITER);
+			writeToFile(fileWriter,courseRegistration.getTutorialGroup(),COMMA_DELIMITER);
+			writeToFile(fileWriter,courseRegistration.getLabGroup(),NEW_LINE_SEPARATOR);
+
 		} catch (Exception e) {
 			System.out.println("Error in adding a course registration to the file.");
 			e.printStackTrace();
@@ -144,7 +140,6 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	 * Get the instance of the CourseRegistrationFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static CourseRegistrationFileMgr getInstance() {
 		if (instance == null) {
 			instance = new CourseRegistrationFileMgr();

@@ -4,6 +4,11 @@ import com.softeng306.Interfaces.Entity.*;
 
 import java.util.List;
 
+/**
+ * Interface for using the Database singleton.
+ * Getters used to retrieve data from the database
+ * Setters currently used for testing purposes
+ */
 public interface IDatabase {
 
     /**
