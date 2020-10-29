@@ -11,6 +11,7 @@ import com.softeng306.Interfaces.Utils.IPrinter;
 import com.softeng306.Interfaces.Entity.IStudent;
 
 import com.softeng306.Entity.Student;
+import com.softeng306.Interfaces.Utils.IScannerSingleton;
 import com.softeng306.Managers.Validation.StudentValidationMgr;
 import com.softeng306.Utils.Printer;
 import com.softeng306.Utils.ScannerSingleton;
@@ -18,11 +19,10 @@ import com.softeng306.Utils.ScannerSingleton;
 /**
  * Manages the student related operations.
  * Contains addStudent.
-
  */
 public class StudentMgr implements IStudentMgr {
 
-    private ScannerSingleton scanner = ScannerSingleton.getInstance();
+    private IScannerSingleton scanner = ScannerSingleton.getInstance();
     private static StudentMgr instance = null;
 
     /**
@@ -147,8 +147,6 @@ public class StudentMgr implements IStudentMgr {
         } while (studentIDUsed);
         return generateStudentID;
     }
-
-
 
     /**
      * Helper method which queries the user for a valid student name

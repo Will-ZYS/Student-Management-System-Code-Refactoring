@@ -1,8 +1,13 @@
 package com.softeng306.Utils;
 
+import com.softeng306.Interfaces.Utils.IScannerSingleton;
+
 import java.util.Scanner;
 
-public class ScannerSingleton {
+/**
+ * Scanner used to read the users input.
+ */
+public class ScannerSingleton implements IScannerSingleton {
 
     private static Scanner scanner = null;
     private static ScannerSingleton instance = null;
@@ -15,7 +20,11 @@ public class ScannerSingleton {
         return instance;
     }
 
-    public static void refreshSystemIn(){
+    //TODO STATIC? For setting test to normal but using getInstance works
+    /**
+     * Made to reset the Scanner. Main purpose is to ensure consistent testing results
+     */
+    public void refreshSystemIn(){
         scanner = new Scanner(System.in);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
-	private static StudentFileMgr instance;
+	private static StudentFileMgr instance = null;
 	/**
 	 * The file name of studentFile.csv.
 	 */
@@ -63,18 +63,13 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 		try {
 			fileWriter = initializeCSV(studentFileName, studentHeader);
 
-			fileWriter.append(student.getStudentID());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(student.getStudentName());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(student.getStudentSchool());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(student.getGender());
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.valueOf(student.getGPA()));
-			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.valueOf(student.getStudentYear()));
-			fileWriter.append(NEW_LINE_SEPARATOR);
+			writeToFile(fileWriter,student.getStudentID(),COMMA_DELIMITER);
+			writeToFile(fileWriter,student.getStudentName(),COMMA_DELIMITER);
+			writeToFile(fileWriter,student.getStudentSchool(),COMMA_DELIMITER);
+			writeToFile(fileWriter,student.getGender(),COMMA_DELIMITER);
+			writeToFile(fileWriter,String.valueOf(student.getGPA()),COMMA_DELIMITER);
+			writeToFile(fileWriter,String.valueOf(student.getStudentYear()),NEW_LINE_SEPARATOR);
+
 		} catch (Exception e) {
 			System.out.println("Error in adding a student to the file.");
 			e.printStackTrace();
@@ -137,7 +132,6 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 * Get the instance of the StudentFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static StudentFileMgr getInstance() {
 		if (instance == null) {
 			instance = new StudentFileMgr();
@@ -145,6 +139,10 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 		return instance;
 	}
 
+	/**
+	 * Method used for testing purposes
+	 * @param studentFileName
+	 */
 	public void setStudentFileName(String studentFileName) {
 		this.studentFileName = studentFileName;
 	}

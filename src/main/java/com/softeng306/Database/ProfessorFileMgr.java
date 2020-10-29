@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileMgr {
-	private static ProfessorFileMgr instance;
+	private static ProfessorFileMgr instance = null;
 	/**
 	 * The file name of professorFile.csv.
 	 */
@@ -70,7 +70,6 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	 * Get the instance of the ProfessorFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static ProfessorFileMgr getInstance() {
 		if (instance == null) {
 			instance = new ProfessorFileMgr();
@@ -78,6 +77,10 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 		return instance;
 	}
 
+	/**
+	 * Method used for testing purposes
+	 * @param professorFileName
+	 */
 	public void setProfessorFileName(String professorFileName) {
 		this.professorFileName = professorFileName;
 	}
