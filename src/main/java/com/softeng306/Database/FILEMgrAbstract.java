@@ -57,7 +57,13 @@ public abstract class FILEMgrAbstract {
         return fileWriter;
     }
 
-    //TODO may be useful in reducing lines
+    /**
+     * helper method to insert content into the file, alongside the appropriate symbol
+     * @param fileWriter
+     * @param content
+     * @param separater
+     * @throws IOException
+     */
     protected void writeToFile(FileWriter fileWriter, String content, String separater)  throws IOException{
         fileWriter.append(content);
         fileWriter.append(separater);

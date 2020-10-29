@@ -132,7 +132,6 @@ public class StudentFileMgr extends FILEMgrAbstract implements IStudentFileMgr {
 	 * Get the instance of the StudentFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static StudentFileMgr getInstance() {
 		if (instance == null) {
 			instance = new StudentFileMgr();

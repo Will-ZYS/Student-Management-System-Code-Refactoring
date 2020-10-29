@@ -32,6 +32,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        //to ensure we are talking to the interface rather than the concrete class
         ICourseMgr courseMgr = CourseMgr.getInstance();
         ICourseRegistrationMgr courseRegistrationMgr = CourseRegistrationMgr.getInstance();
         IMarkMgr markMgr = MarkMgr.getInstance();

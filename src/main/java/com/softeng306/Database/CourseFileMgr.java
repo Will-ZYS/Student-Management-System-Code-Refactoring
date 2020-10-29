@@ -44,6 +44,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * The index of the professor in charge of this course in courseFile.csv.
 	 */
 	private final int profInChargeIndex = 2;
+
 	/**
 	 * The index of course vacancies in courseFile.csv.
 	 */
@@ -75,9 +76,9 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	private final int mainComponentsIndex = 8;
 
 	/**
-	 * The index of course AU in courseFile.csv.
+	 * The index of course Academic Unit in courseFile.csv.
 	 */
-	private final int AUIndex = 9;
+	private final int academicUnitIndex = 9;
 
 	/**
 	 * The index of course department in courseFile.csv.
@@ -158,7 +159,7 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 					}
 					int vacancies = Integer.parseInt(tokens[vacanciesIndex]);
 					int totalSeats = Integer.parseInt(tokens[totalSeatsIndex]);
-					int AU = Integer.parseInt(tokens[AUIndex]);
+					int AU = Integer.parseInt(tokens[academicUnitIndex]);
 					String courseDepartment = tokens[courseDepartmentIndex];
 					String courseType = tokens[courseTypeIndex];
 					int lecWeeklyHr = Integer.parseInt(tokens[lecHrIndex]);
@@ -281,7 +282,6 @@ public class CourseFileMgr extends FILEMgrAbstract implements ICourseFileMgr {
 	 * @param course the course to be written
 	 * @throws IOException throws IOException to the caller
 	 */
-	//TODO maybe make a helper method with two parameters
 	private void writeCourseToCSV(FileWriter fileWriter, ICourse course) throws IOException{
 		writeToFile(fileWriter,course.getCourseID(),COMMA_DELIMITER);
 		writeToFile(fileWriter,course.getCourseName(),COMMA_DELIMITER);

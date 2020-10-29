@@ -20,7 +20,7 @@ public class Course implements ICourse {
      */
     private String courseName;
 
-    /** The AU of this course.
+    /** The Academic Unit value of this course.
      *
      */
     private int academicUnit;
@@ -96,7 +96,7 @@ public class Course implements ICourse {
      * @param vacancies The current vacancy of this course.
      * @param totalSeats The total seats of this course.
      * @param lectureGroups The lecture groups of this course.
-     * @param academicUnit The AU of this course.
+     * @param academicUnit The Academic Units of this course.
      * @param courseDepartment The course department of this course.
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
@@ -125,7 +125,7 @@ public class Course implements ICourse {
      * @param lectureGroups The lecture groups of this course.
      * @param tutorialGroups The tutorial groups of this course.
      * @param labGroups The lab groups of this course.
-     * @param academicUnit The AU of this course.
+     * @param academicUnit The Academic Units of this course.
      * @param courseDepartment The course department of this course.
      * @param courseType The course type of this course.
      * @param lecWeeklyHour The lecture weekly hour of this course.
@@ -167,7 +167,7 @@ public class Course implements ICourse {
 
     /**
      * Gets the course's AU.
-     * @return the AU of this course.
+     * @return the Academic Units of this course.
      */
     public int getAcademicUnit() { return academicUnit; }
 

@@ -140,7 +140,6 @@ public class CourseRegistrationFileMgr extends FILEMgrAbstract implements ICours
 	 * Get the instance of the CourseRegistrationFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static CourseRegistrationFileMgr getInstance() {
 		if (instance == null) {
 			instance = new CourseRegistrationFileMgr();

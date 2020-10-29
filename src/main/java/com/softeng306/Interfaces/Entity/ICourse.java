@@ -16,8 +16,8 @@ public interface ICourse {
     String getCourseName();
 
     /**
-     * Gets the course's AU.
-     * @return the AU of this course.
+     * Gets the course's Academic Unit value.
+     * @return the Academic Units of this course.
      */
     int getAcademicUnit();
 

@@ -70,7 +70,6 @@ public class ProfessorFileMgr extends FILEMgrAbstract implements IProfessorFileM
 	 * Get the instance of the ProfessorFileMgr class.
 	 * @return the singleton instance.
 	 */
-
 	public static ProfessorFileMgr getInstance() {
 		if (instance == null) {
 			instance = new ProfessorFileMgr();
