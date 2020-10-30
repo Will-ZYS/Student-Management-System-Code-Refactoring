@@ -32,6 +32,13 @@ Run the jar file using java -cp in terminal, running the Main class
 $ java -cp target/project-2-team-2-1.0.jar com.softeng306.Main
 ```
 
+## Running Tests
+Integration tests are implemented to ensure the correctness of the system during all phases of refactoring.
+To run tests, go to Maven Goal -> Verify OR run the following on the command line:
+```
+$ mvn verify
+```
+
 ## File Structure
 ```
 ├─main
@@ -61,3 +68,8 @@ $ java -cp target/project-2-team-2-1.0.jar com.softeng306.Main
         ├─original
         └─sampleOutput
 ```
+## Documentation
+* [Wiki Documentations](https://github.com/SoftEng306-2020/project-2-team-2/wiki)
+* [Meeting Minutes](https://github.com/SoftEng306-2020/project-2-team-2/wiki/Meeting-Minutes)
+* [Design Doc](https://github.com/SoftEng306-2020/project-2-team-2/wiki/Design-Doc)
+* [Invitation to Trello Board](https://trello.com/invite/b/mJbtsBOH/e2abe57d891760611833252265457c85/project-2)
