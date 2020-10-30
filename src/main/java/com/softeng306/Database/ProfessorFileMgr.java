@@ -79,7 +79,7 @@ public class ProfessorFileMgr extends FileMgr implements IProfessorFileMgr {
 
 	/**
 	 * Method used for testing purposes
-	 * @param professorFileName
+	 * @param professorFileName the professor file name to be set
 	 */
 	public void setProfessorFileName(String professorFileName) {
 		this.professorFileName = professorFileName;

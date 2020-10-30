@@ -1,6 +1,5 @@
 package com.softeng306.Interfaces.Managers;
 
-import com.softeng306.Database.MarkFileMgr;
 import com.softeng306.Entity.Mark;
 import com.softeng306.Interfaces.Entity.ICourse;
 import com.softeng306.Interfaces.Entity.IMark;

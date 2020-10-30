@@ -1,7 +1,5 @@
 package com.softeng306.Interfaces.Managers;
 
-import java.util.List;
-
 public interface IHelperMgr {
 
     /**

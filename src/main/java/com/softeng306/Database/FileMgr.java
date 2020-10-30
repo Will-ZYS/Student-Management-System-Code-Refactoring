@@ -59,13 +59,13 @@ public abstract class FileMgr {
 
     /**
      * helper method to insert content into the file, alongside the appropriate symbol
-     * @param fileWriter
-     * @param content
-     * @param separater
-     * @throws IOException
+     * @param fileWriter the file writer to write
+     * @param content the string to be inserted
+     * @param separator the separator to be inserted
+     * @throws IOException throws IOException to the caller
      */
-    protected void writeToFile(FileWriter fileWriter, String content, String separater)  throws IOException{
+    protected void writeToFile(FileWriter fileWriter, String content, String separator)  throws IOException{
         fileWriter.append(content);
-        fileWriter.append(separater);
+        fileWriter.append(separator);
     }
 }
