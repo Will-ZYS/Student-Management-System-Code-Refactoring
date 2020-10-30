@@ -7,7 +7,6 @@ import com.softeng306.Interfaces.Entity.IGroup;
  * A course must have at least one lecture group.
  * A course can have many or no tutorial groups and lab groups.
  * Student enrolled in this course must also be enrolled in one of the groups of each type.
-
  */
 
 public class Group implements IGroup {

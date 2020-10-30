@@ -75,11 +75,10 @@ public class MarkFileMgr extends FileMgr implements IMarkFileMgr {
 
 	/**
 	 * private helper method to write marks back into the CSV file
-	 *
-	 * @param fileWriter
-	 * @param mark
-	 * @param isSubComponentInitialized
-	 * @throws IOException
+	 * @param fileWriter the file writer to write
+	 * @param mark the mark to be written to the CSV file
+	 * @param isSubComponentInitialized true is subComponent is initialized
+	 * @throws IOException throws IOException to the caller
 	 */
 	private void writeMarkToCSV(FileWriter fileWriter, IMark mark, boolean isSubComponentInitialized) throws IOException {
 

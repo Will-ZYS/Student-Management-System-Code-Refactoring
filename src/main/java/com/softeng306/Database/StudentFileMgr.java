@@ -141,7 +141,7 @@ public class StudentFileMgr extends FileMgr implements IStudentFileMgr {
 
 	/**
 	 * Method used for testing purposes
-	 * @param studentFileName
+	 * @param studentFileName the student file name to be set
 	 */
 	public void setStudentFileName(String studentFileName) {
 		this.studentFileName = studentFileName;

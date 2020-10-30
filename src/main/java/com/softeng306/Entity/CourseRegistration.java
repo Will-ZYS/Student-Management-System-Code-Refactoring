@@ -6,7 +6,6 @@ import com.softeng306.Interfaces.Entity.IStudent;
 
 import java.util.Comparator;
 
-
 public class CourseRegistration implements ICourseRegistration {
     private IStudent student;
     private ICourse course;
