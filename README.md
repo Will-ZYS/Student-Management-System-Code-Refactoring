@@ -21,20 +21,20 @@ Reverse Engineering and Refactoring
 2. Import the project as a Maven project on IntelliJ
 
 ## Building the Project
-To build an executable jar of the project with maven, run the following on the command line:
+To build an executable jar of the project with maven, run the following in terminal:
 ```
 $ mvn package
 ```
 
 ## Run the project
-Run the jar file using java -cp in terminal, running the Main class
+Run the jar file using java -cp in terminal:
 ```
 $ java -cp target/project-2-team-2-1.0.jar com.softeng306.Main
 ```
 
 ## Running Tests
 Integration tests are implemented to ensure the correctness of the system during all phases of refactoring.
-To run tests, go to Maven Goal -> Verify OR run the following on the command line:
+To run tests, go to Maven Goal -> Verify OR run the following in terminal:
 ```
 $ mvn verify
 ```
